@@ -5,12 +5,17 @@ aGVsbG8gd29ybGQ=
 <br><br>
 {"fruit": "Apple","size": "Large","color": "Red"}
 <br><br>
+https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J#1231
+<br><br>
+1576923482
+<br><br>
 
-    <textarea v-model="inputString"/>
+    <textarea v-model="inputString" class="input"/>
+    {{ characterCount }} characters, {{ wordCount }} words, {{ lineCount }} lines
   TODO input info
   length, words, charset
 
-    <select v-model="selectedFunction">
+    <select v-model="selectedFunction" class="select-function">
       <option :value="null">
         Auto
         <template v-if="autoFunction">
@@ -30,22 +35,28 @@ aGVsbG8gd29ybGQ=
 import Base64Encode from './Base64Encode';
 import Base64Decode from './Base64Decode';
 import JsonDecode from './JsonDecode';
+import UnixTimestamp from './UnixTimestamp';
 import Unknown from './Unknown';
+import UrlDecode from './UrlDecode';
 
 const functions = {
   'Base 64 Encode': Base64Encode,
   'Base 64 Decode': Base64Decode,
   'JSON Decode': JsonDecode,
-  'Unknown': Unknown
+  'Unknown': Unknown,
+  'Unix Timestamp': UnixTimestamp,
+  'URL Decode': UrlDecode
 };
 
 export default {
-  name: 'HelloWorld',
+  name: 'StringyTool',
   components: {
     Base64Decode,
     Base64Encode,
     JsonDecode,
-    Unknown
+    Unknown,
+    UnixTimestamp,
+    UrlDecode
   },
   data() {
     return {
@@ -57,10 +68,10 @@ export default {
     };
   },
   computed: {
-    outputString: function() {
+    outputString: function () {
       return this.inputString;
     },
-    currentComponent: function() {
+    currentComponent: function () {
       if (this.selectedFunction) {
         return functions[this.selectedFunction];
       }
@@ -88,13 +99,28 @@ export default {
       QR code generator
       */
 
+      const str = this.inputString.trim();
+
+      if (str === '') {
+        return Unknown;
+      }
+
       for (const f in functions) {
-        if (functions[f].canParse(this.inputString)) {
+        if (functions[f].canParse(str)) {
           return functions[f];
         }
       }
 
       return Unknown;
+    },
+    characterCount: function () {
+      return this.inputString.length;
+    },
+    wordCount: function () {
+      return this.inputString.length;
+    },
+    lineCount: function () {
+      return (this.inputString.match(/\r\n|\r|\n/g) || []).length + 1;
     }
   }
 }
@@ -102,18 +128,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
+
+.input {
+  width: 100%;
+  height: 200px;
 }
-ul {
-  list-style-type: none;
-  padding: 0;
+
+.select-function {
+
 }
-li {
-  display: inline-block;
-  margin: 0 10px;
+
+/deep/ .output {
+  width: 100%;
+  height: 200px;
 }
-a {
-  color: #42b983;
-}
+
 </style>

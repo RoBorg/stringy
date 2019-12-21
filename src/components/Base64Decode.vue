@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea v-model="outputString"/>
+    <textarea v-model="outputString" class="output"/>
   </div>
 </template>
 
@@ -23,7 +23,8 @@ export default {
     }
   },
   canParse (str) {
-    return str.match(/^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/);
+    return /^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(str)
+      && !/^\d+$/.test(str);
   }
 }
 </script>

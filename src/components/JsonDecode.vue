@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea v-model="outputString"/>
+    <textarea v-model="outputString" class="output"/>
   </div>
 </template>
 
@@ -31,6 +31,10 @@ export default {
   },
   canParse (str) {
     let json;
+
+    if (!/{/.test(str)) {
+      return false;
+    }
 
     try {
       json = JSON.parse(str);

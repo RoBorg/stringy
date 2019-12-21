@@ -1,6 +1,6 @@
 <template>
   <div>
-    <textarea v-model="outputString"/>
+    <textarea v-model="outputString" class="output"/>
   </div>
 </template>
 
