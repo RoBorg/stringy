@@ -18,13 +18,21 @@ export default {
     }
   },
   computed: {
+    // TODO output image/binary download
     outputString: function () {
-      return Base64.decode(this.inputString);
+      try {
+        if (!/^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(this.inputString)) {
+          throw new Exception();
+        }
+
+        return Base64.decode(this.inputString);
+      } catch (e) {
+        return 'Invalid base64'
+      }
     }
   },
   canParse (str) {
-    return /^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(str)
-      && !/^\d+$/.test(str);
+    return /^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(str);
   }
 }
 </script>

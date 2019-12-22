@@ -1,6 +1,8 @@
 <template>
   <div>
-    <textarea v-model="outputString" class="output"/>
+    <Copy :text="outputString"/>
+    <pre v-highlightjs="outputString"><code class="json"></code></pre>
+    <Copy :text="outputString"/>
   </div>
 </template>
 
@@ -32,6 +34,7 @@ export default {
   canParse (str) {
     let json;
 
+    // Don't JSON-decode raw values, e.g. 123456
     if (!/{/.test(str)) {
       return false;
     }

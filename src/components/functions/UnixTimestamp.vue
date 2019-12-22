@@ -11,16 +11,16 @@
         <tr>
           <th>Date Time</th>
           <td>{{ date.format() }}</td>
-          <td @click="copy(date.format())">Copy</td>
+          <td></td>
         </tr>
         <tr>
           <th>ISO8601 Format</th>
           <td ref="iso8601">{{ date.toISOString() }}</td>
-          <td @click="copy(date.toISOString())">Copy</td>
+          <td><Copy :text="date.toISOString()"/></td>
         <tr>
           <th>SQL Format</th>
           <td>{{ date.format('Y-MM-DD HH:mm:ss') }}</td>
-          <td @click="copy(date.format('Y-MM-DD HH:mm:ss'))">Copy</td>
+          <td><Copy :text="date.format('Y-MM-DD HH:mm:ss')"/></td>
         </tr>
         <tr>
           <th>Difference From Now</th>
@@ -44,7 +44,6 @@
 
 <script>
 import moment from 'moment';
-import { copy } from '../helpers';
 
 // TODO options
 
@@ -94,11 +93,6 @@ export default {
       }
 
       return parts;
-    }
-  },
-  methods: {
-    copy (value) {
-      copy (value);
     }
   },
   canParse (str) {

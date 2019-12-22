@@ -1,14 +1,20 @@
 <template>
   <div>
-    <textarea class="output" v-model="outputString" readonly/>
+
+    <img :src="dataSrc" v-if="isImage"/>
+    <textarea class="output" v-else-if="isText" v-model="asText" readonly/>
+    <a download :href="dataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>Download binary file</a>
   </div>
 </template>
 
 <script>
+import { Base64 } from 'js-base64';
+import { read } from 'fs';
+
 // TODO options, binary decode
 
 export default {
-  name: 'SqlFormat',
+  name: 'HexDecode',
   props: {
     inputString: {
       type: String,
@@ -91,8 +97,7 @@ export default {
     // }
   },
   canParse (str) {
-    return /^[A-Fa-f0-9+/\s]+$/.test(str)
-      && !/^\d+$/.test(str);
+    return /^[A-Fa-f0-9+/\s]+$/.test(str);
   }
 }
 </script>

@@ -1,5 +1,5 @@
 export function copy (text) {
-  const element = document.createElement('input');
+  const element = document.createElement('textarea');
   document.body.appendChild(element);
   element.value = text;
   element.select();
