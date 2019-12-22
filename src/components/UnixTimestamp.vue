@@ -10,18 +10,32 @@
       <tbody>
         <tr>
           <th>Date Time</th>
-          <td>{{ date.toString() }}</td>
+          <td>{{ date.format() }}</td>
+          <td @click="copy(date.format())">Copy</td>
         </tr>
         <tr>
-          <th>ISO Format</th>
-          <td>{{ date.toISOString() }}</td>
+          <th>ISO8601 Format</th>
+          <td ref="iso8601">{{ date.toISOString() }}</td>
+          <td @click="copy(date.toISOString())">Copy</td>
         <tr>
           <th>SQL Format</th>
-          <td>{{ date.toISOString() }}</td>
+          <td>{{ date.format('Y-MM-DD HH:mm:ss') }}</td>
+          <td @click="copy(date.format('Y-MM-DD HH:mm:ss'))">Copy</td>
         </tr>
         <tr>
           <th>Difference From Now</th>
-          <td></td>
+          <td>{{ date.fromNow() }}</td>
+        </tr>
+        <tr>
+          <th>Difference From Now</th>
+          <td>
+            <template v-if="isInFuture">in</template>
+            <template v-for="item in duration">
+              {{ item.timeInUnit }}
+              {{ item.unit }}
+            </template>
+            <template v-if="!isInFuture">ago</template>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -29,6 +43,9 @@
 </template>
 
 <script>
+import moment from 'moment';
+import { copy } from '../helpers';
+
 // TODO options
 
 export default {
@@ -39,12 +56,15 @@ export default {
       required: true
     }
   },
+  data() {
+    return {
+      now: moment(),
+    }
+  },
+  created: function () {
+    setInterval(() => this.now = moment(), 1000);
+  },
   computed: {
-    outputString: function () {
-      const url = this.url;
-
-      return this.inputString;
-    },
     date: function () {
       let timestamp = this.inputString.trim();
 
@@ -52,9 +72,33 @@ export default {
         timestamp += '000';
       }
 
-      console.log(timestamp)
+      return moment(parseInt(timestamp));
+    },
+    isInFuture: function () {
+      return this.date.diff(moment()) > 0;
+    },
+    duration: function () {
+      const duration = moment.duration(this.date.diff(this.now));
+      const parts = [];
+      const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
 
-      return new Date(parseInt(timestamp));
+      for (let i in units) {
+        const unit = units[i]
+        const timeInUnit = Math.abs(duration[unit]());
+
+        if (timeInUnit > 0)
+          parts.push({
+            timeInUnit,
+            unit
+          });
+      }
+
+      return parts;
+    }
+  },
+  methods: {
+    copy (value) {
+      copy (value);
     }
   },
   canParse (str) {
