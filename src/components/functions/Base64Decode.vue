@@ -27,7 +27,7 @@ export default {
 
         return Base64.decode(this.inputString);
       } catch (e) {
-        return 'Invalid base64'
+        return 'Invalid base64: ' + e.message;
       }
     }
   },

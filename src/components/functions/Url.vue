@@ -5,6 +5,7 @@
     </div>
     <div v-else>
       <a :href="url.href" target="_blank">Link</a>
+      <qrcode-vue :value="url.href" size="200"/>
       <table class="data">
         <tbody>
           <tr>
@@ -115,6 +116,8 @@
 </template>
 
 <script>
+import QrcodeVue from 'qrcode.vue';
+
 // TODO options
 
 export default {
@@ -124,6 +127,9 @@ export default {
       type: String,
       required: true
     }
+  },
+  components: {
+    QrcodeVue,
   },
   computed: {
     outputString: function () {

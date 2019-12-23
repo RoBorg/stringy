@@ -19,14 +19,20 @@ export default {
   computed: {
     outputString: function () {
       try {
-        return decodeURIComponent(this.inputString)
+        return decodeURIComponent(this.inputString);
       } catch (e) {
         return 'Invalid data';
       }
     },
   },
   canParse (str) {
-    return false; // TODO
+    try {
+        decodeURIComponent(this.inputString);
+
+        return true;
+      } catch (e) {
+        return false;
+      }
   }
 }
 </script>
