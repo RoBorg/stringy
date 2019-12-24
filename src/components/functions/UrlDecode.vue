@@ -26,6 +26,10 @@ export default {
     },
   },
   canParse (str) {
+    if (!/%/.test(str)) {
+      return false;
+    }
+
     try {
         decodeURIComponent(this.inputString);
 

@@ -12,49 +12,49 @@
             <th>Protocol</th>
             <td>
               {{ url.protocol }}
-              <Copy text="url.protocol"/>
+              <Copy :text="url.protocol"/>
             </td>
           </tr>
           <tr v-if="url.host !== url.hostname">
             <th>Host</th>
             <td>
               {{ url.host }}
-              <Copy text="url.host"/>
+              <Copy :text="url.host"/>
             </td>
           </tr>
           <tr>
             <th>Hostname</th>
             <td>
               <a :href="`${url.protocol}:${url.hostname}`" target="_blank">{{ url.hostname }}</a>
-              <Copy text="url.hostname"/>
+              <Copy :text="url.hostname"/>
             </td>
           </tr>
           <tr v-if="url.port">
             <th>Port</th>
             <td>
               {{ url.port }}
-              <Copy text="url.port"/>
+              <Copy :text="url.port"/>
             </td>
           </tr>
           <tr v-if="url.pathname">
             <th>Pathname</th>
             <td>
               {{ url.pathname }}
-              <Copy text="url.pathname"/>
+              <Copy :text="url.pathname"/>
             </td>
           </tr>
           <tr v-if="url.pathname && (url.pathname !== url.pathnameDecoded)">
             <th>Pathname (Decoded)</th>
             <td>
               {{ url.pathnameDecoded }}
-              <Copy text="url.pathnameDecoded"/>
+              <Copy :text="url.pathnameDecoded"/>
             </td>
           </tr>
           <tr v-if="url.search">
             <th>Search</th>
             <td>
               {{ url.search }}
-              <Copy text="url.search"/>
+              <Copy :text="url.search"/>
             </td>
           </tr>
           <tr v-if="url.search">
@@ -65,11 +65,11 @@
                     <tr v-for="query in url.searchObject">
                       <td>
                         {{ query.name }}
-                        <Copy text="query.name"/>
+                        <Copy :text="query.name"/>
                       </td>
                       <td>
                         {{ query.value }}
-                        <Copy text="query.value"/>
+                        <Copy :text="query.value"/>
                       </td>
                     </tr>
                   </tbody>
@@ -84,11 +84,11 @@
                     <tr v-for="query in url.searchObject">
                       <td>
                         {{ query.nameDecoded }}
-                        <Copy text="query.nameDecoded"/>
+                        <Copy :text="query.nameDecoded"/>
                       </td>
                       <td>
                         {{ query.valueDecoded }}
-                        <Copy text="query.valueDecoded"/>
+                        <Copy :text="query.valueDecoded"/>
                       </td>
                     </tr>
                   </tbody>
@@ -99,14 +99,14 @@
             <th>Hash</th>
             <td>
               {{ url.hash }}
-              <Copy text="query.valueDecoded"/>
+              <Copy :text="query.valueDecoded"/>
             </td>
           </tr>
           <tr v-if="url.hash && (url.hash !== url.hashDecoded)">
             <th>Hash (Decoded)</th>
             <td>
               {{ url.hashDecoded }}
-              <Copy text="query.valueDecoded"/>
+              <Copy :text="query.valueDecoded"/>
             </td>
           </tr>
         </tbody>
@@ -119,6 +119,7 @@
 import QrcodeVue from 'qrcode.vue';
 
 // TODO options
+// TODO link to domain whois, ip lookup (if we can't do it ourselves)
 
 export default {
   name: 'Url',

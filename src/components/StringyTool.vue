@@ -10,20 +10,21 @@ https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b
 1576923482
 <br><br>
 e2988020e2988120e2988220e2988320e2988420e2988520e2988620e2988720e2988820e2988920e2988a20e2988b20e2988c20e2988d20e2988e20e2988f20e2989020e2989120e2989220e2989320e2989620e2989720e2989920e2989a20e2989b20e2989c20e2989d
-
+<br><br>128.42.5.4/21
+<br><br>195.70.16.159/30
+<br><br>
 TODO file upload
 
-    <textarea v-model="inputString" class="input"/>
-    {{ characterCount }} characters, {{ wordCount }} words, {{ lineCount }} lines
-
+    <textarea v-model="inputString" class="input" placeholder="Enter your text here"/>
+    <div class="input-info">
+      <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
+      <span class="amount">{{ wordCount }}</span> word<template v-if="wordCount != 1">s</template>,
+      <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
+    </div>
     <select v-model="selectedFunction" class="select-function">
       <option :value="null">
-        Auto
-        <template v-if="autoFunction">
-          {{ functions[autoFunction] }}
-        </template>
+        Auto ({{ autoFunction.name }})
       </option>
-      todo: swap button, copy button
       <option v-for="option in functionOptions" :key="option.value" :value="option.value">
         {{ option.text }}
       </option>
@@ -37,6 +38,7 @@ import Base64Encode from './functions/Base64Encode';
 import Base64Decode from './functions/Base64Decode';
 import HexEncode from './functions/HexEncode';
 import HexDecode from './functions/HexDecode';
+import IpAddress from './functions/IpAddress';
 import JsonDecode from './functions/JsonDecode';
 import SqlFormat from './functions/SqlFormat';
 import UnixTimestamp from './functions/UnixTimestamp';
@@ -45,6 +47,11 @@ import Url from './functions/Url';
 import UrlDecode from './functions/UrlDecode';
 import UrlEncode from './functions/UrlEncode';
 
+const unknown = {
+  name: 'Unknown',
+  component: Unknown
+};
+
 // Functions, in order of most specific first
 // E.g. Base 64 Decode will match a unix timestamp, so make sure
 // Unix Timestamp comes before it
@@ -52,6 +59,10 @@ const functions = [
   {
     name: 'Unix Timestamp',
     component: UnixTimestamp
+  },
+  {
+    name: 'IP Address',
+    component: IpAddress
   },
   {
     name: 'Hex Decode',
@@ -89,10 +100,7 @@ const functions = [
     name: 'URL Encode',
     component: UrlEncode
   },
-  {
-    name: 'Unknown',
-    component: Unknown
-  }
+  unknown
 ];
 
 const components = {};
@@ -107,7 +115,6 @@ export default {
       inputString: 'aGVsbG8gd29ybGQ=',
       stringType: null,
       selectedFunction: null,
-      autoFunction: null, // TODO
       functions
     };
   },
@@ -134,28 +141,30 @@ export default {
       HTML format
       html en/decode
       unix timestamp
-      gzip
       hex (md5? sha? colour?)
-      csv
-      ssh key
+      csv???
+      ssh key (format conversion, public from private)
       ssl cert
       CIDR
       QR code generator
       */
 
-      const str = this.inputString.trim();
+      return this.autoFunction.component;
+    },
+    autoFunction: function () {
+     const str = this.inputString.trim();
 
       if (str === '') {
-        return Unknown;
+        return unknown;
       }
 
       for (const f in functions) {
         if (functions[f].component.canParse(str)) {
-          return functions[f].component;
+          return functions[f];
         }
       }
 
-      return Unknown;
+      return unknown;
     },
     characterCount: function () {
       return this.inputString.length;
@@ -189,6 +198,14 @@ export default {
 .input {
   width: 100%;
   height: 200px;
+}
+
+.input-info {
+  background-color: #fefefe;
+}
+
+.input-info .amount {
+  font-weight: bold;
 }
 
 .select-function {
