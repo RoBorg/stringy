@@ -10,6 +10,7 @@
 <script>
 import { Base64 } from 'js-base64';
 import { read } from 'fs';
+import { isImage } from '../../helpers';
 
 // TODO options, binary decode
 
@@ -32,22 +33,21 @@ export default {
   watch: {
     inputString: {
       immediate: true,
-      handler: function (value) {
+      handler: async function (value) {
         const reader = new FileReader();
-        const image = new Image();
 
         this.isImage = false;
         this.dataSrc = '';
         this.asText = '';
 
-        reader.onloadend = () => {
+        reader.onloadend = await async () => {
           this.dataSrc = reader.result;
 
-          image.onload = () => this.isImage = true;
-          image.onerror = () => {
+          this.isImage = await isImage(this.dataSrc);
+
+          if (!this.isImage) {
             this.asText = Base64.decode(reader.result.replace(/^.+?,/, ''));
           };
-          image.src = this.dataSrc;
         };
 
         reader.readAsDataURL(this.toBinary(value));

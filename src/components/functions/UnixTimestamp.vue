@@ -1,6 +1,6 @@
 <template>
   <div>
-    <table>
+    <table class="data">
       <thead>
         <tr>
           <th>Element</th>
@@ -11,16 +11,19 @@
         <tr>
           <th>Date Time</th>
           <td>{{ date.format() }}</td>
-          <td></td>
         </tr>
         <tr>
           <th>ISO8601 Format</th>
-          <td ref="iso8601">{{ date.toISOString() }}</td>
-          <td><Copy :text="date.toISOString()"/></td>
+          <td>
+            {{ date.toISOString() }}
+            <Copy :text="date.toISOString()"/>
+          </td>
         <tr>
           <th>SQL Format</th>
-          <td>{{ date.format('Y-MM-DD HH:mm:ss') }}</td>
-          <td><Copy :text="date.format('Y-MM-DD HH:mm:ss')"/></td>
+          <td>
+            {{ date.format('Y-MM-DD HH:mm:ss') }}
+            <Copy :text="date.format('Y-MM-DD HH:mm:ss')"/>
+          </td>
         </tr>
         <tr>
           <th>Difference From Now</th>

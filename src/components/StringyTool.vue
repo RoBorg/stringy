@@ -1,20 +1,7 @@
 <template>
   <div>
-
-aGVsbG8gd29ybGQ=
-<br><br>
-{"fruit": "Apple","size": "Large","color": "Red"}
-<br><br>
-https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J#1231
-<br><br>
-1576923482
-<br><br>
-e2988020e2988120e2988220e2988320e2988420e2988520e2988620e2988720e2988820e2988920e2988a20e2988b20e2988c20e2988d20e2988e20e2988f20e2989020e2989120e2989220e2989320e2989620e2989720e2989920e2989a20e2989b20e2989c20e2989d
-<br><br>128.42.5.4/21
-<br><br>195.70.16.159/30
-<br><br>
 TODO file upload
-
+    <TestData/>
     <textarea v-model="inputString" class="input" placeholder="Enter your text here"/>
     <div class="input-info">
       <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
@@ -36,16 +23,20 @@ TODO file upload
 <script>
 import Base64Encode from './functions/Base64Encode';
 import Base64Decode from './functions/Base64Decode';
+import Copy from './Copy';
+import DataUriDecode from './functions/DataUriDecode';
 import HexEncode from './functions/HexEncode';
 import HexDecode from './functions/HexDecode';
 import IpAddress from './functions/IpAddress';
 import JsonDecode from './functions/JsonDecode';
 import SqlFormat from './functions/SqlFormat';
+import SslCertificate from './functions/SslCertificate';
 import UnixTimestamp from './functions/UnixTimestamp';
 import Unknown from './functions/Unknown';
 import Url from './functions/Url';
 import UrlDecode from './functions/UrlDecode';
 import UrlEncode from './functions/UrlEncode';
+import TestData from './TestData';
 
 const unknown = {
   name: 'Unknown',
@@ -56,6 +47,14 @@ const unknown = {
 // E.g. Base 64 Decode will match a unix timestamp, so make sure
 // Unix Timestamp comes before it
 const functions = [
+  {
+    name: 'SSL Certificate',
+    component: SslCertificate
+  },
+  {
+    name: 'Data URI Decode',
+    component: DataUriDecode
+  },
   {
     name: 'Unix Timestamp',
     component: UnixTimestamp
@@ -103,7 +102,7 @@ const functions = [
   unknown
 ];
 
-const components = {};
+const components = {Copy: Copy, TestData: TestData};
 
 functions.map((f) => components[f.component.name] = f.component);
 
@@ -144,7 +143,7 @@ export default {
       hex (md5? sha? colour?)
       csv???
       ssh key (format conversion, public from private)
-      ssl cert
+      ssl cert https://www.npmjs.com/package/openssl.js
       CIDR
       QR code generator
       */

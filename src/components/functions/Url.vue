@@ -4,10 +4,20 @@
       Malformed Url
     </div>
     <div v-else>
-      <a :href="url.href" target="_blank">Link</a>
-      <qrcode-vue :value="url.href" size="200"/>
       <table class="data">
         <tbody>
+          <tr>
+            <th>Link</th>
+            <td>
+              <a :href="url.href" target="_blank">Click here</a>
+            </td>
+          </tr>
+          <tr>
+            <th>Link QR Code</th>
+            <td>
+              <qrcode-vue :value="url.href" size="200"/>
+            </td>
+          </tr>
           <tr>
             <th>Protocol</th>
             <td>
@@ -99,14 +109,14 @@
             <th>Hash</th>
             <td>
               {{ url.hash }}
-              <Copy :text="query.valueDecoded"/>
+              <Copy :text="url.hash"/>
             </td>
           </tr>
           <tr v-if="url.hash && (url.hash !== url.hashDecoded)">
             <th>Hash (Decoded)</th>
             <td>
               {{ url.hashDecoded }}
-              <Copy :text="query.valueDecoded"/>
+              <Copy :text="url.hashDecoded"/>
             </td>
           </tr>
         </tbody>
@@ -119,7 +129,7 @@
 import QrcodeVue from 'qrcode.vue';
 
 // TODO options
-// TODO link to domain whois, ip lookup (if we can't do it ourselves)
+// TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
 
 export default {
   name: 'Url',
@@ -192,46 +202,6 @@ export default {
 </script>
 
 <style scoped lang="css">
-tbody th {
-  text-align: right;
-}
-
-table.data {
-  border-collapse: collapse;
-}
-
-table.data th,
-table.data td {
-  background-color: #ffffff;
-  border-top: 1px solid #dddddd;
-  padding: 8px 10px;
-}
-
-table.data td {
-  font-family: 'Courier New', Courier, monospace;
-}
-
-table.data > tbody > tr:nth-child(even) > td {
-  background-color: #f9f9f9;
-}
-
-table.data > tbody > tr:nth-child(even) > th {
-  background-color: #f1f1f1;
-}
-
-table.data > tbody > tr:hover > th {
-  background-color: #eaeaea;
-}
-
-table.data > tbody > tr:hover > td {
-  background-color: #f6f6f6;
-}
-
-table.data > tbody > tr:first-child > th,
-table.data > tbody > tr:first-child > td {
-  border-top-width: 0;
-}
-
 .parameters {
   width: 100%;
 }
