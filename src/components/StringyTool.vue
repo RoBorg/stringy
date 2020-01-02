@@ -36,12 +36,34 @@ import Unknown from './functions/Unknown';
 import Url from './functions/Url';
 import UrlDecode from './functions/UrlDecode';
 import UrlEncode from './functions/UrlEncode';
+import XmlFormat from './functions/XmlFormat';
 import TestData from './TestData';
 
 const unknown = {
   name: 'Unknown',
   component: Unknown
 };
+    /*
+    TODO
+    https://codebeautify.org/string-functions
+
+    Data URI
+    Base64
+    Base64 image
+    URL
+    XML format/validator
+    (S)CSS
+    SQL
+    HTML format
+    html en/decode
+    unix timestamp
+    hex (md5? sha? colour?)
+    csv???
+    ssh key (format conversion, public from private)
+    ssl cert https://www.npmjs.com/package/openssl.js
+    CIDR
+    QR code generator
+    */
 
 // Functions, in order of most specific first
 // E.g. Base 64 Decode will match a unix timestamp, so make sure
@@ -99,6 +121,10 @@ const functions = [
     name: 'URL Encode',
     component: UrlEncode
   },
+  {
+    name: 'XML Format',
+    component: XmlFormat
+  },
   unknown
 ];
 
@@ -125,28 +151,6 @@ export default {
       if (this.selectedFunction) {
         return functions[this.selectedFunction].component;
       }
-
-      /*
-      TODO
-      https://codebeautify.org/string-functions
-
-      Data URI
-      Base64
-      Base64 image
-      URL
-      XML formatter/validator
-      (S)CSS
-      SQL
-      HTML format
-      html en/decode
-      unix timestamp
-      hex (md5? sha? colour?)
-      csv???
-      ssh key (format conversion, public from private)
-      ssl cert https://www.npmjs.com/package/openssl.js
-      CIDR
-      QR code generator
-      */
 
       return this.autoFunction.component;
     },
