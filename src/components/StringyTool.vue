@@ -23,6 +23,7 @@ TODO file upload
 <script>
 import Base64Encode from './functions/Base64Encode';
 import Base64Decode from './functions/Base64Decode';
+import CssColour from './functions/CssColour';
 import Copy from './Copy';
 import DataUriDecode from './functions/DataUriDecode';
 import HexEncode from './functions/HexEncode';
@@ -72,6 +73,10 @@ const functions = [
   {
     name: 'SSL Certificate',
     component: SslCertificate
+  },
+  {
+    name: 'CSS Colour',
+    component: CssColour
   },
   {
     name: 'Data URI Decode',
