@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <NoteBlock alert>TODO: delete this<br>
     <span class="test"><Copy text="8950 4e47 0d0a 1a0a 0000 000d 4948 4452
 0000 000a 0000 000a 0806 0000 008d 32cf
 bd00 0000 0467 414d 4100 00af c837 058a
@@ -98,26 +98,23 @@ LEFT JOIN     (
         FROM wp_postmeta         WHERE meta_key = '_shipping_first_name'
     ) AS a ON wp_woocommerce_order_items.order_id = a.post_id WHERE  wp_woocommerce_order_items.order_id =2198"/>SQL Query</span>
 <span class="test"><Copy text='<?xml version="1.0" encoding="UTF-8"?><breakfast_menu>  <food>    <name>Belgian Waffles</name>    <price>$5.95</price>    <description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>    <calories>650</calories>  </food>  <food>    <name>Strawberry Belgian Waffles</name>    <price>$7.95</price>    <description>Light Belgian waffles covered with strawberries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>Berry-Berry Belgian Waffles</name>    <price>$8.95</price>    <description>Light Belgian waffles covered with an assortment of fresh berries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>French Toast</name>    <price>$4.50</price>    <description>Thick slices made from our homemade sourdough bread</description>    <calories>600</calories>  </food>  <food>    <name>Homestyle Breakfast</name>    <price>$6.95</price>    <description>Two eggs, bacon or sausage, toast, and our ever-popular hash browns</description>    <calories>950</calories>  </food></breakfast_menu>'/>XML</span>
-</div>
+  </NoteBlock>
 </template>
 
 <script>
 import Copy from './Copy';
+import NoteBlock from './NoteBlock';
 
 export default {
   name: 'TestData',
   components: {
-    Copy
+    Copy,
+    NoteBlock
   }
 }
 </script>
 
 <style scoped>
-  div {
-    border: 1px solid #000000;
-    margin: 10px;
-  }
-
   .test {
     padding-right: 20px;
   }

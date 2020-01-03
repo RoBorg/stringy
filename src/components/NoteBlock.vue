@@ -1,25 +1,26 @@
 <template>
-  <div class="note-block" :class="[{ alert, tip, warning }, $mdActiveTheme]">
+  <div class="note-block" :class="[{ alert, tip, warning }]">
     <slot />
   </div>
 </template>
 
 <script>
-  import MdComponent from 'vue-material/core/MdComponent'
+  // import MdComponent from 'vue-material/src/core/MdComponent'
 
-  export default MdComponent({
+  // export default MdComponent({
+  export default {
     name: 'NoteBlock',
     props: {
       alert: Boolean,
       warning: Boolean,
       tip: Boolean
     }
-  })
+  }
 </script>
 
 <style lang="scss" scoped>
-  @import "~vue-material/components/MdAnimation/variables";
-  @import "~vue-material/theme/engine";
+  // @import "~vue-material/dist/components/MdAnimation/variables";
+  @import "~vue-material/dist/theme/engine";
 
   $note-border: md-get-palette-color(orange, A200);
   $alert-border: md-get-palette-color(red, A200);

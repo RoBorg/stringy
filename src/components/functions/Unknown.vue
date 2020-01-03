@@ -1,11 +1,11 @@
 <template>
   <div>
-    <note-block tip><code>md-file</code> works just like a regular <code>md-input</code> component. This means that you can pass any <code>md-input</code> prop to <code>md-file</code>, like <strong>placeholder</strong>, <strong>required</strong> and <strong>disabled</strong>, for example.</note-block>
+    <NoteBlock note v-if="inputString.trim() !== ''">Unrecognised format - please choose an action</NoteBlock>
   </div>
 </template>
 
 <script>
-import { NoteBlock } from '../NoteBlock.vue';
+import NoteBlock from '../NoteBlock.vue';
 
 export default {
   name: 'Unknown',
