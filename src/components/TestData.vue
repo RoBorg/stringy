@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Copy text="8950 4e47 0d0a 1a0a 0000 000d 4948 4452
+    <span class="test"><Copy text="8950 4e47 0d0a 1a0a 0000 000d 4948 4452
 0000 000a 0000 000a 0806 0000 008d 32cf
 bd00 0000 0467 414d 4100 00af c837 058a
 e900 0000 1974 4558 7453 6f66 7477 6172
@@ -29,9 +29,9 @@ e35d 1ee1 3da7 11b5 ad64 cf0f a134 819f
 4e63 b20f c868 cc68 273f b58f 7273 61f1
 18fe c51e 681f f598 ca43 ca09 46ff 0b30
 0081 6599 b7e4 9326 ee00 0000 0049 454e
-44ae 4260 82"/>Hex image<br><br>
-<Copy text="e2988020e2988120e2988220e2988320e2988420e2988520e2988620e2988720e2988820e2988920e2988a20e2988b20e2988c20e2988d20e2988e20e2988f20e2989020e2989120e2989220e2989320e2989620e2989720e2989920e2989a20e2989b20e2989c20e2989d"/>Hex utf8<br><br>
-<Copy text="-----BEGIN CERTIFICATE-----
+44ae 4260 82"/>Hex image</span>
+<span class="test"><Copy text="e2988020e2988120e2988220e2988320e2988420e2988520e2988620e2988720e2988820e2988920e2988a20e2988b20e2988c20e2988d20e2988e20e2988f20e2989020e2989120e2989220e2989320e2989620e2989720e2989920e2989a20e2989b20e2989c20e2989d"/>Hex utf8</span>
+<span class="test"><Copy text="-----BEGIN CERTIFICATE-----
 MIII2TCCCH6gAwIBAgIQQ5v7yBGYVhFAG04E9Crs7TAKBggqhkjOPQQDAjCBkjEL
 MAkGA1UEBhMCR0IxGzAZBgNVBAgTEkdyZWF0ZXIgTWFuY2hlc3RlcjEQMA4GA1UE
 BxMHU2FsZm9yZDEaMBgGA1UEChMRQ09NT0RPIENBIExpbWl0ZWQxODA2BgNVBAMT
@@ -81,24 +81,23 @@ BzjYgQwu16ng8UWlFxT+x8HhV8RGjDAKBggqhkjOPQQDAgNJADBGAiEAs/NbJnOi
 W6q6fdErunKQYEMtMObm93rG5n+yhFbuJxICIQC1RJPEHKZfFKm9qp7OSv7yUzRg
 CSmgD+V1NAXyXbesZg==
 -----END CERTIFICATE-----"/>SSL Certificate
-<br><br>
-<Copy text="https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J#1231"/>URL<br><br>
-<Copy text='{"fruit": "Apple","size": "Large","color": "Red"}'/>JSON<br><br>
-<Copy text="aGVsbG8gd29ybGQ="/>Base64<br><br>
-<Copy text="1576923482"/>UNIX Timestamp<br><br>
-<Copy text="128.42.5.4/21"/>CIDR<br><br>
-<Copy text="data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%3E%3Chead%3E%3Ctitle%3EEmbedded%20Window%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3E%3Ch1%3E42%3C%2Fh1%3E%3C%2Fbody%3E%3C%2Fhtml%3E"/>Data URI Text<br><br>
-<Copy text="data:image/png;base64,iVBORw0KGgoAAA
+</span>
+<span class="test"><Copy text="https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J#1231"/>URL</span>
+<span class="test"><Copy text='{"fruit": "Apple","size": "Large","color": "Red"}'/>JSON</span>
+<span class="test"><Copy text="aGVsbG8gd29ybGQ="/>Base64</span>
+<span class="test"><Copy text="1576923482"/>UNIX Timestamp</span>
+<span class="test"><Copy text="128.42.5.4/21"/>CIDR</span>
+<span class="test"><Copy text="data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%3E%3Chead%3E%3Ctitle%3EEmbedded%20Window%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3E%3Ch1%3E42%3C%2Fh1%3E%3C%2Fbody%3E%3C%2Fhtml%3E"/>Data URI Text</span>
+<span class="test"><Copy text="data:image/png;base64,iVBORw0KGgoAAA
 ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 //8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
-5ErkJggg=="/>Data URI Image<br><br>
-<Copy text="SELECT wp_woocommerce_order_items.order_id As No_Commande FROM  wp_woocommerce_order_items
+5ErkJggg=="/>Data URI Image</span>
+<span class="test"><Copy text="SELECT wp_woocommerce_order_items.order_id As No_Commande FROM  wp_woocommerce_order_items
 LEFT JOIN     (
         SELECT meta_value As Prenom, post_id  -- <----- this
         FROM wp_postmeta         WHERE meta_key = '_shipping_first_name'
-    ) AS a ON wp_woocommerce_order_items.order_id = a.post_id WHERE  wp_woocommerce_order_items.order_id =2198"/>SQL Query<br><br>
-<Copy text='<?xml version="1.0" encoding="UTF-8"?><breakfast_menu>  <food>    <name>Belgian Waffles</name>    <price>$5.95</price>    <description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>    <calories>650</calories>  </food>  <food>    <name>Strawberry Belgian Waffles</name>    <price>$7.95</price>    <description>Light Belgian waffles covered with strawberries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>Berry-Berry Belgian Waffles</name>    <price>$8.95</price>    <description>Light Belgian waffles covered with an assortment of fresh berries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>French Toast</name>    <price>$4.50</price>    <description>Thick slices made from our homemade sourdough bread</description>    <calories>600</calories>  </food>  <food>    <name>Homestyle Breakfast</name>    <price>$6.95</price>    <description>Two eggs, bacon or sausage, toast, and our ever-popular hash browns</description>    <calories>950</calories>  </food></breakfast_menu>'/>XML<br><br>
-
+    ) AS a ON wp_woocommerce_order_items.order_id = a.post_id WHERE  wp_woocommerce_order_items.order_id =2198"/>SQL Query</span>
+<span class="test"><Copy text='<?xml version="1.0" encoding="UTF-8"?><breakfast_menu>  <food>    <name>Belgian Waffles</name>    <price>$5.95</price>    <description>Two of our famous Belgian Waffles with plenty of real maple syrup</description>    <calories>650</calories>  </food>  <food>    <name>Strawberry Belgian Waffles</name>    <price>$7.95</price>    <description>Light Belgian waffles covered with strawberries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>Berry-Berry Belgian Waffles</name>    <price>$8.95</price>    <description>Light Belgian waffles covered with an assortment of fresh berries and whipped cream</description>    <calories>900</calories>  </food>  <food>    <name>French Toast</name>    <price>$4.50</price>    <description>Thick slices made from our homemade sourdough bread</description>    <calories>600</calories>  </food>  <food>    <name>Homestyle Breakfast</name>    <price>$6.95</price>    <description>Two eggs, bacon or sausage, toast, and our ever-popular hash browns</description>    <calories>950</calories>  </food></breakfast_menu>'/>XML</span>
 </div>
 </template>
 
@@ -112,3 +111,14 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  div {
+    border: 1px solid #000000;
+    margin: 10px;
+  }
+
+  .test {
+    padding-right: 20px;
+  }
+</style>

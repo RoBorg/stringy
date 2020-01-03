@@ -2,7 +2,10 @@
   <div>
 TODO file upload
     <TestData/>
-    <textarea v-model="inputString" class="input" placeholder="Enter your text here"/>
+    <md-field>
+      <md-textarea v-model="inputString" placeholder="Enter your text here"></md-textarea>
+    </md-field>
+
     <div class="input-info">
       <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
       <span class="amount">{{ wordCount }}</span> word<template v-if="wordCount != 1">s</template>,
@@ -52,18 +55,14 @@ const unknown = {
     Base64
     Base64 image
     URL
-    XML format/validator
+    XML format/validator/decode
     (S)CSS
     SQL
     HTML format
     html en/decode
-    unix timestamp
     hex (md5? sha? colour?)
-    csv???
     ssh key (format conversion, public from private)
     ssl cert https://www.npmjs.com/package/openssl.js
-    CIDR
-    QR code generator
     */
 
 // Functions, in order of most specific first
