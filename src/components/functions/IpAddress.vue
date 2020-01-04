@@ -83,7 +83,6 @@ export default {
       const networkAddress = this.intToIp(networkAddressInt);
       const broadcastAddressInt = (networkAddressInt + hostInt) >>> 0;
       const broadcastAddress = this.intToIp(broadcastAddressInt);
-      const networkAddres = this.intToIp(networkAddressInt);
       const firstUsableAddress = this.intToIp(networkAddressInt + 1);
       const lastUsableAddress = this.intToIp(broadcastAddressInt - 1);
       const hosts = ((2 ** hostBits) - (networkBits ? 1 : 0)).toLocaleString();
@@ -99,11 +98,6 @@ export default {
         lastUsableAddress,
         hosts
       }
-    },
-    outputString: function () {
-      const url = this.url;
-
-      return this.inputString;
     },
     hosts: function () {
       return (2 ** (32 - this.info.networkBits)).toLocaleString();

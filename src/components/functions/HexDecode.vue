@@ -1,16 +1,41 @@
 <template>
   <div>
+    <md-card v-if="isImage" style="float: left">
+      <md-card-header>
+        <div class="md-title">Decoded Image</div>
+        <div class="md-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
+      </md-card-header>
 
-    <img :src="dataSrc" v-if="isImage"/>
-    <textarea class="output" v-else-if="isText" v-model="asText" readonly/>
+      <md-card-content>
+        <img :src="dataSrc"/>
+      </md-card-content>
+
+      <md-card-actions>
+        <md-button :href="dataSrc" download class="md-raised md-primary">Download</md-button>
+      </md-card-actions>
+    </md-card>
+    <md-card v-else-if="isText">
+      <md-card-header>
+        <div class="md-title">Card without hover effect</div>
+      </md-card-header>
+
+      <md-card-content>
+        <textarea class="output" v-model="asText" readonly/>
+      </md-card-content>
+
+      <md-card-actions>
+        <md-button>Copy</md-button>
+      </md-card-actions>
+    </md-card>
     <a download :href="dataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>Download binary file</a>
+    <div style="clear: both;">xxx</div>
   </div>
 </template>
 
 <script>
 import { Base64 } from 'js-base64';
 import { read } from 'fs';
-import { isImage } from '../../helpers';
+import { imageInfo } from '../../helpers';
 
 // TODO options, binary decode
 
@@ -25,6 +50,8 @@ export default {
   data () {
     return {
       isImage: false,
+      imageWidth: null,
+      imageHeight: null,
       isText: true,
       dataSrc: '',
       asText: ''
@@ -43,11 +70,14 @@ export default {
         reader.onloadend = await async () => {
           this.dataSrc = reader.result;
 
-          this.isImage = await isImage(this.dataSrc);
+          const imageInfoResult = await imageInfo(this.dataSrc);
+          this.isImage = imageInfoResult.isImage;
+          this.imageWidth = imageInfoResult.width;
+          this.imageHeight = imageInfoResult.height;
 
           if (!this.isImage) {
             this.asText = Base64.decode(reader.result.replace(/^.+?,/, ''));
-          };
+          }
         };
 
         reader.readAsDataURL(this.toBinary(value));

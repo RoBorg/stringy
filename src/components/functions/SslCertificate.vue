@@ -45,7 +45,7 @@ export default {
     }
   },
   canParse (str) {
-    return false // todo
+    return /^-----BEGIN CERTIFICATE-----/.test(str);
   }
 }
 </script>

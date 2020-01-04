@@ -5,19 +5,32 @@ export function copy (text) {
   element.select();
   document.execCommand('copy');
   element.remove();
-};
+}
 
-export function isImage (text) {
+export function imageInfo (text) {
+  const result = {
+    isImage: false,
+    image: null,
+    width: null,
+    height: null
+  };
+
   return new Promise(resolve => {
     const image = new Image();
 
-    image.onload = () => resolve(true);
-    image.onerror = () => resolve(false);
+    image.onload = () => {
+      result.isImage = true;
+      result.image = image;
+      result.width = image.width;
+      result.height = image.height;
+      resolve(result);
+    };
+    image.onerror = () => resolve(result);
     image.src = text;
   });
-};
+}
 
 export default {
   copy,
-  isImage
+  imageInfo
 };

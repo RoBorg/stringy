@@ -22,7 +22,7 @@ export default {
     outputString: function () {
       try {
         if (!/^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(this.inputString)) {
-          throw new Exception();
+          throw new Error();
         }
 
         return Base64.decode(this.inputString);

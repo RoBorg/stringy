@@ -1,7 +1,7 @@
 <template>
-  <span class="icon">
-    <font-awesome-icon icon="copy" @click="copy(text)" title="Copy to clipboard"/>
-  </span>
+  <md-button class="md-icon-button md-dense" @click="copy(text)" title="Copy to clipboard">
+    <md-icon>content_copy</md-icon>
+  </md-button>
   <!-- todo visual feeback -->
 </template>
 
@@ -23,15 +23,7 @@ export default {
 </script>
 
 <style scoped>
-
-.icon {
-  cursor: pointer;
-  opacity: 0.3;
-  transition: opacity 0.25s;
-}
-
-.icon:hover {
-  opacity: 1;
-}
-
+  .md-icon-button {
+    vertical-align: middle;
+  }
 </style>

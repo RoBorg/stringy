@@ -22,7 +22,7 @@ export default {
       return Base64.encode(this.inputString);
     }
   },
-  canParse (str) {
+  canParse () {
     return false;
   }
 }

@@ -21,7 +21,7 @@ export default {
       return encodeURIComponent(this.inputString);
     },
   },
-  canParse (str) {
+  canParse () {
     return false;
   }
 }

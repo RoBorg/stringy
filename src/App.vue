@@ -6,6 +6,11 @@
           <md-icon>menu</md-icon>
         </md-button>
         <span class="md-title">Stringy</span>
+        <div class="md-toolbar-section-end">
+          <md-button class="md-icon-button" href="https://github.com/RoBorg/stringy" target="_blank">
+            <div class="github-icon"/>
+          </md-button>
+        </div>
       </md-app-toolbar>
 
       <md-app-drawer md-permanent="full" :md-active.sync="showNavigation" md-swipeable>
@@ -76,6 +81,13 @@
 
 
 <style>
+
+.github-icon {
+  width: 32px;
+  height: 32px;
+  background-image: url(assets/github-light.png);
+}
+
 /*
 #app {
   /*font-family: 'Avenir', Helvetica, Arial, sans-serif; * /

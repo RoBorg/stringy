@@ -13,6 +13,10 @@ table.data td {
   padding: 8px 10px;
 }
 
+.with-subtable table.data td {
+  padding: 0;
+}
+
 table.data td {
   font-family: 'Courier New', Courier, monospace;
 }

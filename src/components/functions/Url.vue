@@ -69,7 +69,7 @@
           </tr>
           <tr v-if="url.search">
             <th>Search Parameters</th>
-            <td>
+            <td class="with-subtable">
               <table class="data parameters">
                   <tbody>
                     <tr v-for="query in url.searchObject">
@@ -88,7 +88,7 @@
           </tr>
           <tr v-if="url.search && url.hasEncodedQuery">
             <th>Search Parameters (Decoded)</th>
-            <td>
+            <td class="with-subtable">
               <table class="data parameters">
                   <tbody>
                     <tr v-for="query in url.searchObject">
@@ -143,11 +143,6 @@ export default {
     QrcodeVue,
   },
   computed: {
-    outputString: function () {
-      const url = this.url;
-
-      return this.inputString;
-    },
     url: function () {
       try {
         const parser = document.createElement('a');
