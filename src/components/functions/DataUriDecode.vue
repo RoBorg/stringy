@@ -11,23 +11,47 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button :href="inputString" download class="md-raised md-primary">Download</md-button>
+        <md-button :href="inputString" download class="md-primary md-raised">Download</md-button>
       </md-card-actions>
     </md-card>
-    <md-card v-else-if="isText">
-      <md-card-header>
-        <div class="md-title">Decoded Text</div>
-      </md-card-header>
+    <template v-else-if="isText">
+      <md-card>
+        <md-card-header>
+          <div class="md-title">Decoded Text</div>
+        </md-card-header>
 
-      <md-card-content>
-        <textarea class="output" v-model="asText" readonly/>
-      </md-card-content>
+        <md-card-content>
+          <md-field>
+            <md-textarea v-model="asText" placeholder="Enter your text here" readonly/>
+          </md-field>
+        </md-card-content>
 
-      <md-card-actions>
-        <md-button>TODOCopy</md-button>
-      </md-card-actions>
-    </md-card>
-    <md-button download :href="inputString" v-else>Download binary file</md-button>
+        <md-card-actions>
+          <md-button class="md-raised" :href="inputString" download>Download</md-button>
+          <md-button class="md-primary md-raised" @click="copy(asText)">Copy</md-button>
+        </md-card-actions>
+      </md-card>
+
+      <br><br>
+
+      <md-card v-if="isHtml">
+        <md-card-header>
+          <div class="md-title">HTML Preview</div>
+        </md-card-header>
+
+        <md-card-content>
+          <label>
+            <input type="checkbox" v-model="sandbox">
+            Sandbox preview (disallow Javascript etc)
+          </label>
+        </md-card-content>
+
+        <md-card-content>
+          <iframe :srcdoc="asText" :sandbox="sandbox ? '' : false" class="preview"/>
+        </md-card-content>
+      </md-card>
+    </template>
+    <md-button download :href="inputString" class="md-primary md-raised" v-else>Download binary file</md-button>
     <div style="clear: both;">xxx</div>
   </div>
 </template>
@@ -35,6 +59,7 @@
 <script>
 import { Base64 } from 'js-base64';
 import { imageInfo } from '../../helpers';
+import { copy } from '../../helpers';
 
 // TODO options
 
@@ -54,10 +79,18 @@ export default {
       imageWidth: null,
       imageHeight: null,
       isText: true,
-      asText: ''
+      asText: '',
+      isHtml: false,
+      sandbox: true
     };
   },
   watch: {
+    sandbox: function () {
+      const temp = this.asText;
+      this.asText = '';
+
+      this.$nextTick(() => this.asText = temp);
+    },
     inputString: {
       immediate: true,
       handler: async function (value) {
@@ -74,8 +107,10 @@ export default {
           }
         }
 
+        this.isText = true;
         // this.dataSrc = '';
         this.asText = data;
+        this.isHtml = /<(html|head|title|body|div|span|a|p)/i.test(data);
 
         const imageInfoResult = await imageInfo(value);
         this.isImage = imageInfoResult.isImage;
@@ -83,7 +118,7 @@ export default {
         this.imageHeight = imageInfoResult.height;
 
         for (let i = 0; i < data.length; i++) {
-          const byte = data[i];
+          const byte = data.charCodeAt(i);
 
           if (byte < 32) {
             this.isText = false;
@@ -92,6 +127,9 @@ export default {
       }
     }
   },
+  methods: {
+    copy
+  },
   canParse (str) {
     return regEx.test(str);
   }
@@ -99,5 +137,9 @@ export default {
 </script>
 
 <style scoped lang="css">
-
+  .preview {
+    border: 0;
+    width: 100%;
+    height: 500px;
+  }
 </style>

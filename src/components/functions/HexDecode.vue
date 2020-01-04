@@ -11,7 +11,7 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button :href="dataSrc" download class="md-raised md-primary">Download</md-button>
+        <md-button :href="dataSrc" download class="md-primary md-raised">Download</md-button>
       </md-card-actions>
     </md-card>
     <md-card v-else-if="isText">
@@ -24,7 +24,7 @@
       </md-card-content>
 
       <md-card-actions>
-        <md-button>Copy</md-button>
+        <md-button class="md-primary md-raised">TODOCopy</md-button>
       </md-card-actions>
     </md-card>
     <a download :href="dataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>Download binary file</a>

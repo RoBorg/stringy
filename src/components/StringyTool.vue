@@ -3,7 +3,7 @@
 TODO file upload
     <TestData/>
     <md-field>
-      <md-textarea v-model="inputString" placeholder="Enter your text here"></md-textarea>
+      <md-textarea v-model="inputString" placeholder="Enter your text here"/>
     </md-field>
 
     <div class="input-info">

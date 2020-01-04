@@ -87,7 +87,7 @@ CSmgD+V1NAXyXbesZg==
 <span class="test"><Copy text="aGVsbG8gd29ybGQ="/>Base64</span>
 <span class="test"><Copy text="1576923482"/>UNIX Timestamp</span>
 <span class="test"><Copy text="128.42.5.4/21"/>CIDR</span>
-<span class="test"><Copy text="data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%3Chtml%20lang%3D%22en%22%3E%3Chead%3E%3Ctitle%3EEmbedded%20Window%3C%2Ftitle%3E%3C%2Fhead%3E%3Cbody%3E%3Ch1%3E42%3C%2Fh1%3E%3C%2Fbody%3E%3C%2Fhtml%3E"/>Data URI Text</span>
+<span class="test"><Copy text="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+PGh0bWwgbGFuZz0iZW4iPjxoZWFkPjx0aXRsZT5FbWJlZGRlZCBXaW5kb3c8L3RpdGxlPjwvaGVhZD48Ym9keT48aDE+NDI8L2gxPjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij53aW5kb3cub25sb2FkPWZ1bmN0aW9uKCkgeyBkb2N1bWVudC5ib2R5LnN0eWxlLmJhY2tncm91bmRDb2xvcj0nI2ZmODAwMCc7fTwvc2NyaXB0PjwvYm9keT48L2h0bWw+"/>Data URI HTML</span>
 <span class="test"><Copy text="data:image/png;base64,iVBORw0KGgoAAA
 ANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4
 //8/w38GIAXDIBKE0DHxgljNBAAO9TXL0Y4OHwAAAABJRU
