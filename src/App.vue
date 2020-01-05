@@ -1,5 +1,5 @@
 <template>
-  <div class="page-container" @drop.prevent="addFile" @dragover.prevent @dragenter="showOverlay = true">
+  <div class="page-container" @drop.prevent="dropFiles" @dragover.prevent @dragenter="showOverlay = true">
     <md-app>
       <md-app-toolbar class="md-primary">
         <span class="md-title">Stringy</span>
@@ -10,7 +10,14 @@
         </div>
       </md-app-toolbar>
       <md-app-content>
-        <p>Paste your text below, drag-drop a file or <a href="#todo">upload a file</a></p>
+        <p>Paste your text below, drag-drop a file or
+          <md-button>
+            <label>
+              upload a file
+              <input type="file" @change="selectFile">
+            </label>
+          </md-button>
+        </p>
         <md-button @click="loadFile">Read File TOOD</md-button>
         <StringyTool/>
       </md-app-content>
@@ -48,49 +55,58 @@
       };
     },
     methods: {
-      log(a) {console.log(a)},
-      addFile (e) {
-        const droppedFiles = e.dataTransfer.files;
-        const files = [];
+      log(a) {console.log(a)}, // todo delete
+      selectFile (e) {
+        const files = e.target.files || e.dataTransfer.files;
+
+        if (files.length) {
+          this.setFile(files[0]);
+        } else {
+          this.removeFile();
+        }
+      },
+      dropFiles (e) {
+        const files = e.target.files || e.dataTransfer.files;
 
         this.showOverlay = false;
 
-        if (!droppedFiles) {
+        if (!files || !files.length) {
+          this.removeFile();
+
           return;
         }
-
-        // Convert FileList to array https://www.smashingmagazine.com/2018/01/drag-drop-file-uploader-vanilla-js/
-        ([...droppedFiles]).forEach(f => {
-          files.push(f);
-        });
 
         if (files.length > 1) {
           // TODO
           alert('one file only please');
+
+          this.removeFile();
+
           return;
         }
 
-        this.file = files[0];
-        console.log(this.file)
+        this.setFile(files[0]);
+      },
+      setFile (file) {
+        this.file = file;
+        this.loadFile();
       },
       removeFile () {
         this.file = null;
       },
       loadFile () {
-        // tODO
         const reader = new FileReader();
-        const files = this.file ? [this.file] : this.$refs('#file')[0].files;
 
-        if (!files.length)
+        if (!this.file)
           return;
 
         reader.onload = function(e) {
-          console.log(e.target.result);
+          console.log(e.target.result); // TODO
         };
 
-        reader.readAsDataURL(files[0]);
+        reader.readAsDataURL(this.file);
       }
-    },
+    }
   }
 </script>
 
@@ -132,6 +148,10 @@
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+input[type=file] {
+  display: none;
 }
 
 /*

@@ -19,7 +19,7 @@ TODO file upload
         {{ option.text }}
       </option>
     </select>
-    <component v-bind:is="currentComponent" :inputString="inputString"></component>
+    <component v-bind:is="currentComponent" :inputString="inputString"/>
   </div>
 </template>
 
