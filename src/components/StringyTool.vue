@@ -11,7 +11,7 @@ TODO file upload
       <span class="amount">{{ wordCount }}</span> word<template v-if="wordCount != 1">s</template>,
       <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
     </div>
-    <select v-model="selectedFunction" class="select-function">
+    <select v-model="selectedAction" class="select-function">
       <option :value="null">
         Auto ({{ autoFunction.name }})
       </option>
@@ -24,127 +24,32 @@ TODO file upload
 </template>
 
 <script>
-import Base64Encode from './functions/Base64Encode';
-import Base64Decode from './functions/Base64Decode';
-import CssColour from './functions/CssColour';
 import Copy from './Copy';
-import DataUriDecode from './functions/DataUriDecode';
-import HexEncode from './functions/HexEncode';
-import HexDecode from './functions/HexDecode';
-import IpAddress from './functions/IpAddress';
-import JsonDecode from './functions/JsonDecode';
-import SqlFormat from './functions/SqlFormat';
-import SslCertificate from './functions/SslCertificate';
-import UnixTimestamp from './functions/UnixTimestamp';
-import Unknown from './functions/Unknown';
-import Url from './functions/Url';
-import UrlDecode from './functions/UrlDecode';
-import UrlEncode from './functions/UrlEncode';
-import XmlFormat from './functions/XmlFormat';
 import TestData from './TestData';
+import Unknown from './actions/Unknown';
+import actions from '../actions';
 
 const unknown = {
   name: 'Unknown',
   component: Unknown
 };
-    /*
-    TODO
-    https://codebeautify.org/string-functions
 
-    Data URI
-    Base64
-    Base64 image
-    URL
-    XML format/validator/decode
-    (S)CSS
-    SQL
-    HTML format
-    html en/decode
-    hex (md5? sha? colour?)
-    ssh key (format conversion, public from private)
-    ssl cert https://www.npmjs.com/package/openssl.js
-    */
+const components = {
+  Copy: Copy,
+  TestData: TestData
+};
 
-// Functions, in order of most specific first
-// E.g. Base 64 Decode will match a unix timestamp, so make sure
-// Unix Timestamp comes before it
-const functions = [
-  {
-    name: 'SSL Certificate',
-    component: SslCertificate
-  },
-  {
-    name: 'CSS Colour',
-    component: CssColour
-  },
-  {
-    name: 'Data URI Decode',
-    component: DataUriDecode
-  },
-  {
-    name: 'Unix Timestamp',
-    component: UnixTimestamp
-  },
-  {
-    name: 'IP Address',
-    component: IpAddress
-  },
-  {
-    name: 'Hex Decode',
-    component: HexDecode
-  },
-  {
-    name: 'Hex Encode',
-    component: HexEncode
-  },
-  {
-    name: 'Base 64 Decode',
-    component: Base64Decode
-  },
-  {
-    name: 'Base 64 Encode',
-    component: Base64Encode
-  },
-  {
-    name: 'JSON Decode',
-    component: JsonDecode
-  },
-  {
-    name: 'SQL Format',
-    component: SqlFormat
-  },
-  {
-    name: 'URL Information',
-    component: Url
-  },
-  {
-    name: 'URL Decode',
-    component: UrlDecode
-  },
-  {
-    name: 'URL Encode',
-    component: UrlEncode
-  },
-  {
-    name: 'XML Format',
-    component: XmlFormat
-  },
-  unknown
-];
-
-const components = {Copy: Copy, TestData: TestData};
-
-functions.map((f) => components[f.component.name] = f.component);
+actions.map((action) => components[action.component.name] = action.component);
 
 export default {
   name: 'StringyTool',
   components,
   data() {
     return {
-      inputString: 'aGVsbG8gd29ybGQ=',
+      inputString: 'aGVsbG8gd29ybGQ=', // TODO
       stringType: null,
-      selectedFunction: null,
-      functions
+      selectedAction: null,
+      actions
     };
   },
   computed: {
@@ -152,8 +57,8 @@ export default {
       return this.inputString;
     },
     currentComponent: function () {
-      if (this.selectedFunction) {
-        return functions[this.selectedFunction].component;
+      if (this.selectedAction) {
+        return actions[this.selectedAction].component;
       }
 
       return this.autoFunction.component;
@@ -165,9 +70,9 @@ export default {
         return unknown;
       }
 
-      for (const f in functions) {
-        if (functions[f].component.canParse(str)) {
-          return functions[f];
+      for (const i in actions) {
+        if (actions[i].component.canParse(str)) {
+          return actions[i];
         }
       }
 
@@ -185,10 +90,10 @@ export default {
     functionOptions: function () {
       const options = [];
 
-      for (let i in this.functions) {
+      for (const i in this.actions) {
         options.push({
           value: i,
-          text: this.functions[i].name
+          text: this.actions[i].name
         });
       }
 
