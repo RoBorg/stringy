@@ -1,7 +1,17 @@
 <template>
   <div>
-TODO file upload
     <TestData/>
+    <!--
+    <p>Paste your text below, drag-drop a file or
+      <md-button>
+        <label>
+          upload a file
+          <input type="file" @change="selectFile">
+        </label>
+      </md-button>
+    </p>
+    <md-button @click="loadFile">Read File TOOD</md-button>
+    -->
     <md-field>
       <md-textarea v-model="inputString" placeholder="Enter your text here"/>
     </md-field>
@@ -15,7 +25,7 @@ TODO file upload
       <option :value="null">
         Auto ({{ autoFunction.name }})
       </option>
-      <option v-for="option in functionOptions" :key="option.value" :value="option.value">
+      <option v-for="option in actionOptions" :key="option.value" :value="option.value">
         {{ option.text }}
       </option>
     </select>
@@ -87,7 +97,7 @@ export default {
     lineCount: function () {
       return (this.inputString.match(/\r\n|\r|\n/g) || []).length + 1;
     },
-    functionOptions: function () {
+    actionOptions: function () {
       const options = [];
 
       for (const i in this.actions) {

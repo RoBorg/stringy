@@ -11,14 +11,13 @@
       </md-app-toolbar>
       <md-app-content>
         <p>Paste your text below, drag-drop a file or
-          <md-button>
+          <md-button style="vertical-align: middle" class="md-raised">
             <label>
               upload a file
               <input type="file" @change="selectFile">
             </label>
           </md-button>
         </p>
-        <md-button @click="loadFile">Read File TOOD</md-button>
         <StringyTool/>
       </md-app-content>
     </md-app>
