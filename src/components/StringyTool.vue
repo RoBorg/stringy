@@ -1,26 +1,21 @@
 <template>
   <div>
     <TestData/>
-    <!--
-    <p>Paste your text below, drag-drop a file or
-      <md-button>
-        <label>
-          upload a file
-          <input type="file" @change="selectFile">
-        </label>
-      </md-button>
-    </p>
-    <md-button @click="loadFile">Read File TOOD</md-button>
-    -->
-    <md-field>
-      <md-textarea v-model="inputString" placeholder="Enter your text here"/>
-    </md-field>
-
-    <div class="input-info">
-      <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
-      <span class="amount">{{ wordCount }}</span> word<template v-if="wordCount != 1">s</template>,
-      <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
+    <div v-if="file">
+      {{ file.name }}
+      <md-button class="md-raised" style="vertical-align: middle;" @click="removeFile">Clear</md-button>
     </div>
+    <template v-else>
+      <md-field>
+        <md-textarea v-model="inputString" placeholder="Enter your text here"/>
+      </md-field>
+
+      <div class="input-info">
+        <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
+        <span class="amount">{{ wordCount }}</span> word<template v-if="wordCount != 1">s</template>,
+        <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
+      </div>
+    </template>
     <select v-model="selectedAction" class="select-function">
       <option :value="null">
         Auto ({{ autoFunction.name }})
@@ -38,6 +33,7 @@ import Copy from './Copy';
 import TestData from './TestData';
 import Unknown from './actions/Unknown';
 import actions from '../actions';
+import { mapMutations, mapState } from 'vuex';
 
 const unknown = {
   name: 'Unknown',
@@ -63,6 +59,7 @@ export default {
     };
   },
   computed: {
+    ...mapState(['file']),
     outputString: function () {
       return this.inputString;
     },
@@ -111,7 +108,8 @@ export default {
 
       return options;
     }
-  }
+  },
+  methods: mapMutations(['removeFile'])
 }
 </script>
 

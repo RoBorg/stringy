@@ -34,11 +34,13 @@
         </md-card>
       </div>
     </transition>
+    <div @click="$store.commit('increment')">{{count}}</div>
   </div>
 </template>
 
 <script>
   import StringyTool from './components/StringyTool.vue';
+  import { mapActions, mapMutations } from 'vuex';
 
   import './css/data-table.css';
 
@@ -53,8 +55,15 @@
         file: null
       };
     },
+    computed: {
+      count () {
+        return this.$store.state.count
+      }
+    },
     methods: {
       log(a) {console.log(a)}, // todo delete
+      ...mapActions(['setFile']),
+      ...mapMutations(['removeFile']),
       selectFile (e) {
         const files = e.target.files || e.dataTransfer.files;
 
@@ -86,13 +95,13 @@
 
         this.setFile(files[0]);
       },
-      setFile (file) {
-        this.file = file;
-        this.loadFile();
-      },
-      removeFile () {
-        this.file = null;
-      },
+      // setFile (file) {
+      //   this.file = file;
+      //   this.loadFile();
+      // },
+      // removeFile () {
+      //   this.file = null;
+      // },
       loadFile () {
         const reader = new FileReader();
 

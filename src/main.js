@@ -3,6 +3,7 @@ import App from './App.vue';
 import Copy from './components/Copy';
 import VueHighlightJS from 'vue-highlightjs';
 import VueMaterial from 'vue-material'; // TODO remove - see https://vuematerial.io/getting-started import individual components
+import store from './store/index';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -22,5 +23,6 @@ Vue.use(VueMaterial); // TODO remove
 Vue.config.productionTip = false;
 
 new Vue({
+  store,
   render: h => h(App),
 }).$mount('#app');
