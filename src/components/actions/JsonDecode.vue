@@ -35,17 +35,17 @@ export default {
     let json;
 
     // Don't JSON-decode raw values, e.g. 123456
-    if (!/{/.test(str)) {
+    if (!/{|\[/.test(str)) {
       return false;
     }
 
     try {
       json = JSON.parse(str);
     } catch (e) {
-      // Do nothing
+      return false;
     }
 
-    return typeof json !== 'undefined';
+    return true;
   }
 }
 </script>

@@ -8,11 +8,13 @@ export default new Vuex.Store({
     file: null,
     fileContentsAsArrayBuffer: null,
     fileContentsAsText: null,
-    isText: false,
-    isImage: false,
+    fileIsLoaded: false,
     text: ''
   },
   mutations: {
+    setFileIsLoaded (state, fileIsLoaded) {
+      state.fileIsLoaded = fileIsLoaded;
+    },
     setFile (state, file) {
       state.file = file;
     },
@@ -24,7 +26,9 @@ export default new Vuex.Store({
     },
     removeFile (state) {
       state.file = null;
-      state.fileContents = '';
+      state.fileIsLoaded = false;
+      state.fileContentsAsArrayBuffer = null;
+      state.fileContentsAsText = null;
     },
     setText (state, { text }) {
       state.text = text;
@@ -37,27 +41,26 @@ export default new Vuex.Store({
         const arrayBufferReader = new FileReader();
         const textReader = new FileReader();
         let remaining = 2;
-
-        commit('setFile', file);
-
-        arrayBufferReader.onload = function(e) {
-          commit('setFileContentsAsArrayBuffer', e.target.result);
-
+        const loaded = () => {
           remaining--;
 
           if (!remaining) {
+            commit('setFileIsLoaded', true);
             resolve();
           }
         };
 
+        commit('setFileIsLoaded', false);
+        commit('setFile', file);
+
+        arrayBufferReader.onload = function(e) {
+          commit('setFileContentsAsArrayBuffer', e.target.result);
+          loaded();
+        };
+
         textReader.onload = function(e) {
           commit('setFileContentsAsText', e.target.result);
-
-          remaining--;
-
-          if (!remaining) {
-            resolve();
-          }
+          loaded();
         };
 
         arrayBufferReader.readAsArrayBuffer(file);

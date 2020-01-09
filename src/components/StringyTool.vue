@@ -24,7 +24,8 @@
         {{ option.text }}
       </option>
     </select>
-    <component v-bind:is="currentComponent" :inputString="inputString"/>
+    <pre style="width: 100%; overflow: auto;">{{ input }}</pre>
+    <component v-bind:is="currentComponent" :inputString="input" :inputArrayBuffer="inputArrayBuffer"/>
   </div>
 </template>
 
@@ -52,16 +53,31 @@ export default {
   components,
   data() {
     return {
-      inputString: 'aGVsbG8gd29ybGQ=', // TODO
+      inputString: '',
       stringType: null,
       selectedAction: null,
       actions
     };
   },
   computed: {
-    ...mapState(['file']),
-    outputString: function () {
+    ...mapState(['file', 'fileIsLoaded', 'fileContentsAsText', 'fileContentsAsArrayBuffer']),
+    input: function () {
+      if (this.file) {
+        if (!this.fileIsLoaded) {
+          return '';
+        }
+
+        return this.fileContentsAsText;
+      }
+
       return this.inputString;
+    },
+    inputArrayBuffer: function () {
+      if (!this.file || !this.fileIsLoaded) {
+        return null;
+      }
+
+      return this.fileContentsAsArrayBuffer;
     },
     currentComponent: function () {
       if (this.selectedAction) {
@@ -71,7 +87,7 @@ export default {
       return this.autoFunction.component;
     },
     autoFunction: function () {
-     const str = this.inputString.trim();
+     const str = this.input.trim();
 
       if (str === '') {
         return unknown;
