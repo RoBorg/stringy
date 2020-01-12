@@ -6,41 +6,37 @@
 </template>
 
 <script>
-// TODO options
+  // TODO options
 
-export default {
-  name: 'UrlDecode',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  computed: {
-    outputString: function () {
-      try {
-        return decodeURIComponent(this.inputString);
-      } catch (e) {
-        return 'Invalid data';
+  export default {
+    name: 'UrlDecode',
+    props: {
+      inputString: {
+        type: String,
+        required: true
       }
     },
-  },
-  canParse (str) {
-    if (!/%/.test(str)) {
-      return false;
-    }
-
-    try {
-        decodeURIComponent(this.inputString);
-
-        return true;
-      } catch (e) {
+    computed: {
+      outputString: function () {
+        try {
+          return decodeURIComponent(this.inputString);
+        } catch (e) {
+          return 'Invalid data';
+        }
+      },
+    },
+    canParse (str) {
+      if (!/%/.test(str)) {
         return false;
       }
+
+      try {
+          decodeURIComponent(this.inputString);
+
+          return true;
+        } catch (e) {
+          return false;
+        }
+    }
   }
-}
 </script>
-
-<style scoped lang="css">
-
-</style>

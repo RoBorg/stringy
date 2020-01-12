@@ -15,36 +15,36 @@
 </template>
 
 <script>
-import { Base64 } from 'js-base64';
+  import { Base64 } from 'js-base64';
 
-export default {
-  name: 'Base64Encode',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      urlFriendly: false,
-      wrap: true,
-      wrapCharacters: 80
-    };
-  },
-  computed: {
-    outputString: function () {
-      let str = Base64.encode(this.inputString, this.urlFriendly);
-
-      if (this.wrap) {
-        str = str.replace(new RegExp(`(.{${this.wrapCharacters}})`, 'g'), '$1\n');
+  export default {
+    name: 'Base64Encode',
+    props: {
+      inputString: {
+        type: String,
+        required: true
       }
+    },
+    data() {
+      return {
+        urlFriendly: false,
+        wrap: true,
+        wrapCharacters: 80
+      };
+    },
+    computed: {
+      outputString: function () {
+        let str = Base64.encode(this.inputString, this.urlFriendly);
 
-      return str;
+        if (this.wrap) {
+          str = str.replace(new RegExp(`(.{${this.wrapCharacters}})`, 'g'), '$1\n');
+        }
+
+        return str;
+      }
+    },
+    canParse () {
+      return false;
     }
-  },
-  canParse () {
-    return false;
   }
-}
 </script>

@@ -126,79 +126,78 @@
 </template>
 
 <script>
-import QrcodeVue from 'qrcode.vue';
+  import QrcodeVue from 'qrcode.vue';
 
-// TODO options
-// TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
+  // TODO options
+  // TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
 
-export default {
-  name: 'Url',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  components: {
-    QrcodeVue,
-  },
-  computed: {
-    url: function () {
-      try {
-        const parser = document.createElement('a');
-        const searchObject = [];
-
-        parser.href = this.inputString.trim();
-
-        // Convert query string to object
-        const queries = parser.search.replace(/^\?/, '').split(/&|;/);
-        let hasEncodedQuery = false;
-
-        for (let i = 0; i < queries.length; i++) {
-            const split = queries[i].split('=');
-            const part = {
-              name: split[0],
-              value: split[1],
-              nameDecoded: decodeURIComponent(split[0]),
-              valueDecoded: decodeURIComponent(split[1])
-            };
-
-            searchObject.push(part);
-
-            if ((part.name !== part.nameDecoded) || (part.value !== part.valueDecoded)) {
-              hasEncodedQuery = true;
-            }
-        }
-        const url = {
-            href: parser.href,
-            protocol: parser.protocol.replace(/:$/, ''),
-            host: parser.host,
-            hostname: parser.hostname,
-            port: parser.port,
-            pathname: parser.pathname,
-            pathnameDecoded: decodeURIComponent(parser.pathname),
-            search: parser.search.replace(/^\?/, ''),
-            searchObject: searchObject,
-            hash: parser.hash.replace(/^#/, ''),
-            hashDecoded: decodeURIComponent(parser.hash.replace(/^#/, '')),
-            hasEncodedQuery
-        };
-
-        return url;
-      } catch (e) {
-        return false;
+  export default {
+    name: 'Url',
+    props: {
+      inputString: {
+        type: String,
+        required: true
       }
+    },
+    components: {
+      QrcodeVue,
+    },
+    computed: {
+      url: function () {
+        try {
+          const parser = document.createElement('a');
+          const searchObject = [];
+
+          parser.href = this.inputString.trim();
+
+          // Convert query string to object
+          const queries = parser.search.replace(/^\?/, '').split(/&|;/);
+          let hasEncodedQuery = false;
+
+          for (let i = 0; i < queries.length; i++) {
+              const split = queries[i].split('=');
+              const part = {
+                name: split[0],
+                value: split[1],
+                nameDecoded: decodeURIComponent(split[0]),
+                valueDecoded: decodeURIComponent(split[1])
+              };
+
+              searchObject.push(part);
+
+              if ((part.name !== part.nameDecoded) || (part.value !== part.valueDecoded)) {
+                hasEncodedQuery = true;
+              }
+          }
+          const url = {
+              href: parser.href,
+              protocol: parser.protocol.replace(/:$/, ''),
+              host: parser.host,
+              hostname: parser.hostname,
+              port: parser.port,
+              pathname: parser.pathname,
+              pathnameDecoded: decodeURIComponent(parser.pathname),
+              search: parser.search.replace(/^\?/, ''),
+              searchObject: searchObject,
+              hash: parser.hash.replace(/^#/, ''),
+              hashDecoded: decodeURIComponent(parser.hash.replace(/^#/, '')),
+              hasEncodedQuery
+          };
+
+          return url;
+        } catch (e) {
+          return false;
+        }
+      }
+    },
+    canParse (str) {
+      return /^\S+:\/\//.test(str);
     }
-  },
-  canParse (str) {
-    return /^\S+:\/\//.test(str);
   }
-}
 </script>
 
 <style scoped lang="css">
-.parameters {
-  width: 100%;
-}
-
+  .parameters {
+    width: 100%;
+  }
 </style>

@@ -46,60 +46,60 @@
 </template>
 
 <script>
-import moment from 'moment';
+  import moment from 'moment';
 
-// TODO options
+  // TODO options
 
-export default {
-  name: 'UnixTimestamp',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      now: moment(),
-    }
-  },
-  created: function () {
-    setInterval(() => this.now = moment(), 1000);
-  },
-  computed: {
-    date: function () {
-      let timestamp = this.inputString.trim();
-
-      if (timestamp.length === 10) {
-        timestamp += '000';
+  export default {
+    name: 'UnixTimestamp',
+    props: {
+      inputString: {
+        type: String,
+        required: true
       }
-
-      return moment(parseInt(timestamp));
     },
-    isInFuture: function () {
-      return this.date.diff(moment()) > 0;
-    },
-    duration: function () {
-      const duration = moment.duration(this.date.diff(this.now));
-      const parts = [];
-      const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
-
-      for (let i in units) {
-        const unit = units[i]
-        const timeInUnit = Math.abs(duration[unit]());
-
-        if (timeInUnit > 0)
-          parts.push({
-            timeInUnit,
-            unit
-          });
+    data() {
+      return {
+        now: moment(),
       }
+    },
+    created: function () {
+      setInterval(() => this.now = moment(), 1000);
+    },
+    computed: {
+      date: function () {
+        let timestamp = this.inputString.trim();
 
-      return parts;
+        if (timestamp.length === 10) {
+          timestamp += '000';
+        }
+
+        return moment(parseInt(timestamp));
+      },
+      isInFuture: function () {
+        return this.date.diff(moment()) > 0;
+      },
+      duration: function () {
+        const duration = moment.duration(this.date.diff(this.now));
+        const parts = [];
+        const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+
+        for (let i in units) {
+          const unit = units[i]
+          const timeInUnit = Math.abs(duration[unit]());
+
+          if (timeInUnit > 0)
+            parts.push({
+              timeInUnit,
+              unit
+            });
+        }
+
+        return parts;
+      }
+    },
+    canParse (str) {
+      return /^(\d{10}|\d{13})$/.test(str);
     }
-  },
-  canParse (str) {
-    return /^(\d{10}|\d{13})$/.test(str);
   }
-}
 </script>

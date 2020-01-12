@@ -57,83 +57,83 @@
 </template>
 
 <script>
-import { Base64 } from 'js-base64';
-import { imageInfo } from '../../helpers';
-import { copy } from '../../helpers';
+  import { Base64 } from 'js-base64';
+  import { imageInfo } from '../../helpers';
+  import { copy } from '../../helpers';
 
-// TODO options
+  // TODO options
 
-const regEx = /^data:([^,]*?)(base64|),(.*)$/si;
+  const regEx = /^data:([^,]*?)(base64|),(.*)$/si;
 
-export default {
-  name: 'DataUriDecode',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  data () {
-    return {
-      isImage: false,
-      imageWidth: null,
-      imageHeight: null,
-      isText: true,
-      asText: '',
-      isHtml: false,
-      sandbox: true
-    };
-  },
-  watch: {
-    sandbox: function () {
-      const temp = this.asText;
-      this.asText = '';
-
-      this.$nextTick(() => this.asText = temp);
+  export default {
+    name: 'DataUriDecode',
+    props: {
+      inputString: {
+        type: String,
+        required: true
+      }
     },
-    inputString: {
-      immediate: true,
-      handler: async function (value) {
-        const matches = this.inputString.match(regEx);
+    data () {
+      return {
+        isImage: false,
+        imageWidth: null,
+        imageHeight: null,
+        isText: true,
+        asText: '',
+        isHtml: false,
+        sandbox: true
+      };
+    },
+    watch: {
+      sandbox: function () {
+        const temp = this.asText;
+        this.asText = '';
 
-        let data = matches[3];
-        if (matches[2] !== '') {
-          data = Base64.decode(data);
-        } else {
-          try {
-            data = decodeURIComponent(data);
-          } catch (e) {
-            data = 'Invalid URL-encoded data';
+        this.$nextTick(() => this.asText = temp);
+      },
+      inputString: {
+        immediate: true,
+        handler: async function (value) {
+          const matches = this.inputString.match(regEx);
+
+          let data = matches[3];
+          if (matches[2] !== '') {
+            data = Base64.decode(data);
+          } else {
+            try {
+              data = decodeURIComponent(data);
+            } catch (e) {
+              data = 'Invalid URL-encoded data';
+            }
           }
-        }
 
-        this.isText = true;
-        // this.dataSrc = '';
-        this.asText = data;
-        this.isHtml = /<(html|head|title|body|div|span|a|p)/i.test(data);
+          this.isText = true;
+          // this.dataSrc = '';
+          this.asText = data;
+          this.isHtml = /<(html|head|title|body|div|span|a|p)/i.test(data);
 
-        const imageInfoResult = await imageInfo(value);
-        this.isImage = imageInfoResult.isImage;
-        this.imageWidth = imageInfoResult.width;
-        this.imageHeight = imageInfoResult.height;
+          const imageInfoResult = await imageInfo(value);
+          this.isImage = imageInfoResult.isImage;
+          this.imageWidth = imageInfoResult.width;
+          this.imageHeight = imageInfoResult.height;
 
-        for (let i = 0; i < data.length; i++) {
-          const byte = data.charCodeAt(i);
+          for (let i = 0; i < data.length; i++) {
+            const byte = data.charCodeAt(i);
 
-          if (byte < 32) {
-            this.isText = false;
+            if (byte < 32) {
+              this.isText = false;
+            }
           }
         }
       }
+    },
+    methods: {
+      copy
+    },
+    canParse (str) {
+      return regEx.test(str);
     }
-  },
-  methods: {
-    copy
-  },
-  canParse (str) {
-    return regEx.test(str);
   }
-}
 </script>
 
 <style scoped lang="css">
