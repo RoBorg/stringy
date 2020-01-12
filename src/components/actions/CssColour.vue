@@ -5,7 +5,7 @@
         <tr>
           <th>Colour</th>
           <td>
-            <div class="swatch" :style="`background-color: ${asHex}`"/>
+            <input type="color" v-model="colour">
           </td>
         </tr>
         <tr>
@@ -24,15 +24,10 @@
         </tr>
       </tbody>
     </table>
-
   </div>
 </template>
 
 <script>
-  // import xmlFormatter from 'xml-formatter';
-
-  // TODO options
-
   export default {
     name: 'CssColour',
     props: {
@@ -41,16 +36,17 @@
         required: true
       }
     },
+    data () {
+      return {
+        colour: this.isHex() ? this.inputString : this.rgbToHex(this.inputString)
+      };
+    },
     computed: {
       asHex: function () {
-        return this.isHex() ? this.inputString : this.rgbToHex(this.inputString);
+        return this.colour
       },
       asRgb: function () {
-        if (!this.isHex()) {
-          return this.inputString;
-        }
-
-        const rgb = this.hexToRgb(this.inputString);
+        const rgb = this.hexToRgb(this.colour);
 
         return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
       }
@@ -68,6 +64,7 @@
         });
 
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
         return result ? {
           r: parseInt(result[1], 16),
           g: parseInt(result[2], 16),
@@ -86,6 +83,11 @@
           + this.componentToHex(result[1])
           + this.componentToHex(result[2])
           + this.componentToHex(result[3]);
+      }
+    },
+    watch: {
+      inputString () {
+        this.colour = this.isHex() ? this.inputString : this.rgbToHex(this.inputString);
       }
     },
     canParse (str) {

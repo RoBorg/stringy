@@ -1,14 +1,13 @@
 <template>
   <div>
     <textarea v-model="outputString" class="output" readonly/>
-      <md-checkbox v-model="format">Format output</md-checkbox>
+    <md-divider/>
+    <md-checkbox v-model="format">Format output</md-checkbox>
   </div>
 </template>
 
 <script>
   import { Base64 } from 'js-base64';
-
-  // TODO options, binary decode
 
   export default {
     name: 'HexEncode',

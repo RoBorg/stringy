@@ -32,7 +32,10 @@
         </md-card>
       </div>
     </transition>
-    <div @click="$store.commit('increment')">{{count}}</div>
+    <md-snackbar md-position="center" :md-active.sync="showUploadError">
+      <span>Please choose a single file only</span>
+      <md-button class="md-primary" @click="showUploadError = false">close</md-button>
+    </md-snackbar>
   </div>
 </template>
 
@@ -50,16 +53,11 @@
     data () {
       return {
         showOverlay: false,
+        showUploadError: false,
         file: null
       };
     },
-    computed: {
-      count () {
-        return this.$store.state.count
-      }
-    },
     methods: {
-      log(a) {console.log(a)}, // todo delete
       ...mapActions(['setFile']),
       ...mapMutations(['removeFile']),
       selectFile (e) {
@@ -83,9 +81,7 @@
         }
 
         if (files.length > 1) {
-          // TODO
-          alert('one file only please');
-
+          this.showUploadError = true;
           this.removeFile();
 
           return;
