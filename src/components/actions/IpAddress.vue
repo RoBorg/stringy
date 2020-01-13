@@ -1,64 +1,135 @@
 <template>
   <div>
-    <table class="data">
-      <tbody>
-        <tr>
-          <th>CIDR Range</th>
-          <td>
-            {{ inputString }}
-            <Copy :text="inputString"/>
-          </td>
-        </tr>
-        <tr>
-          <th>Network Address</th>
-          <td>
-            {{ info.networkAddress }}
-            <Copy :text="info.networkAddress"/>
-          </td>
-        </tr>
-        <tr>
-          <th>First Usable IP</th>
-          <td>
-            {{ info.firstUsableAddress }}
-            <Copy :text="info.firstUsableAddress"/>
-          </td>
-        </tr>
-        <tr>
-          <th>Last Usable IP</th>
-          <td>
-            {{ info.lastUsableAddress }}
-            <Copy :text="info.lastUsableAddress"/>
-          </td>
-        </tr>
-        <tr v-if="info.networkBits > 0">
-          <th>Broadcast Address</th>
-          <td>
-            {{ info.broadcastAddress }}
-            <Copy :text="info.broadcastAddress"/>
-          </td>
-        </tr>
-        <tr>
-          <th>Mask</th>
-          <td>
-            {{ info.mask }}
-            <Copy :text="info.mask"/>
-          </td>
-        </tr>
-        <tr>
-          <th>Hosts</th>
-          <td>
-            {{ info.hosts }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to decode
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      Invalid IP address / CIDR
+    </NoteBlock>
+    <template v-else>
+      <NoteBlock warning v-if="info.networkAddress !== info.ip">
+        Invalid CIDR - The IP address should be the network address
+      </NoteBlock>
+      <table class="data">
+        <tbody>
+          <tr>
+            <th>CIDR Range</th>
+            <td>
+              {{ info.networkAddress }}/{{ info.networkBits }}
+              <Copy :text="`${info.networkAddress}/${info.networkBits}`"/>
+            </td>
+          </tr>
+          <tr v-if="info.hostBits > 0">
+            <th>Network Address</th>
+            <td>
+              {{ info.networkAddress }}
+              <Copy :text="info.networkAddress"/>
+            </td>
+          </tr>
+          <tr v-if="info.hostBits > 0">
+            <th>First Usable IP</th>
+            <td>
+              {{ info.firstUsableAddress }}
+              <Copy :text="info.firstUsableAddress"/>
+            </td>
+          </tr>
+          <tr v-if="info.hostBits > 0">
+            <th>Last Usable IP</th>
+            <td>
+              {{ info.lastUsableAddress }}
+              <Copy :text="info.lastUsableAddress"/>
+            </td>
+          </tr>
+          <tr v-if="info.hostBits > 0">
+            <th>Broadcast Address</th>
+            <td>
+              {{ info.broadcastAddress }}
+              <Copy :text="info.broadcastAddress"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Mask</th>
+            <td>
+              {{ info.mask }}
+              <Copy :text="info.mask"/>
+            </td>
+          </tr>
+          <tr>
+            <th>Hosts</th>
+            <td>
+              {{ info.hosts }}
+            </td>
+          </tr>
+          <template v-if="ipInfo.status === 'success'">
+            <tr v-if="ipInfo.businessName">
+              <th>Business Name</th>
+              <td>{{ ipInfo.businessName }}</td>
+            </tr>
+            <tr v-if="ipInfo.businessWebsite">
+              <th>Business Website</th>
+              <td>{{ ipInfo.businessWebsite }}</td>
+            </tr>
+            <tr v-if="ipInfo.city">
+              <th>City</th>
+              <td>{{ ipInfo.city }}</td>
+            </tr>
+            <tr v-if="ipInfo.continent">
+              <th>Continent</th>
+              <td>{{ ipInfo.continent }}</td>
+            </tr>
+            <tr v-if="ipInfo.country">
+              <th>Country</th>
+              <td>{{ ipInfo.country }}</td>
+            </tr>
+            <tr v-if="ipInfo.countryCode">
+              <th>Country Code</th>
+              <td>{{ ipInfo.countryCode }}</td>
+            </tr>
+            <tr v-if="ipInfo.ipName">
+              <th>IP Name</th>
+              <td>{{ ipInfo.ipName }}</td>
+            </tr>
+            <tr v-if="ipInfo.ipType">
+              <th>IP Type</th>
+              <td>{{ ipInfo.ipType }}</td>
+            </tr>
+            <tr v-if="ipInfo.isp">
+              <th>ISP</th>
+              <td>{{ ipInfo.isp }}</td>
+            </tr>
+            <tr v-if="ipInfo.lat">
+              <th>Latitude</th>
+              <td>{{ ipInfo.lat }}</td>
+            </tr>
+            <tr v-if="ipInfo.lon">
+              <th>Longitude</th>
+              <td>{{ ipInfo.lon }}</td>
+            </tr>
+            <tr v-if="ipInfo.lat && ipInfo.lon">
+              <th>Map</th>
+              <td><a :href="`https://www.google.com/maps/@${ipInfo.lat},${ipInfo.lon},8z`" target="_blank">Google Maps</a></td>
+            </tr>
+            <tr v-if="ipInfo.org">
+              <th>Org</th>
+              <td>{{ ipInfo.org }}</td>
+            </tr>
+            <tr v-if="ipInfo.query">
+              <th>Query</th>
+              <td>{{ ipInfo.query }}</td>
+            </tr>
+            <tr v-if="ipInfo.region">
+              <th>Region</th>
+              <td>{{ ipInfo.region }}</td>
+            </tr>
+          </template>
+        </tbody>
+      </table>
+    </template>
   </div>
 </template>
 
 <script>
-  // TODO options
-
-  const regEx = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?:\/([12]?\d|3[12]))?$/;
+  const regEx = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?:\/([12]?\d|3[012]))?$/;
 
   export default {
     name: 'IpAddress',
@@ -68,7 +139,15 @@
         required: true
       }
     },
+    data () {
+      return {
+        ipInfo: {}
+      };
+    },
     computed: {
+      error: function () {
+        return !regEx.test(this.inputString);
+      },
       info: function () {
         const parts = this.inputString.trim().split('/');
         const ip = parts[0];
@@ -78,18 +157,19 @@
         const octets = parts[0].split('.');
         const hostInt = (((1 << hostBits) - 1) >>> 0);
         const maskInt = (((1 << networkBits) - 1) << hostBits) >>> 0;
-        const mask = this.intToIp(maskInt);
+        const mask = hostBits ? this.intToIp(maskInt) : '255.255.255.255';
         const networkAddressInt = (ipInt & maskInt) >>> 0;
-        const networkAddress = this.intToIp(networkAddressInt);
+        const networkAddress = hostBits ? this.intToIp(networkAddressInt) : ip;
         const broadcastAddressInt = (networkAddressInt + hostInt) >>> 0;
         const broadcastAddress = this.intToIp(broadcastAddressInt);
         const firstUsableAddress = this.intToIp(networkAddressInt + 1);
         const lastUsableAddress = this.intToIp(broadcastAddressInt - 1);
-        const hosts = ((2 ** hostBits) - (networkBits ? 1 : 0)).toLocaleString();
+        const hosts = hostBits ? ((2 ** hostBits) - (networkBits ? 1 : 0)).toLocaleString() : 1;
 
         return {
           ip,
           networkBits,
+          hostBits,
           octets,
           mask,
           networkAddress,
@@ -116,6 +196,33 @@
           + '.' + (ipInt & 255);
       }
     },
+    watch: {
+      inputString: {
+        handler: function () {
+          this.ipInfo = {};
+
+          if (this.error) {
+            return;
+          }
+
+          const parts = this.inputString.trim().split('/');
+
+          if (parts.length > 1) {
+            return;
+          }
+
+          fetch(`http://extreme-ip-lookup.com/json/${parts[0]}`)
+            .then((response) => {
+              console.log(response)
+              return response.json();
+            })
+            .then((json) => {
+              this.ipInfo = json;
+            });
+        },
+        immediate: true
+      }
+    },
     canParse (str) {
       return regEx.test(str);
     }
@@ -123,46 +230,6 @@
 </script>
 
 <style scoped lang="css">
-  tbody th {
-    text-align: right;
-  }
-
-  table.data {
-    border-collapse: collapse;
-  }
-
-  table.data th,
-  table.data td {
-    background-color: #ffffff;
-    border-top: 1px solid #dddddd;
-    padding: 8px 10px;
-  }
-
-  table.data td {
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  table.data > tbody > tr:nth-child(even) > td {
-    background-color: #f9f9f9;
-  }
-
-  table.data > tbody > tr:nth-child(even) > th {
-    background-color: #f1f1f1;
-  }
-
-  table.data > tbody > tr:hover > th {
-    background-color: #eaeaea;
-  }
-
-  table.data > tbody > tr:hover > td {
-    background-color: #f6f6f6;
-  }
-
-  table.data > tbody > tr:first-child > th,
-  table.data > tbody > tr:first-child > td {
-    border-top-width: 0;
-  }
-
   .parameters {
     width: 100%;
   }

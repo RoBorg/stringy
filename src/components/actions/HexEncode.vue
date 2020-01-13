@@ -1,13 +1,30 @@
 <template>
   <div>
-    <textarea v-model="outputString" class="output" readonly/>
-    <md-divider/>
-    <md-checkbox v-model="format">Format output</md-checkbox>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to encode
+    </NoteBlock>
+    <md-card v-else>
+      <md-card-header>
+        <div class="md-title">Output</div>
+      </md-card-header>
+
+      <md-card-content>
+        <md-field>
+          <md-textarea v-model="outputString" readonly/>
+        </md-field>
+        <md-checkbox v-model="format">Format output</md-checkbox>
+      </md-card-content>
+
+      <md-card-actions>
+        <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
+      </md-card-actions>
+    </md-card>
   </div>
 </template>
 
 <script>
   import { Base64 } from 'js-base64';
+  import { copy } from '../../helpers';
 
   export default {
     name: 'HexEncode',
@@ -37,7 +54,6 @@
         }
 
         result = result.map(b => b.toString(16).padStart(2, '0'));
-        console.log(result)
 
         if (this.format) {
           return result.reduce((accumulator, currentValue, index) => {
@@ -51,6 +67,9 @@
 
         return result.join('');
       }
+    },
+    methods: {
+      copy
     },
     canParse () {
       return false;

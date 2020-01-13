@@ -1,6 +1,12 @@
 <template>
   <div>
-    <table class="data">
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to parse
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      Invalid CSS colour
+    </NoteBlock>
+    <table class="data" v-else>
       <tbody>
         <tr>
           <th>Colour</th>
@@ -22,12 +28,20 @@
             <Copy :text="asRgb"/>
           </td>
         </tr>
+        <tr>
+          <th>HSL</th>
+          <td>
+            {{ asHsl }}
+            <Copy :text="asHsl"/>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
 </template>
 
 <script>
+  // TODO HSL
   export default {
     name: 'CssColour',
     props: {
@@ -38,14 +52,26 @@
     },
     data () {
       return {
-        colour: this.isHex() ? this.inputString : this.rgbToHex(this.inputString)
+        colour: '',
+        error: false
       };
     },
     computed: {
       asHex: function () {
-        return this.colour
+        return this.colour;
+      },
+      asHsl: function () {
+        if (!this.colour) {
+          return ''
+        }
+
+        return 'TODO'; // TODO
       },
       asRgb: function () {
+        if (!this.colour) {
+          return ''
+        }
+
         const rgb = this.hexToRgb(this.colour);
 
         return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
@@ -65,11 +91,11 @@
 
         const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-        return result ? {
+        return {
           r: parseInt(result[1], 16),
           g: parseInt(result[2], 16),
           b: parseInt(result[3], 16)
-        } : null;
+        };
       },
       componentToHex (c) {
         const hex = parseInt(c).toString(16);
@@ -86,8 +112,18 @@
       }
     },
     watch: {
-      inputString () {
-        this.colour = this.isHex() ? this.inputString : this.rgbToHex(this.inputString);
+      inputString: {
+        handler () {
+          this.colour = '';
+          this.error = false;
+
+          try {
+            this.colour = this.isHex() ? this.inputString : this.rgbToHex(this.inputString);
+          } catch (e) {
+            this.error = true;
+          }
+        },
+        immediate: true
       }
     },
     canParse (str) {

@@ -87,7 +87,7 @@
         -----END CERTIFICATE-----"/>
       SSL Certificate
     </span>
-    <span class="test"><Copy text="https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J#1231"/>URL</span>
+    <span class="test"><Copy text="https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J&test%23=test%23#1231"/>URL</span>
     <span class="test"><Copy text='{"fruit": "Apple","size": "Large","color": "Red"}'/>JSON</span>
     <span class="test"><Copy text="aGVsbG8gd29ybGQ="/>Base64</span>
     <span class="test"><Copy text="1576923482"/>UNIX Timestamp</span>
@@ -114,15 +114,8 @@
 </template>
 
 <script>
-  import Copy from './Copy';
-  import NoteBlock from './NoteBlock';
-
   export default {
-    name: 'TestData',
-    components: {
-      Copy,
-      NoteBlock
-    }
+    name: 'TestData'
   }
 </script>
 

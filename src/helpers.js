@@ -7,6 +7,12 @@ export function copy (text) {
   element.remove();
 }
 
+export async function paste () {
+  const text = await navigator.clipboard.readText();
+
+  return text;
+}
+
 export function imageInfo (text) {
   const result = {
     isImage: false,

@@ -5,11 +5,10 @@ import DataUriDecode from './components/actions/DataUriDecode';
 import HexEncode from './components/actions/HexEncode';
 import HexDecode from './components/actions/HexDecode';
 import IpAddress from './components/actions/IpAddress';
-import JsonDecode from './components/actions/JsonDecode';
+import JsonFormat from './components/actions/JsonFormat';
 import SqlFormat from './components/actions/SqlFormat';
 import SslCertificate from './components/actions/SslCertificate';
 import UnixTimestamp from './components/actions/UnixTimestamp';
-import Unknown from './components/actions/Unknown';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
@@ -74,8 +73,8 @@ export default [
     component: Base64Encode
   },
   {
-    name: 'JSON Decode',
-    component: JsonDecode
+    name: 'JSON Format',
+    component: JsonFormat
   },
   {
     name: 'SQL Format',
@@ -96,9 +95,5 @@ export default [
   {
     name: 'XML Format',
     component: XmlFormat
-  },
-  {
-    name: 'Unknown',
-    component: Unknown
   }
 ];

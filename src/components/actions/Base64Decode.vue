@@ -1,6 +1,14 @@
 <template>
   <div>
-    <textarea v-model="outputString" class="output"/>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to decode
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      {{ error }}
+    </NoteBlock>
+    <md-field v-else>
+      <md-textarea v-model="outputString" readonly/>
+    </md-field>
   </div>
 </template>
 
@@ -17,9 +25,16 @@ export default {
       required: true
     }
   },
+  data () {
+    return {
+      error: ''
+    };
+  },
   computed: {
     // TODO output image/binary download
     outputString: function () {
+      this.error = '';
+
       try {
         if (!/^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(this.inputString)) {
           throw new Error();
@@ -27,7 +42,9 @@ export default {
 
         return Base64.decode(this.inputString);
       } catch (e) {
-        return 'Invalid base64: ' + e.message;
+        this.error = 'Invalid input: ' + e.message;
+
+        return '';
       }
     }
   },

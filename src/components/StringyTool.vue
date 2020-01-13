@@ -7,7 +7,7 @@
     </div>
     <template v-else>
       <md-field>
-        <md-textarea v-model="inputString" placeholder="Enter your text here"/>
+        <md-textarea v-model="inputString" ref="input" placeholder="Enter your text here"/>
       </md-field>
 
       <div class="input-info">
@@ -16,14 +16,18 @@
         <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
       </div>
     </template>
-    <select v-model="selectedAction" class="select-function">
-      <option :value="null">
+    <br>
+    <md-divider/>
+    <br>
+    <md-radio v-model="selectedAction" value="auto">
         Auto ({{ autoFunction.name }})
-      </option>
-      <option v-for="option in actionOptions" :key="option.value" :value="option.value">
-        {{ option.text }}
-      </option>
-    </select>
+    </md-radio>
+    <md-radio v-model="selectedAction" v-for="option in actionOptions" :key="option.value" :value="option.value">
+      {{ option.text }}
+    </md-radio>
+    <br>
+    <md-divider/>
+    <br>
     <component v-bind:is="currentComponent" :inputString="input" :inputArrayBuffer="inputArrayBuffer"/>
   </div>
 </template>
@@ -33,6 +37,7 @@
   import TestData from './TestData';
   import Unknown from './actions/Unknown';
   import actions from '../actions';
+  import { paste as getClipboardContents } from '../helpers';
   import { mapMutations, mapState } from 'vuex';
 
   const unknown = {
@@ -54,7 +59,7 @@
       return {
         inputString: '',
         stringType: null,
-        selectedAction: null,
+        selectedAction: 'auto',
         actions
       };
     },
@@ -82,14 +87,14 @@
         return this.fileContentsAsArrayBuffer;
       },
       currentComponent: function () {
-        if (this.selectedAction) {
+        if (this.selectedAction !== 'auto') {
           return actions[this.selectedAction].component;
         }
 
         return this.autoFunction.component;
       },
       autoFunction: function () {
-      const str = this.input.trim();
+        const str = this.input.trim();
 
         if (str === '') {
           return unknown;
@@ -127,7 +132,13 @@
         return options;
       }
     },
-    methods: mapMutations(['removeFile'])
+    methods: {
+      ...mapMutations(['removeFile']),
+      getClipboardContents,
+      async paste () {
+        this.inputString = await this.getClipboardContents();
+      }
+    }
   }
 </script>
 

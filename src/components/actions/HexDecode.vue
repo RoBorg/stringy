@@ -1,41 +1,53 @@
 <template>
   <div>
-    <md-card v-if="isImage" style="float: left">
-      <md-card-header>
-        <div class="md-title">Decoded Image</div>
-        <div class="md-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
-      </md-card-header>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to decode
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      Invalid hex data
+    </NoteBlock>
+    <template v-else>
+      <md-card v-if="isImage" style="float: left">
+        <md-card-header>
+          <div class="md-title">Decoded Image</div>
+          <div class="md-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
+        </md-card-header>
 
-      <md-card-content>
-        <img :src="dataSrc"/>
-      </md-card-content>
+        <md-card-content>
+          <img :src="dataSrc"/>
+        </md-card-content>
 
-      <md-card-actions>
-        <md-button :href="dataSrc" download class="md-primary md-raised">Download</md-button>
-      </md-card-actions>
-    </md-card>
-    <md-card v-else-if="isText">
-      <md-card-header>
-        <div class="md-title">Card without hover effect</div>
-      </md-card-header>
+        <md-card-actions>
+          <md-button :href="dataSrc" download class="md-primary md-raised">Download</md-button>
+        </md-card-actions>
+      </md-card>
+      <md-card v-else-if="isText">
+        <md-card-header>
+          <div class="md-title">Output</div>
+        </md-card-header>
 
-      <md-card-content>
-        <textarea class="output" v-model="asText" readonly/>
-      </md-card-content>
+        <md-card-content>
+          <md-field>
+            <md-textarea v-model="asText" readonly/>
+          </md-field>
+        </md-card-content>
 
-      <md-card-actions>
-        <md-button class="md-primary md-raised">TODOCopy</md-button>
-      </md-card-actions>
-    </md-card>
-    <a download :href="dataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>Download binary file</a>
-    <div style="clear: both;">xxx</div>
+        <md-card-actions>
+          <md-button class="md-primary md-raised" @click="copy(asText)">Copy</md-button>
+        </md-card-actions>
+      </md-card>
+      <a download :href="dataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>Download binary file</a>
+      <div style="clear: both;">xxx-<!--TODO--></div>
+    </template>
   </div>
 </template>
 
 <script>
   import { Base64 } from 'js-base64';
   import { read } from 'fs';
-  import { imageInfo } from '../../helpers';
+  import { copy, imageInfo } from '../../helpers';
+
+  const hexRegEx = /^[A-Fa-f0-9+/\s]+$/
 
   // TODO options, binary decode
 
@@ -54,7 +66,8 @@
         imageHeight: null,
         isText: true,
         dataSrc: '',
-        asText: ''
+        asText: '',
+        error: false
       };
     },
     watch: {
@@ -63,9 +76,16 @@
         handler: async function (value) {
           const reader = new FileReader();
 
+          this.error = false;
           this.isImage = false;
           this.dataSrc = '';
           this.asText = '';
+
+          if (!hexRegEx.test(this.inputString)) {
+            this.error = true;
+
+            return;
+          }
 
           reader.onloadend = await async () => {
             this.dataSrc = reader.result;
@@ -85,6 +105,7 @@
       }
     },
     methods: {
+      copy,
       toBinary (str) {
         const hexBytes = str.match(/[A-Fa-f0-9]{1,2}/g);
         const arrayBuffer = new ArrayBuffer(hexBytes.length);
@@ -127,7 +148,7 @@
       // }
     },
     canParse (str) {
-      return /^[A-Fa-f0-9+/\s]+$/.test(str);
+      return hexRegEx.test(str);
     }
   }
 </script>

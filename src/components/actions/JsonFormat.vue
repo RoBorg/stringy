@@ -21,7 +21,7 @@
   // TODO options
 
   export default {
-    name: 'JsonDecode',
+    name: 'JsonFormat',
     props: {
       inputString: {
         type: String,

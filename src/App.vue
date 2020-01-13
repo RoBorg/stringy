@@ -10,13 +10,17 @@
         </div>
       </md-app-toolbar>
       <md-app-content>
-        <p>Paste your text below, drag-drop a file or
-          <md-button style="vertical-align: middle;" class="md-raised" @click="$refs.fileInput.click()">
+        <p>
+          <md-button style="vertical-align: middle;" class="md-raised" @click="paste">
+            Paste
+          </md-button>
+           your text below, drag-drop a file or
+          <md-button style="vertical-align: middle;" class="md-raised" @click="$refs.fileInput.click();">
             upload a file
           </md-button>
           <input type="file" @change="selectFile" ref="fileInput">
         </p>
-        <StringyTool/>
+        <StringyTool ref="stringy"/>
       </md-app-content>
     </md-app>
     <transition name="fade">
@@ -88,6 +92,9 @@
         }
 
         this.setFile(files[0]);
+      },
+      paste () {
+        this.$refs.stringy.paste();
       }
     }
   }

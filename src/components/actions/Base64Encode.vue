@@ -1,16 +1,25 @@
 <template>
   <div>
-    <textarea v-model="outputString" class="output"/>
-    <Copy :text="outputString"/>
-    <label>
-      <input type="checkbox" v-model="urlFriendly">
-      URL friendly (use <code>-_</code> instead of <code>+/</code> <a href="https://tools.ietf.org/html/rfc4648" target="_blank">RFC 4648</a>)
-    </label>
-    <label>
-      <input type="checkbox" v-model="wrap">
-      Wrap at
-    </label>
-    <input type="number" min="1" v-model="wrapCharacters">
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to encode
+    </NoteBlock>
+    <div v-else>
+      <Copy :text="outputString"/>
+      <md-field>
+        <md-textarea v-model="outputString" readonly/>
+      </md-field>
+      <Copy :text="outputString"/>
+      <br>
+      <md-checkbox v-model="urlFriendly">
+        URL friendly (use <code>-_</code> instead of <code>+/</code> <a href="https://tools.ietf.org/html/rfc4648" target="_blank">RFC 4648</a>)
+      </md-checkbox>
+      <md-checkbox v-model="wrap">
+        Wrap at
+        <md-field>
+          <md-input type="number" min="1" v-model="wrapCharacters"/>
+        </md-field>
+      </md-checkbox>
+    </div>
   </div>
 </template>
 

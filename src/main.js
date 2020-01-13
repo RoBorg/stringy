@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './App.vue';
 import Copy from './components/Copy';
+import NoteBlock from './components/NoteBlock';
 import VueHighlightJS from 'vue-highlightjs';
 import VueMaterial from 'vue-material'; // TODO remove - see https://vuematerial.io/getting-started import individual components
 import store from './store/index';
@@ -16,6 +17,7 @@ library.add(faCopy);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Copy', Copy);
+Vue.component('NoteBlock', NoteBlock);
 
 Vue.use(VueHighlightJS);
 Vue.use(VueMaterial); // TODO remove
