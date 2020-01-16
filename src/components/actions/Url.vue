@@ -39,6 +39,36 @@
               <Copy :text="url.hostname"/>
             </td>
           </tr>
+          <tr>
+            <th>IP</th>
+            <td>
+              <template v-if="ipLoading">
+                Loading
+              </template>
+              <template v-else-if="ipError">
+                {{ ipError }}
+              </template>
+              <template v-else>
+                {{ ip }}
+                <Copy :text="ip"/>
+              </template>
+            </td>
+          </tr>
+          <tr>
+            <th>IP Org</th>
+            <td>
+              <template v-if="ipInfoLoading">
+                Loading
+              </template>
+              <template v-else-if="ipInfoError">
+                {{ ipInfoError }}
+              </template>
+              <template v-else>
+                {{ ipInfo.org }}
+                <Copy :text="ipInfo.org"/>
+              </template>
+            </td>
+          </tr>
           <tr v-if="url.port">
             <th>Port</th>
             <td>
@@ -127,6 +157,7 @@
 
 <script>
   import QrcodeVue from 'qrcode.vue';
+  import { getIp, getIpInfo } from '../../helpers';
 
   // TODO options
   // TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
@@ -141,6 +172,17 @@
     },
     components: {
       QrcodeVue,
+    },
+    data () {
+      return {
+        ip: '',
+        ipError: '',
+        ipLoading: true,
+        ipInfo: {},
+        ipInfoError: '',
+        ipInfoLoading: true,
+        oldHostname: ''
+      };
     },
     computed: {
       url: function () {
@@ -169,6 +211,7 @@
                 hasEncodedQuery = true;
               }
           }
+
           const url = {
               href: parser.href,
               protocol: parser.protocol.replace(/:$/, ''),
@@ -188,6 +231,50 @@
         } catch (e) {
           return false;
         }
+      }
+    },
+    watch: {
+      url: {
+        handler: async function (value) {
+
+          if (this.oldHostname === value.hostname) {
+            return;
+          }
+
+          this.ip = '';
+          this.ipError = '';
+          this.ipLoading = true;
+          this.ipInfo = {};
+          this.ipInfoError = '';
+          this.ipInfoLoading = true;
+
+          this.oldHostname = value.hostname;
+
+          // TODO use https://github.com/getify/CAF
+
+          try {
+            this.ip = await getIp(value.hostname);
+          } catch (e) {
+            this.ipError = e.message;
+
+            return;
+          } finally {
+            this.ipLoading = false;
+            this.ipInfoLoading = false;
+            this.ipInfoError = '-';
+          }
+
+          try {
+            this.ipInfo = await getIpInfo(this.ip);
+          } catch (e) {
+            this.ipInfoError = e.message;
+
+            return;
+          } finally {
+            this.ipInfoLoading = false;
+          }
+        },
+        immediate: true
       }
     },
     canParse (str) {

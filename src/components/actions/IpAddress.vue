@@ -122,6 +122,12 @@
               <td>{{ ipInfo.region }}</td>
             </tr>
           </template>
+          <template v-else-if="ipInfo.status">
+            <tr>
+              <th>IP Info</th>
+              <td>{{ ipInfo.status }}</td>
+            </tr>
+          </template>
         </tbody>
       </table>
     </template>
@@ -129,6 +135,8 @@
 </template>
 
 <script>
+  import { getIp, getIpInfo } from '../../helpers';
+
   const regEx = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?:\/([12]?\d|3[012]))?$/;
 
   export default {
@@ -198,7 +206,7 @@
     },
     watch: {
       inputString: {
-        handler: function () {
+        handler: async function () {
           this.ipInfo = {};
 
           if (this.error) {
@@ -211,14 +219,13 @@
             return;
           }
 
-          fetch(`http://extreme-ip-lookup.com/json/${parts[0]}`)
-            .then((response) => {
-              console.log(response)
-              return response.json();
-            })
-            .then((json) => {
-              this.ipInfo = json;
-            });
+          this.ipInfo = {status: 'Loading'};
+
+          try {
+            this.ipInfo = await getIpInfo(parts[0]);
+          } catch (e) {
+            this.ipInfo = {status: e.message};
+          }
         },
         immediate: true
       }
