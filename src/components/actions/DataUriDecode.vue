@@ -69,8 +69,6 @@
   import { imageInfo } from '../../helpers';
   import { copy } from '../../helpers';
 
-  // TODO options
-
   const regEx = /^data:([^,]*?)(base64|),(.*)$/si;
 
   export default {

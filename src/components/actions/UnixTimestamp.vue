@@ -48,8 +48,6 @@
 <script>
   import moment from 'moment';
 
-  // TODO options
-
   export default {
     name: 'UnixTimestamp',
     props: {

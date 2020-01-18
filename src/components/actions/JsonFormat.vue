@@ -1,25 +1,41 @@
 <template>
   <div>
-    <Copy :text="outputString"/>
-    <pre v-highlightjs="outputString"><code class="json"></code></pre>
-    <Copy :text="outputString"/>
-    <md-divider/>
-    <md-field>
-      <label>Indent with</label>
-    </md-field>
-    <md-radio v-model="indentType" value="spaces">
-      <md-field class="spaces-field">
-        <md-input v-model="indentSpaces" type="number" class="spaces-input"/>
-        <span class="md-suffix">Spaces</span>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to format
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      {{ error }}
+    </NoteBlock>
+    <template v-else>
+      <md-card>
+        <md-card-header>
+          <div class="md-title">Output</div>
+        </md-card-header>
+
+        <md-card-content>
+          <pre v-highlightjs="outputString"><code class="json"></code></pre>
+        </md-card-content>
+
+        <md-card-actions>
+          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
+        </md-card-actions>
+      </md-card>
+
+      <md-field>
+        <label>Indent with</label>
       </md-field>
-    </md-radio>
-    <md-radio v-model="indentType" value="tabs">Tabs</md-radio>
+      <md-radio v-model="indentType" value="spaces">
+        <md-field class="spaces-field">
+          <md-input v-model="indentSpaces" type="number" class="spaces-input"/>
+          <span class="md-suffix">Spaces</span>
+        </md-field>
+      </md-radio>
+      <md-radio v-model="indentType" value="tabs">Tabs</md-radio>
+    </template>
   </div>
 </template>
 
 <script>
-  // TODO options
-
   export default {
     name: 'JsonFormat',
     props: {
@@ -31,21 +47,22 @@
     data() {
       return {
         indentType: 'spaces',
-        indentSpaces: 4
+        indentSpaces: 4,
+        error: ''
       }
     },
     computed: {
       outputString: function () {
-        // TODO show errors better
-        let json;
+        this.error = '';
 
         try {
-          json = JSON.parse(this.inputString)
+          const json = JSON.parse(this.inputString)
+          return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
         } catch (e) {
-          return e.message;
+          this.error = e.message;
         }
 
-        return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
+        return '';
       }
     },
     canParse (str) {
