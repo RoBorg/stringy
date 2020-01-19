@@ -100,7 +100,6 @@
   }
 </script>
 
-
 <style scoped>
   .github-icon {
     width: 32px;

@@ -1,12 +1,28 @@
 <template>
   <div>
-    <pre>{{ outputString }}</pre>
-    <Copy :text="outputString"/>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to encode
+    </NoteBlock>
+    <template v-else>
+      <md-card>
+        <md-card-header>
+          <div class="md-title">Output</div>
+        </md-card-header>
+
+        <md-card-content>
+          <pre>{{ outputString }}</pre>
+        </md-card-content>
+
+        <md-card-actions>
+          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
+        </md-card-actions>
+      </md-card>
+    </template>
   </div>
 </template>
 
 <script>
-  // TODO options
+  import { copy } from '../../helpers';
 
   export default {
     name: 'UrlEncode',
@@ -21,6 +37,9 @@
         return encodeURIComponent(this.inputString);
       },
     },
+    methods: {
+      copy
+    },
     canParse () {
       return false;
     }
@@ -28,48 +47,7 @@
 </script>
 
 <style scoped lang="css">
-  tbody th {
-    text-align: right;
-  }
-
-  table.data {
-    border-collapse: collapse;
-  }
-
-  table.data th,
-  table.data td {
-    background-color: #ffffff;
-    border-top: 1px solid #dddddd;
-    padding: 8px 10px;
-    transition: background-color 0.5s;
-  }
-
-  table.data td {
-    font-family: 'Courier New', Courier, monospace;
-  }
-
-  table.data > tbody > tr:nth-child(even) > td {
-    background-color: #f9f9f9;
-  }
-
-  table.data > tbody > tr:nth-child(even) > th {
-    background-color: #f1f1f1;
-  }
-
-  table.data > tbody > tr:hover > th {
-    background-color: #eaeaea;
-  }
-
-  table.data > tbody > tr:hover > td {
-    background-color: #f6f6f6;
-  }
-
-  table.data > tbody > tr:first-child > th,
-  table.data > tbody > tr:first-child > td {
-    border-top-width: 0;
-  }
-
-  .parameters {
-    width: 100%;
+  pre {
+    overflow: auto;
   }
 </style>

@@ -26,7 +26,7 @@
       </md-field>
       <md-radio v-model="indentType" value="spaces">
         <md-field class="spaces-field">
-          <md-input v-model="indentSpaces" type="number" class="spaces-input"/>
+          <md-input v-model="indentSpaces" type="number" min="1" max="8" class="spaces-input"/>
           <span class="md-suffix">Spaces</span>
         </md-field>
       </md-radio>
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+  import { copy } from '../../helpers';
+
   export default {
     name: 'JsonFormat',
     props: {
@@ -64,6 +66,9 @@
 
         return '';
       }
+    },
+    methods: {
+      copy
     },
     canParse (str) {
       let json;

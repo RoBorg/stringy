@@ -1,15 +1,40 @@
 <template>
   <div>
-    <Copy :text="outputString"/>
-    <pre v-highlightjs="outputString"><code class="sql"></code></pre>
-    <Copy :text="outputString"/>
+    <NoteBlock warning v-if="inputString === ''">
+      Nothing to format
+    </NoteBlock>
+    <template v-else>
+      <md-card>
+        <md-card-header>
+          <div class="md-title">Output</div>
+        </md-card-header>
+
+        <md-card-content>
+          <pre v-highlightjs="outputString"><code class="sql"></code></pre>
+        </md-card-content>
+
+        <md-card-actions>
+          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
+        </md-card-actions>
+      </md-card>
+      <md-field>
+        <label>Indent with</label>
+      </md-field>
+
+      <md-radio v-model="indentType" value="spaces">
+        <md-field class="spaces-field">
+          <md-input v-model="indentSpaces" type="number" min="1" max="8" class="spaces-input"/>
+          <span class="md-suffix">Spaces</span>
+        </md-field>
+      </md-radio>
+      <md-radio v-model="indentType" value="tabs">Tabs</md-radio>
+    </template>
   </div>
 </template>
 
 <script>
   import sqlFormatter from 'sql-formatter';
-
-  // TODO options
+  import { copy } from '../../helpers';
 
   export default {
     name: 'SqlFormat',
@@ -19,10 +44,23 @@
         required: true
       }
     },
+    data() {
+      return {
+        indentType: 'spaces',
+        indentSpaces: 4
+      }
+    },
     computed: {
       outputString: function () {
-        return sqlFormatter.format(this.inputString);
+        const options = {
+          indent: this.indentType === 'spaces' ? ' '.repeat(this.indentSpaces) : '\t'
+        };
+
+        return sqlFormatter.format(this.inputString, options);
       }
+    },
+    methods: {
+      copy
     },
     canParse (str) {
       // This comment removal doesn't account for strings,
@@ -40,3 +78,19 @@
     }
   }
 </script>
+
+<style scoped>
+  .spaces-field {
+    vertical-align: middle;
+    padding-top: 0;
+    margin: 0;
+    min-height: 20px;
+    height: 20px;
+    line-height: 20px;
+  }
+
+  .spaces-field .spaces-input {
+    width: 2em;
+    height: 20px;
+  }
+</style>

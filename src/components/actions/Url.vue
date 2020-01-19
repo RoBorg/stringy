@@ -7,9 +7,11 @@
       <table class="data">
         <tbody>
           <tr>
-            <th>Link</th>
+            <th>Links</th>
             <td>
-              <a :href="url.href" target="_blank">Click here</a>
+              <a :href="url.href" target="_blank">Visit</a> /
+              <a :href="`https://www.sslshopper.com/ssl-checker.html#hostname=${encodeURIComponent(url.hostname)}`" target="_blank" download>Quick SSL check</a> /
+              <a :href="`https://www.ssllabs.com/ssltest/analyze.html?d=${encodeURIComponent(url.hostname)}&hideResults=on&latest`" target="_blank" download>SSL Labs report</a>
             </td>
           </tr>
           <tr>
@@ -63,7 +65,7 @@
               <template v-else-if="ipInfoError">
                 {{ ipInfoError }}
               </template>
-              <template v-else>
+              <template v-else-if="ipInfo.org">
                 {{ ipInfo.org }}
                 <Copy :text="ipInfo.org"/>
               </template>
@@ -159,7 +161,6 @@
   import QrcodeVue from 'qrcode.vue';
   import { getIp, getIpInfo } from '../../helpers';
 
-  // TODO options
   // TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
 
   export default {
@@ -256,12 +257,12 @@
             this.ip = await getIp(value.hostname);
           } catch (e) {
             this.ipError = e.message;
+            this.ipInfoError = '-';
 
             return;
           } finally {
             this.ipLoading = false;
             this.ipInfoLoading = false;
-            this.ipInfoError = '-';
           }
 
           try {
