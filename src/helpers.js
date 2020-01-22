@@ -1,3 +1,5 @@
+import { Base64 } from 'js-base64';
+
 export function copy (text) {
   const element = document.createElement('textarea');
   document.body.appendChild(element);
@@ -14,15 +16,14 @@ export async function paste () {
 }
 
 export function imageInfo (text) {
-  const result = {
-    isImage: false,
-    image: null,
-    width: null,
-    height: null
-  };
-
   return new Promise(resolve => {
     const image = new Image();
+    const result = {
+      isImage: false,
+      image: null,
+      width: null,
+      height: null
+    };
 
     image.onload = () => {
       result.isImage = true;
@@ -33,6 +34,44 @@ export function imageInfo (text) {
     };
     image.onerror = () => resolve(result);
     image.src = text;
+  });
+}
+
+export function getFileInfo (intArray) {
+  return new Promise(resolve => {
+    const reader = new FileReader();
+    const response = {
+      isImage: false,
+      isText: false,
+      asDataSrc: '',
+      asText: '',
+      imageWidth: 0,
+      imageHeight: 0
+    };
+
+    for (let i = 0; i < intArray.length; i++) {
+      if (intArray[i] < 32) {
+        response.isText = false; // TODO: better test for valid UTF-8 (or 16?)
+      }
+    }
+
+    reader.onloadend = async () => {
+      response.asDataSrc = reader.result;
+
+      const imageInfoResult = await imageInfo(response.asDataSrc);
+      response.isImage = imageInfoResult.isImage;
+      response.imageWidth = imageInfoResult.width;
+      response.imageHeight = imageInfoResult.height;
+
+      if (!response.isImage && response.isText) {
+        response.asText = Base64.decode(response.asDataSrc.replace(/^.+?,/, ''));
+      }
+
+      resolve(response);
+    };
+
+    // Doesn't matter if the image isn't actually a jpeg
+    reader.readAsDataURL(new Blob([intArray], {type: 'image/jpeg'}));
   });
 }
 

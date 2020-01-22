@@ -15,6 +15,9 @@ import 'vue-material/dist/theme/default.css';
 
 library.add(faCopy);
 
+Vue.config.errorHandler = function(err, vm, info) { console.log(err); };
+Vue.config.warnHandler = function(msg, vm, info) { console.log(msg); };
+
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Copy', Copy);
 Vue.component('NoteBlock', NoteBlock);

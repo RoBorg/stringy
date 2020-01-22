@@ -12,19 +12,13 @@ import UnixTimestamp from './components/actions/UnixTimestamp';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
-import XmlFormat from './components/actions/XmlFormat';
 
 /*
 TODO
-https://codebeautify.org/string-functions
-
 Data URI
 Base64
-Base64 image
-URL
 XML format/validator/decode
 (S)CSS
-SQL
 HTML format
 html en/decode
 hex (md5? sha? colour?)
@@ -91,9 +85,5 @@ export default [
   {
     name: 'URL Encode',
     component: UrlEncode
-  },
-  {
-    name: 'XML Format',
-    component: XmlFormat
   }
 ];
