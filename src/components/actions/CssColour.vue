@@ -11,7 +11,7 @@
         <tr>
           <th>Colour</th>
           <td>
-            <input type="color" v-model="colour">
+            <input type="color" v-model="chosenColour" @change="colour = chosenColour">
           </td>
         </tr>
         <tr>
@@ -41,7 +41,16 @@
 </template>
 
 <script>
-  // TODO HSL
+  import pureColor from 'pure-color';
+
+  const isValid = (str) => {
+    try {
+      return pureColor.parse(str) !== undefined;
+    } catch (e) {
+      return false;
+    }
+  };
+
   export default {
     name: 'CssColour',
     props: {
@@ -50,84 +59,57 @@
         required: true
       }
     },
-    data () {
+    data: function () {
       return {
         colour: '',
-        error: false
+        chosenColour: '#000000'
       };
     },
     computed: {
+      error: function () {
+        return !isValid(this.colour);
+      },
+      rgbColour: function () {
+        try {
+          return pureColor.parse(this.colour);
+        } catch (e) {
+          // Do nothing
+        }
+      },
       asHex: function () {
-        return this.colour;
+        return this.error ? '' : pureColor.convert.rgb.hex(this.rgbColour);
       },
       asHsl: function () {
-        if (!this.colour) {
-          return ''
+        if (this.error) {
+          return '';
         }
 
-        return 'TODO'; // TODO
+        const hsl = pureColor.convert.rgb.hsl(this.rgbColour);
+
+        if (this.rgbColour.length === 4) {
+          hsl[3] = this.rgbColour[3];
+        }
+
+        return this.error ? '' : pureColor.convert.hsl.string(hsl).replace(/,/g, ', ');
       },
       asRgb: function () {
-        if (!this.colour) {
-          return ''
-        }
-
-        const rgb = this.hexToRgb(this.colour);
-
-        return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+        return this.error ? '' : pureColor.convert.rgb.string(this.rgbColour).replace(/,/g, ', ');
       }
     },
     methods: {
-      isHex () {
-        return /^#([0-9a-f]{3}){1,2}$/i.test(this.inputString);
-      },
-      // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb
-      hexToRgb (hex) {
-        // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
-        const shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-        hex = hex.replace(shorthandRegex, function(m, r, g, b) {
-          return r + r + g + g + b + b;
-        });
-
-        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-
-        return {
-          r: parseInt(result[1], 16),
-          g: parseInt(result[2], 16),
-          b: parseInt(result[3], 16)
-        };
-      },
-      componentToHex (c) {
-        const hex = parseInt(c).toString(16);
-
-        return hex.length == 1 ? '0' + hex : hex;
-      },
-      rgbToHex (str) {
-        const result = /rgba?\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*/gi.exec(str);
-
-        return '#'
-          + this.componentToHex(result[1])
-          + this.componentToHex(result[2])
-          + this.componentToHex(result[3]);
-      }
+      isValid
     },
     watch: {
       inputString: {
         handler () {
-          this.colour = '';
-          this.error = false;
-
-          try {
-            this.colour = this.isHex() ? this.inputString : this.rgbToHex(this.inputString);
-          } catch (e) {
-            this.error = true;
-          }
+          this.colour = isValid(this.inputString) ? pureColor.convert.rgb.hex(pureColor.parse(this.inputString)) : '#000000';
+          this.chosenColour = this.colour.substr(0, 7);
         },
         immediate: true
       }
     },
     canParse (str) {
-      return /^(#([0-9a-f]{3}){1,2}$|rgba?\()/i.test(str);
+      return isValid(str);
     },
   }
 </script>
