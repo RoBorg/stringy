@@ -41,8 +41,9 @@ export function getFileInfo (intArray) {
   return new Promise(resolve => {
     const reader = new FileReader();
     const response = {
+      isHtml: false,
       isImage: false,
-      isText: false,
+      isText: true,
       asDataSrc: '',
       asText: '',
       imageWidth: 0,
@@ -50,7 +51,7 @@ export function getFileInfo (intArray) {
     };
 
     for (let i = 0; i < intArray.length; i++) {
-      if (intArray[i] < 32) {
+      if (intArray[i] <= 8) {
         response.isText = false; // TODO: better test for valid UTF-8 (or 16?)
       }
     }
@@ -65,6 +66,7 @@ export function getFileInfo (intArray) {
 
       if (!response.isImage && response.isText) {
         response.asText = Base64.decode(response.asDataSrc.replace(/^.+?,/, ''));
+        response.isHtml = /<(html|head|title|body|div|span|a|p)/i.test(response.asText); // TODO better test?
       }
 
       resolve(response);

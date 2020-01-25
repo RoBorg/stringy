@@ -1,48 +1,71 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
-      Nothing to encode
+    <NoteBlock alert v-if="error">
+      Error: {{ error }}
     </NoteBlock>
-    <template v-else>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">Output</div>
-        </md-card-header>
-
-        <md-card-content>
-          <pre>{{ outputString }}</pre>
-        </md-card-content>
-
-        <md-card-actions>
-          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
-        </md-card-actions>
-      </md-card>
-    </template>
+    <Output v-else :int-array="intArray"/>
   </div>
 </template>
 
 <script>
-  import { copy } from '../../helpers';
+  import Output from '../Output';
+
+  const decode = (str) => {
+    try {
+      return decodeURIComponent(str);
+    } catch (e) {
+      // TODO binary somehow
+      throw new Error('Invalid data: ' + e.message);
+    }
+  };
 
   export default {
     name: 'UrlDecode',
+    components: {
+      Output
+    },
     props: {
       inputString: {
         type: String,
         required: true
       }
     },
+    data () {
+      return {
+        error: '',
+        intArray: null
+      };
+    },
     computed: {
       outputString: function () {
         try {
-          return decodeURIComponent(this.inputString);
+          return this.decode(this.inputString);
         } catch (e) {
-          return 'Invalid data';
+          return 'Invalid data: ' + e.message;
         }
       },
     },
+    watch: {
+      inputString: {
+        immediate: true,
+        handler: function (value) {
+          this.error = '';
+
+          try {
+            const data = this.decode(this.inputString);
+
+            this.intArray = this.toIntArray(data);
+          } catch (e) {
+            this.error = e.message;
+          }
+        }
+      }
+    },
     methods: {
-      copy
+      decode,
+      toIntArray (str) {
+        return Uint8Array.from(str, c => c.charCodeAt(0));
+      }
     },
     canParse (str) {
       if (!/%/.test(str)) {
@@ -50,12 +73,12 @@
       }
 
       try {
-          decodeURIComponent(this.inputString);
+        decode(str);
 
-          return true;
-        } catch (e) {
-          return false;
-        }
+        return true;
+      } catch (e) {
+        return false;
+      }
     }
   }
 </script>

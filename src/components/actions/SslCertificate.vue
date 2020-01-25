@@ -10,7 +10,7 @@
 
   (async function() {
     const { fileURLToPath } = await import('url');
-    console.log(['---', fileURLToPath])
+    //console.log(['---', fileURLToPath])
   })()
 
   //console.log(OpenSSL);

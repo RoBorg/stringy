@@ -1,55 +1,60 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
-      Nothing to decode
+    <NoteBlock alert v-if="error">
+      Error: {{ error }}
     </NoteBlock>
-    <NoteBlock alert v-else-if="error">
-      {{ error }}
-    </NoteBlock>
-    <md-field v-else>
-      <md-textarea v-model="outputString" readonly/>
-    </md-field>
+    <Output v-else :int-array="intArray"/>
   </div>
 </template>
 
 <script>
-import { Base64 } from 'js-base64';
+  import { Base64 } from 'js-base64';
+  import Output from '../Output';
 
-// TODO options, binary decode
+  const regEx = /^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/;
 
-export default {
-  name: 'Base64Decode',
-  props: {
-    inputString: {
-      type: String,
-      required: true
-    }
-  },
-  data () {
-    return {
-      error: ''
-    };
-  },
-  computed: {
-    // TODO output image/binary download
-    outputString: function () {
-      this.error = '';
-
-      try {
-        if (!/^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(this.inputString)) {
-          throw new Error();
-        }
-
-        return Base64.decode(this.inputString);
-      } catch (e) {
-        this.error = 'Invalid input: ' + e.message;
-
-        return '';
+  export default {
+    name: 'Base64Decode',
+    components: {
+      Output
+    },
+    props: {
+      inputString: {
+        type: String,
+        required: true
       }
+    },
+    data () {
+      return {
+        error: '',
+        intArray: null
+      };
+    },
+    watch: {
+      inputString: {
+        immediate: true,
+        handler: async function (value) {
+          try {
+            this.error = '';
+
+            if (!regEx.test(this.inputString)) {
+              throw new Error('Invalid Base64 data');
+            }
+
+            this.intArray = this.toIntArray(Base64.atob(this.inputString));
+          } catch (e) {
+            this.error = e.message;
+          }
+        }
+      }
+    },
+    methods: {
+      toIntArray (str) {
+        return Uint8Array.from(str, c => c.charCodeAt(0));
+      }
+    },
+    canParse (str) {
+      return regEx.test(str);
     }
-  },
-  canParse (str) {
-    return /^([A-Za-z0-9+/\s]+|[A-Za-z0-9-_\s]+)[=\s]*$/.test(str);
   }
-}
 </script>
