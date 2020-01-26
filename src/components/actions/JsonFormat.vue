@@ -71,15 +71,13 @@
       copy
     },
     canParse (str) {
-      let json;
-
       // Don't JSON-decode raw values, e.g. 123456
       if (!/{|\[/.test(str)) {
         return false;
       }
 
       try {
-        json = JSON.parse(str);
+        JSON.parse(str);
       } catch (e) {
         return false;
       }

@@ -48,7 +48,7 @@
     watch: {
       inputString: {
         immediate: true,
-        handler: function (value) {
+        handler: function () {
           this.error = '';
 
           try {

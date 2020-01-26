@@ -75,6 +75,8 @@
         } catch (e) {
           // Do nothing
         }
+
+        return undefined;
       },
       asHex: function () {
         return this.error ? '' : pureColor.convert.rgb.hex(this.rgbColour);

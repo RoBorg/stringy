@@ -3,7 +3,7 @@
     <div v-if="!url">
       Malformed Url
     </div>
-    <div v-else>
+    <div v-else style="display: flex; flex-wrap: wrap;">
       <table class="data">
         <tbody>
           <tr>
@@ -11,13 +11,8 @@
             <td>
               <a :href="url.href" target="_blank">Visit</a> /
               <a :href="`https://www.sslshopper.com/ssl-checker.html#hostname=${encodeURIComponent(url.hostname)}`" target="_blank" download>Quick SSL check</a> /
-              <a :href="`https://www.ssllabs.com/ssltest/analyze.html?d=${encodeURIComponent(url.hostname)}&hideResults=on&latest`" target="_blank" download>SSL Labs report</a>
-            </td>
-          </tr>
-          <tr>
-            <th>Link QR Code</th>
-            <td>
-              <qrcode-vue :value="url.href" size="200"/>
+              <a :href="`https://www.ssllabs.com/ssltest/analyze.html?d=${encodeURIComponent(url.hostname)}&hideResults=on&latest`" target="_blank" download>SSL Labs report</a> /
+              <a :href="`https://whois.domaintools.com/${encodeURIComponent(url.hostname)}`" target="_blank">Domain WHOIS</a>
             </td>
           </tr>
           <tr>
@@ -37,7 +32,7 @@
           <tr>
             <th>Hostname</th>
             <td>
-              <a :href="`${url.protocol}:${url.hostname}`" target="_blank">{{ url.hostname }}</a>
+              <a :href="`${url.protocol}://${url.hostname}`" target="_blank">{{ url.hostname }}</a>
               <Copy :text="url.hostname"/>
             </td>
           </tr>
@@ -153,6 +148,16 @@
           </tr>
         </tbody>
       </table>
+      <table class="data">
+        <tbody>
+          <tr>
+            <th>Link QR Code</th>
+            <td>
+              <qrcode-vue :value="url.href" size="200"/>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -160,8 +165,6 @@
 <script>
   import QrcodeVue from 'qrcode.vue';
   import { getIp, getIpInfo } from '../../helpers';
-
-  // TODO link to domain whois, ip lookup (if we can't do it ourselves), ssl info
 
   export default {
     name: 'Url',
