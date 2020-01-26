@@ -34,6 +34,7 @@
       Hex image
     </span>
     <span class="test"><Copy text="e2988020e2988120e2988220e2988320e2988420e2988520e2988620e2988720e2988820e2988920e2988a20e2988b20e2988c20e2988d20e2988e20e2988f20e2989020e2989120e2989220e2989320e2989620e2989720e2989920e2989a20e2989b20e2989c20e2989d"/>Hex utf8</span>
+    <!--
     <span class="test">
       <Copy text="-----BEGIN CERTIFICATE-----
         MIII2TCCCH6gAwIBAgIQQ5v7yBGYVhFAG04E9Crs7TAKBggqhkjOPQQDAjCBkjEL
@@ -87,6 +88,7 @@
         -----END CERTIFICATE-----"/>
       SSL Certificate
     </span>
+    -->
     <span class="test"><Copy text="https://www.amazon.co.uk/dp/B07TWFWJDZ/ref=gw_uk_desk_mso_dc_avs_fb2?pf_rd_p=a2b298ad-045f-44eb-9b21-44e5da2e38ed&pf_rd_r=HZ8KBA6Y40P1CKVN6T1J&test%23=test%23#1231"/>URL</span>
     <span class="test"><Copy text='{"fruit": "Apple","size": "Large","color": "Red"}'/>JSON</span>
     <span class="test"><Copy text="aGVsbG8gd29ybGQ="/>Base64</span>

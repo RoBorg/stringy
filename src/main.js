@@ -3,7 +3,7 @@ import App from './App.vue';
 import Copy from './components/Copy';
 import NoteBlock from './components/NoteBlock';
 import VueHighlightJS from 'vue-highlightjs';
-import VueMaterial from 'vue-material'; // TODO remove - see https://vuematerial.io/getting-started import individual components
+import { MdApp, MdButton, MdCard, MdCheckbox, MdContent, MdDivider, MdField, MdRadio, MdSnackbar, MdToolbar } from 'vue-material/dist/components'
 import store from './store/index';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
@@ -11,20 +11,25 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 import 'vue-material/dist/vue-material.min.css';
 import 'vue-material/dist/theme/default.css';
-// todo import 'vue-material/dist/theme/default-dark.css'
 
 library.add(faCopy);
-
-// TODO remove
-Vue.config.errorHandler = function(err) { console.log(err); };
-Vue.config.warnHandler = function(msg) { console.log(msg); };
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('Copy', Copy);
 Vue.component('NoteBlock', NoteBlock);
 
 Vue.use(VueHighlightJS);
-Vue.use(VueMaterial); // TODO remove
+
+Vue.use(MdApp);
+Vue.use(MdButton);
+Vue.use(MdCard);
+Vue.use(MdCheckbox);
+Vue.use(MdContent);
+Vue.use(MdDivider);
+Vue.use(MdField);
+Vue.use(MdRadio);
+Vue.use(MdSnackbar);
+Vue.use(MdToolbar);
 
 Vue.config.productionTip = false;
 

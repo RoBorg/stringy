@@ -7,33 +7,15 @@ import HexDecode from './components/actions/HexDecode';
 import IpAddress from './components/actions/IpAddress';
 import JsonFormat from './components/actions/JsonFormat';
 import SqlFormat from './components/actions/SqlFormat';
-import SslCertificate from './components/actions/SslCertificate';
 import UnixTimestamp from './components/actions/UnixTimestamp';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
 
-/*
-TODO
-Data URI
-Base64
-XML format/validator/decode
-(S)CSS
-HTML format
-html en/decode
-hex (md5? sha? colour?)
-ssh key (format conversion, public from private)
-ssl cert https://www.npmjs.com/package/openssl.js
-*/
-
 // Actions, in order of most specific first
 // E.g. Base 64 Decode will match a unix timestamp, so make sure
 // Unix Timestamp comes before it
 export default [
-  {
-    name: 'SSL Certificate',
-    component: SslCertificate
-  },
   {
     name: 'CSS Colour',
     component: CssColour
