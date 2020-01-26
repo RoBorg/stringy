@@ -164,6 +164,7 @@
 
 <script>
   import QrcodeVue from 'qrcode.vue';
+  import { debounce} from 'lodash';
   import { getIp, getIpInfo } from '../../helpers';
 
   export default {
@@ -185,7 +186,8 @@
         ipInfo: {},
         ipInfoError: '',
         ipInfoLoading: true,
-        oldHostname: ''
+        oldHostname: '',
+        version: 0
       };
     },
     computed: {
@@ -239,8 +241,7 @@
     },
     watch: {
       url: {
-        handler: async function (value) {
-
+        handler: debounce(async function (value) {
           if (this.oldHostname === value.hostname) {
             return;
           }
@@ -251,13 +252,19 @@
           this.ipInfo = {};
           this.ipInfoError = '';
           this.ipInfoLoading = true;
-
+          this.version++;
           this.oldHostname = value.hostname;
 
-          // TODO use https://github.com/getify/CAF
+          const currentVersion = this.version;
 
           try {
-            this.ip = await getIp(value.hostname);
+            const ip = await getIp(value.hostname);
+
+            if (this.version !== currentVersion) {
+              return;
+            }
+
+            this.ip = ip;
           } catch (e) {
             this.ipError = e.message;
             this.ipInfoError = '-';
@@ -269,7 +276,13 @@
           }
 
           try {
-            this.ipInfo = await getIpInfo(this.ip);
+            const ipInfo = await getIpInfo(this.ip);
+
+            if (this.version !== currentVersion) {
+              return;
+            }
+
+            this.ipInfo = ipInfo;
           } catch (e) {
             this.ipInfoError = e.message;
 
@@ -277,7 +290,7 @@
           } finally {
             this.ipInfoLoading = false;
           }
-        },
+        }, 500),
         immediate: true
       }
     },

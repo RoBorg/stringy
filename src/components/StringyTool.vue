@@ -20,7 +20,7 @@
     <md-divider/>
     <br>
     <md-radio v-model="selectedAction" value="auto">
-        Auto ({{ autoFunction.name }})
+        <strong>Auto ({{ autoFunction.name }})</strong>
     </md-radio>
     <md-radio v-model="selectedAction" v-for="option in actionOptions" :key="option.value" :value="option.value">
       {{ option.text }}

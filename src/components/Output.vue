@@ -10,7 +10,7 @@
       Loading...
     </NoteBlock>
     <template v-else>
-      <md-card v-if="isImage" style="float: left">
+      <md-card v-if="isImage">
         <md-card-header>
           <div class="md-title">Decoded Image</div>
           <div class="md-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
@@ -60,7 +60,6 @@
       <a download :href="asDataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>
         Download binary file
       </a>
-      <div style="clear: both;">xxx-<!--TODO--></div>
     </template>
   </div>
 </template>
