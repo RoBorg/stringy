@@ -148,9 +148,40 @@ export async function getIpInfo(ip) {
   return result;
 }
 
+export function urlEncodedToUint8Array(str) {
+  try {
+    return Uint8Array.from(decodeURIComponent(str), c => c.charCodeAt(0));
+  } catch (e) {
+    const bytes = [];
+    let hexChar = 0;
+
+    for (let i = 0; i < str.length; i++) {
+      const char = str[i];
+
+      if (hexChar && !/[0-9a-f]/i.test(char)) {
+        throw new Error('Invalid data: ' + char);
+      }
+
+      if (char === '%') {
+        hexChar = 1;
+      } else if (hexChar === 1) {
+        hexChar++;
+      } else if (hexChar === 2) {
+        hexChar = 0;
+        bytes.push(parseInt(str[i - 1] + str[i], 16));
+      } else {
+        bytes.push(char.charCodeAt(0));
+      }
+    }
+
+    return Uint8Array.from(bytes);
+  }
+};
+
 export default {
   copy,
   imageInfo,
   getIp,
-  getIpInfo
+  getIpInfo,
+  urlEncodedToUint8Array
 };

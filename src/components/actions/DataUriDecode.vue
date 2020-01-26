@@ -10,6 +10,7 @@
 <script>
   import { Base64 } from 'js-base64';
   import Output from '../Output';
+  import { urlEncodedToUint8Array } from '../../helpers';
 
   const regEx = /^data:([^,]*?)(base64|),(.*)$/si;
 
@@ -36,7 +37,6 @@
         handler: function (value) {
           try {
             const matches = this.inputString.match(regEx);
-            let data;
 
             this.error = '';
 
@@ -44,15 +44,13 @@
               throw new Error('Invalid data URI');
             }
 
-            data = matches[3];
+            const data = matches[3];
 
             if (matches[2] !== '') {
-              data = Base64.atob(data);
+              this.intArray = this.toIntArray(Base64.atob(data));
             } else {
-              data = decodeURIComponent(data);
+              this.intArray = urlEncodedToUint8Array(data);
             }
-
-            this.intArray = this.toIntArray(data);
           } catch (e) {
             this.error = e.message;
           }
@@ -62,14 +60,6 @@
     methods: {
       toIntArray (str) {
         return Uint8Array.from(str, c => c.charCodeAt(0));
-        // const arrayBuffer = new ArrayBuffer(str.length);
-        // const intArray = new Uint8Array(arrayBuffer);
-
-        // for (let i = 0; i < str.length; i++) {
-        //   intArray[i] = str.charCodeAt(i);
-        // }
-
-        // return intArray;
       }
     },
     canParse (str) {

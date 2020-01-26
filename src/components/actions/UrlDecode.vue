@@ -9,15 +9,7 @@
 
 <script>
   import Output from '../Output';
-
-  const decode = (str) => {
-    try {
-      return decodeURIComponent(str);
-    } catch (e) {
-      // TODO binary somehow
-      throw new Error('Invalid data: ' + e.message);
-    }
-  };
+  import { urlEncodedToUint8Array } from '../../helpers';
 
   export default {
     name: 'UrlDecode',
@@ -36,15 +28,6 @@
         intArray: null
       };
     },
-    computed: {
-      outputString: function () {
-        try {
-          return this.decode(this.inputString);
-        } catch (e) {
-          return 'Invalid data: ' + e.message;
-        }
-      },
-    },
     watch: {
       inputString: {
         immediate: true,
@@ -52,19 +35,11 @@
           this.error = '';
 
           try {
-            const data = this.decode(this.inputString);
-
-            this.intArray = this.toIntArray(data);
+            this.intArray = urlEncodedToUint8Array(this.inputString);
           } catch (e) {
             this.error = e.message;
           }
         }
-      }
-    },
-    methods: {
-      decode,
-      toIntArray (str) {
-        return Uint8Array.from(str, c => c.charCodeAt(0));
       }
     },
     canParse (str) {
@@ -73,7 +48,7 @@
       }
 
       try {
-        decode(str);
+        urlEncodedToUint8Array(str);
 
         return true;
       } catch (e) {
