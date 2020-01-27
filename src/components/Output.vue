@@ -57,9 +57,14 @@
           </md-card-content>
         </md-card>
       </template>
-      <a download :href="asDataSrc.replace(/image\/jpeg/, 'application/octet-stream')" v-else>
-        Download binary file
-      </a>
+      <template v-else>
+        <md-button class="md-primary md-raised" download :href="asDataSrc.replace(/image\/jpeg/, 'application/octet-stream')">
+          Download binary file
+        </md-button>
+        <p>
+          {{ intArray.length.toLocaleString() }} bytes
+        </p>
+      </template>
     </template>
   </div>
 </template>

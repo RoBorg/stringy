@@ -37,6 +37,44 @@ export function imageInfo (text) {
   });
 }
 
+// From https://codereview.stackexchange.com/questions/59428/validating-utf-8-byte-array
+export function isValidUtf8 (intArray) {
+  const arrayLength = intArray.length;
+  let expectedLen;
+
+  for (let i = 0; i < arrayLength; i++) {
+    // Lead byte analysis
+    if ((intArray[i] & 0b10000000) === 0b00000000) {
+      continue;
+    } else if ((intArray[i] & 0b11100000) === 0b11000000) {
+      expectedLen = 2;
+    } else if ((intArray[i] & 0b11110000) === 0b11100000) {
+      expectedLen = 3;
+    } else if ((intArray[i] & 0b11111000) === 0b11110000) {
+      expectedLen = 4;
+    } else if ((intArray[i] & 0b11111100) === 0b11111000) {
+      expectedLen = 5;
+    } else if ((intArray[i] & 0b11111110) === 0b11111100) {
+      expectedLen = 6;
+    } else {
+      return false;
+    }
+
+    // Count trailing bytes
+    while (--expectedLen > 0) {
+      if (++i >= arrayLength) {
+        return false;
+      }
+
+      if ((intArray[i] & 0b11000000) !== 0b10000000) {
+        return false;
+      }
+    }
+  }
+
+  return true;
+}
+
 export function getFileInfo (intArray) {
   return new Promise(resolve => {
     const reader = new FileReader();
@@ -50,11 +88,7 @@ export function getFileInfo (intArray) {
       imageHeight: 0
     };
 
-    for (let i = 0; i < intArray.length; i++) {
-      if (intArray[i] <= 8) {
-        response.isText = false; // TODO: better test for valid UTF-8 (or 16?)
-      }
-    }
+    response.isText = isValidUtf8(intArray);
 
     reader.onloadend = async () => {
       response.asDataSrc = reader.result;
@@ -64,9 +98,26 @@ export function getFileInfo (intArray) {
       response.imageWidth = imageInfoResult.width;
       response.imageHeight = imageInfoResult.height;
 
-      if (!response.isImage && response.isText) {
+      if (response.isImage) {
+        response.isText = false;
+      }
+
+      if (response.isText) {
         response.asText = Base64.decode(response.asDataSrc.replace(/^.+?,/, ''));
-        response.isHtml = /<(html|head|title|body|div|span|a|p)/i.test(response.asText); // TODO better test?
+
+        // See if we have any low-value characters, in which case our string might
+        // be valid UTF-8 but is probably binary anyway
+        for (let i = 0; i < response.asText.length; i++) {
+          if (response.asText.charCodeAt(i) <= 8) {
+            response.isText = false;
+            response.asText = '';
+            break;
+          }
+        }
+      }
+
+      if (response.isText) {
+        response.isHtml = /<(!doctype|html|head|title|body|div|span|a|p)/i.test(response.asText);
       }
 
       resolve(response);
