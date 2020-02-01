@@ -25,14 +25,26 @@
   import action from './action.mixin';
   import { copy } from '../../helpers';
 
+  const unreserved = /[A-Za-z.~_-]/;
+  const chars = [];
+
+  for (let i = 0; i < 256; i++) {
+    const char = String.fromCharCode(i);
+
+    chars[i] = unreserved.test(char)
+      ? char
+      : '%' + i.toString(16).padStart(2, '0').toUpperCase()
+  }
+
   export default {
     name: 'UrlEncode',
     mixins: [action],
     computed: {
       outputString: {
         get () {
-          // TODO binary if (useFile)
-          return encodeURIComponent(this.text);
+          return this.useFile
+            ? this.encode(this.inputFile.asArrayBuffer)
+            : encodeURIComponent(this.text);
         },
         set () {
           // Do nothing
@@ -40,7 +52,12 @@
       }
     },
     methods: {
-      copy
+      copy,
+      encode (arrayBuffer) {
+        return [...new Uint8Array(arrayBuffer)]
+          .map(c => chars[c])
+          .join('');
+      }
     },
     canParse () {
       return false;
