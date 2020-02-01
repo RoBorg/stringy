@@ -28,7 +28,7 @@
     <br>
     <md-divider/>
     <br>
-    <component v-bind:is="currentComponent" :inputString="input" :inputArrayBuffer="inputArrayBuffer"/>
+    <component v-bind:is="currentComponent" :inputString="text" :inputFile="inputFile" :useFile="useFile"/>
   </div>
 </template>
 
@@ -64,27 +64,17 @@
       };
     },
     computed: {
-      ...mapState(['file', 'fileIsLoaded', 'fileContentsAsText', 'fileContentsAsArrayBuffer']),
+      ...mapState(['file', 'fileContentsAsText', 'fileContentsAsArrayBuffer', 'fileContentsAsDataUrl', 'text', 'useFile']),
       showTestData () {
         return window.location.hash.match(/test/);
       },
-      input: function () {
-        if (this.file) {
-          if (!this.fileIsLoaded) {
-            return '';
-          }
-
-          return this.fileContentsAsText;
-        }
-
-        return this.inputString;
-      },
-      inputArrayBuffer: function () {
-        if (!this.file || !this.fileIsLoaded) {
-          return null;
-        }
-
-        return this.fileContentsAsArrayBuffer;
+      inputFile: function () {
+        return {
+          file: this.file,
+          asArrayBuffer: this.fileContentsAsArrayBuffer,
+          asDataUrl: this.fileContentsAsDataUrl,
+          asText: this.fileContentsAsText,
+        };
       },
       currentComponent: function () {
         if (this.selectedAction !== 'auto') {
@@ -94,7 +84,8 @@
         return this.autoFunction.component;
       },
       autoFunction: function () {
-        const str = this.input.trim();
+        // TODO use file
+        const str = this.text.trim();
 
         if (str === '') {
           return unknown;
@@ -109,13 +100,13 @@
         return unknown;
       },
       characterCount: function () {
-        return this.inputString.length;
+        return this.text.length;
       },
       wordCount: function () {
-        return this.inputString.split(/\s+/).length;
+        return this.text.split(/\s+/).length;
       },
       lineCount: function () {
-        return (this.inputString.match(/\r\n|\r|\n/g) || []).length + 1;
+        return (this.text.match(/\r\n|\r|\n/g) || []).length + 1;
       },
       actionOptions: function () {
         const options = [];
@@ -133,10 +124,15 @@
       }
     },
     methods: {
-      ...mapMutations(['removeFile']),
+      ...mapMutations(['removeFile', 'setText']),
       getClipboardContents,
       async paste () {
         this.inputString = await this.getClipboardContents();
+      }
+    },
+    watch: {
+      inputString: function () {
+        this.setText(this.inputString);
       }
     }
   }

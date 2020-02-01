@@ -5,14 +5,17 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
+    useFile: false,
     file: null,
     fileContentsAsArrayBuffer: null,
+    fileContentsAsDataUrl: null,
     fileContentsAsText: null,
     fileIsLoaded: false,
     text: ''
   },
   mutations: {
     setFileIsLoaded (state, fileIsLoaded) {
+      state.useFile = true;
       state.fileIsLoaded = fileIsLoaded;
     },
     setFile (state, file) {
@@ -21,26 +24,35 @@ export default new Vuex.Store({
     setFileContentsAsArrayBuffer (state, fileContents) {
       state.fileContentsAsArrayBuffer = fileContents;
     },
+    setFileContentsAsDataUrl (state, fileContents) {
+      state.fileContentsAsDataUrl = fileContents;
+    },
     setFileContentsAsText (state, fileContents) {
       state.fileContentsAsText = fileContents;
     },
     removeFile (state) {
+      state.useFile = false;
       state.file = null;
       state.fileIsLoaded = false;
       state.fileContentsAsArrayBuffer = null;
       state.fileContentsAsText = null;
     },
-    setText (state, { text }) {
+    setText (state, text) {
+      state.useFile = false;
       state.text = text;
-      state.file = '';
+      state.file = null;
+    },
+    setUseFile (state, useFile) {
+      state.useFile = useFile;
     }
   },
   actions: {
     setFile ({ commit }, file) {
       return new Promise((resolve) => {
         const arrayBufferReader = new FileReader();
+        const dataUrlReader = new FileReader();
         const textReader = new FileReader();
-        let remaining = 2;
+        let remaining = 3;
         const loaded = () => {
           remaining--;
 
@@ -58,12 +70,18 @@ export default new Vuex.Store({
           loaded();
         };
 
+        dataUrlReader.onload = function(e) {
+          commit('setFileContentsAsDataUrl', e.target.result);
+          loaded();
+        };
+
         textReader.onload = function(e) {
           commit('setFileContentsAsText', e.target.result);
           loaded();
         };
 
         arrayBufferReader.readAsArrayBuffer(file);
+        dataUrlReader.readAsDataURL(file);
         textReader.readAsText(file);
       });
     }

@@ -28,16 +28,6 @@
 
   export default {
     name: 'Base64Encode',
-    props: {
-      inputString: {
-        type: String,
-        required: false
-      },
-      inputArrayBuffer: {
-        type: ArrayBuffer,
-        required: false
-      }
-    },
     data() {
       return {
         urlFriendly: false,
@@ -45,10 +35,24 @@
         wrapCharacters: 80
       };
     },
+    props: {
+      inputString: {
+        type: String,
+        required: true
+      },
+      inputFile: {
+        type: Object,
+        required: true
+      },
+      useFile: {
+        type: Boolean,
+        required: true
+      }
+    },
     computed: {
       outputString: function () {
-        let str = this.inputArrayBuffer
-          ? Base64.btoa(String.fromCharCode.apply(null, new Uint8Array(this.inputArrayBuffer)))
+        let str = this.useFile
+          ? this.inputFile.asDataUrl.replace(/^data:.*?;base64,/, '')
           : Base64.encode(this.inputString);
 
         if (this.wrap) {

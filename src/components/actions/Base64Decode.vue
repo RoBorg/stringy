@@ -8,6 +8,7 @@
 </template>
 
 <script>
+  import { mapState } from 'vuex';
   import { Base64 } from 'js-base64';
   import Output from '../Output';
 
@@ -21,6 +22,14 @@
     props: {
       inputString: {
         type: String,
+        required: true
+      },
+      inputFile: {
+        type: Object,
+        required: true
+      },
+      useFile: {
+        type: Boolean,
         required: true
       }
     },
