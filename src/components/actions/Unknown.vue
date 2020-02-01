@@ -5,16 +5,12 @@
 </template>
 
 <script>
+  import action from './action.mixin';
   import NoteBlock from '../NoteBlock.vue';
 
   export default {
     name: 'Unknown',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     components: {
       NoteBlock
     },

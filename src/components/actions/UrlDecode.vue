@@ -8,20 +8,12 @@
 </template>
 
 <script>
-  import Output from '../Output';
+  import action from './action.mixin';
   import { urlEncodedToUint8Array } from '../../helpers';
 
   export default {
     name: 'UrlDecode',
-    components: {
-      Output
-    },
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data () {
       return {
         error: '',

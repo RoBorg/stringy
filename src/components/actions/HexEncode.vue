@@ -25,19 +25,11 @@
 <script>
   import { Base64 } from 'js-base64';
   import { copy } from '../../helpers';
+  import action from './action.mixin';
 
   export default {
     name: 'HexEncode',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      },
-      inputArrayBuffer: {
-        type: ArrayBuffer,
-        required: false
-      }
-    },
+    mixins: [action],
     data() {
       return {
         format: false

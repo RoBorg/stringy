@@ -42,6 +42,7 @@
 
 <script>
   import pureColor from 'pure-color';
+  import action from './action.mixin';
 
   const isValid = (str) => {
     try {
@@ -53,12 +54,7 @@
 
   export default {
     name: 'CssColour',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data: function () {
       return {
         colour: '',

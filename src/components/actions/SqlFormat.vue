@@ -34,16 +34,12 @@
 
 <script>
   import sqlFormatter from 'sql-formatter';
+  import action from './action.mixin';
   import { copy } from '../../helpers';
 
   export default {
     name: 'SqlFormat',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data() {
       return {
         indentType: 'spaces',

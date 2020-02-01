@@ -36,16 +36,12 @@
 </template>
 
 <script>
+  import action from './action.mixin';
   import { copy } from '../../helpers';
 
   export default {
     name: 'JsonFormat',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data() {
       return {
         indentType: 'spaces',

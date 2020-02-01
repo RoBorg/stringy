@@ -8,21 +8,13 @@
 </template>
 
 <script>
-  import Output from '../Output';
+  import action from './action.mixin';
 
   const hexRegEx = /^[A-Fa-f0-9\s]+$/
 
   export default {
     name: 'HexDecode',
-    components: {
-      Output
-    },
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data () {
       return {
         error: '',

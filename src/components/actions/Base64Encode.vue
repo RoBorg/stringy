@@ -25,29 +25,17 @@
 
 <script>
   import { Base64 } from 'js-base64';
+  import action from './action.mixin';
 
   export default {
     name: 'Base64Encode',
+    mixins: [action],
     data() {
       return {
         urlFriendly: false,
         wrap: true,
         wrapCharacters: 80
       };
-    },
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      },
-      inputFile: {
-        type: Object,
-        required: true
-      },
-      useFile: {
-        type: Boolean,
-        required: true
-      }
     },
     computed: {
       outputString: function () {

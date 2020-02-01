@@ -165,16 +165,12 @@
 <script>
   import QrcodeVue from 'qrcode.vue';
   import { debounce} from 'lodash';
+  import action from './action.mixin';
   import { getIp, getIpInfo } from '../../helpers';
 
   export default {
     name: 'Url',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     components: {
       QrcodeVue,
     },

@@ -47,15 +47,11 @@
 
 <script>
   import moment from 'moment';
+  import action from './action.mixin';
 
   export default {
     name: 'UnixTimestamp',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data() {
       return {
         now: moment(),

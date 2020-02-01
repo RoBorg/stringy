@@ -9,22 +9,14 @@
 
 <script>
   import { Base64 } from 'js-base64';
-  import Output from '../Output';
+  import action from './action.mixin';
   import { urlEncodedToUint8Array } from '../../helpers';
 
   const regEx = /^data:([^,]*?)(base64|),(.*)$/si;
 
   export default {
     name: 'DataUriDecode',
-    components: {
-      Output
-    },
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data () {
       return {
         error: '',

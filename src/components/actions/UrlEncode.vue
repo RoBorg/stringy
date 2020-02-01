@@ -22,16 +22,12 @@
 </template>
 
 <script>
+  import action from './action.mixin';
   import { copy } from '../../helpers';
 
   export default {
     name: 'UrlEncode',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     computed: {
       outputString: function () {
         return encodeURIComponent(this.inputString);

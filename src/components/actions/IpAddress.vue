@@ -135,18 +135,14 @@
 </template>
 
 <script>
+  import action from './action.mixin';
   import { getIp, getIpInfo } from '../../helpers';
 
   const regEx = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?:\/([12]?\d|3[012]))?$/;
 
   export default {
     name: 'IpAddress',
-    props: {
-      inputString: {
-        type: String,
-        required: true
-      }
-    },
+    mixins: [action],
     data () {
       return {
         ipInfo: {}
