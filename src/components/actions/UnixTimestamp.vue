@@ -1,6 +1,12 @@
 <template>
   <div>
-    <table class="data">
+    <NoteBlock warning v-if="text === ''">
+      No timestamp given
+    </NoteBlock>
+    <NoteBlock alert v-else-if="error">
+      {{ error }}
+    </NoteBlock>
+    <table class="data" v-else>
       <thead>
         <tr>
           <th>Element</th>
@@ -54,6 +60,7 @@
     mixins: [action],
     data() {
       return {
+        date: null,
         now: moment(),
       }
     },
@@ -61,19 +68,14 @@
       setInterval(() => this.now = moment(), 1000);
     },
     computed: {
-      date () {
-        let timestamp = this.text.trim();
-
-        if (timestamp.length === 10) {
-          timestamp += '000';
-        }
-
-        return moment(parseInt(timestamp));
-      },
       isInFuture () {
-        return this.date.diff(moment()) > 0;
+        return this.date ? this.date.diff(moment()) > 0 : null;
       },
       duration () {
+        if (!this.date) {
+          return null;
+        }
+
         const duration = moment.duration(this.date.diff(this.now));
         const parts = [];
         const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
@@ -90,6 +92,25 @@
         }
 
         return parts;
+      }
+    },
+    watch: {
+      text: {
+        immediate: true,
+        handler (value) {
+          let timestamp = this.text.trim();
+
+          if (timestamp.length === 10) {
+            timestamp += '000';
+          }
+
+          this.error = '';
+          this.date = moment(parseInt(timestamp));
+
+          if (!this.date.isValid()) {
+            this.error = 'Invalid timestamp';
+          }
+        }
       }
     },
     canParse (str) {

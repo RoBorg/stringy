@@ -50,17 +50,22 @@
       }
     },
     computed: {
-      outputString () {
-        this.error = '';
+      outputString: {
+        get () {
+          this.error = '';
 
-        try {
-          const json = JSON.parse(this.text);
-          return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
-        } catch (e) {
-          this.error = e.message;
+          try {
+            const json = JSON.parse(this.text);
+            return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
+          } catch (e) {
+            this.error = e.message;
+          }
+
+          return '';
+        },
+        set () {
+          // Do nothing
         }
-
-        return '';
       }
     },
     methods: {

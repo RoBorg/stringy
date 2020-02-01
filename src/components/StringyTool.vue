@@ -57,10 +57,10 @@
     components,
     data() {
       return {
+        actions,
         inputString: '',
         stringType: null,
-        selectedAction: 'auto',
-        actions
+        selectedAction: 'auto'
       };
     },
     computed: {

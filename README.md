@@ -39,3 +39,6 @@ yarn run lint
  - Dark mode
  - Allow different text encodings
  - Catch all errors
+ - Clean up warnings
+ - Fix re-rendering bug when changing action
+ - Data URI encode

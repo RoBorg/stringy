@@ -29,10 +29,15 @@
     name: 'UrlEncode',
     mixins: [action],
     computed: {
-      outputString () {
-        // TODO binary if (useFile)
-        return encodeURIComponent(this.text);
-      },
+      outputString: {
+        get () {
+          // TODO binary if (useFile)
+          return encodeURIComponent(this.text);
+        },
+        set () {
+          // Do nothing
+        }
+      }
     },
     methods: {
       copy

@@ -36,24 +36,29 @@
       };
     },
     computed: {
-      outputString () {
-        let result = this.useFile
-          ? [...new Uint8Array(this.inputFile.asArrayBuffer)]
-          : [...new TextEncoder().encode(this.inputString)];
+      outputString: {
+        get () {
+          let result = this.useFile
+            ? [...new Uint8Array(this.inputFile.asArrayBuffer)]
+            : [...new TextEncoder().encode(this.inputString)];
 
-        result = result.map(b => b.toString(16).padStart(2, '0'));
+          result = result.map(b => b.toString(16).padStart(2, '0'));
 
-        if (this.format) {
-          return result.reduce((accumulator, currentValue, index) => {
-            const newLine = index % 16 ? '' : '\n';
-            const space = index % 2 ? '' : ' ';
-            const divider = newLine ? newLine : space;
+          if (this.format) {
+            return result.reduce((accumulator, currentValue, index) => {
+              const newLine = index % 16 ? '' : '\n';
+              const space = index % 2 ? '' : ' ';
+              const divider = newLine ? newLine : space;
 
-            return accumulator + divider + currentValue;
-          });
+              return accumulator + divider + currentValue;
+            });
+          }
+
+          return result.join('');
+        },
+        set () {
+          // Do nothing
         }
-
-        return result.join('');
       }
     },
     methods: {
