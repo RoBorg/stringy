@@ -46,22 +46,24 @@
       return {
         indentType: 'spaces',
         indentSpaces: 4,
-        error: ''
+        error: '',
+        outputString: ''
       }
     },
-    computed: {
-      outputString: {
-        get () {
+    watch: {
+      text: {
+        immediate: true,
+        handler (value) {
+          this.outputString = '';
           this.error = '';
 
           try {
-            const json = JSON.parse(this.text);
-            return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
+            const json = JSON.parse(value);
+
+            this.outputString = JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
           } catch (e) {
             this.error = e.message;
           }
-
-          return '';
         },
         set () {
           // Do nothing

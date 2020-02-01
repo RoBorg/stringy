@@ -227,7 +227,7 @@ export function urlEncodedToUint8Array(str) {
 
     return Uint8Array.from(bytes);
   }
-};
+}
 
 export default {
   copy,

@@ -136,7 +136,7 @@
 
 <script>
   import action from './action.mixin';
-  import { getIp, getIpInfo } from '../../helpers';
+  import { getIpInfo } from '../../helpers';
 
   const regEx = /^((?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))(?:\/([12]?\d|3[012]))?$/;
 

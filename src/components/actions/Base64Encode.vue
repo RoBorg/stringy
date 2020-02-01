@@ -56,7 +56,7 @@
 
           if (this.urlFriendly) {
             str = str
-              .replace(/[+\/]/g, c => c === '+' ? '-' : '_')
+              .replace(/[+/]/g, c => c === '+' ? '-' : '_')
               .replace(/=+$/g, '');
           }
 

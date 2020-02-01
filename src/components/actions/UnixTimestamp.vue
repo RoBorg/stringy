@@ -98,7 +98,7 @@
       text: {
         immediate: true,
         handler (value) {
-          let timestamp = this.text.trim();
+          let timestamp = value.trim();
 
           if (timestamp.length === 10) {
             timestamp += '000';
