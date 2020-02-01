@@ -192,7 +192,7 @@
           const parser = document.createElement('a');
           const searchObject = [];
 
-          parser.href = this.inputString.trim();
+          parser.href = this.text.trim();
 
           // Convert query string to object
           const queries = parser.search.replace(/^\?/, '').split(/&|;/);

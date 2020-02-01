@@ -62,7 +62,7 @@
     },
     computed: {
       date () {
-        let timestamp = this.inputString.trim();
+        let timestamp = this.text.trim();
 
         if (timestamp.length === 10) {
           timestamp += '000';

@@ -30,7 +30,8 @@
     mixins: [action],
     computed: {
       outputString () {
-        return encodeURIComponent(this.inputString);
+        // TODO binary if (useFile)
+        return encodeURIComponent(this.text);
       },
     },
     methods: {

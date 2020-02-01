@@ -52,7 +52,7 @@
           indent: this.indentType === 'spaces' ? ' '.repeat(this.indentSpaces) : '\t'
         };
 
-        return sqlFormatter.format(this.inputString, options);
+        return sqlFormatter.format(this.text, options);
       }
     },
     methods: {

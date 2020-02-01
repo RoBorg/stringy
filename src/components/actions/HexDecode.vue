@@ -22,17 +22,17 @@
       };
     },
     watch: {
-      inputString: {
+      text: {
         immediate: true,
         handler (value) {
           try {
             this.error = '';
 
-            if ((this.inputString !== '') && !hexRegEx.test(this.inputString)) {
+            if ((value !== '') && !hexRegEx.test(value)) {
               throw new Error('Invalid hex data');
             }
 
-            this.intArray = this.toIntArray(this.inputString);
+            this.intArray = this.toIntArray(value);
           } catch (e) {
             this.error = e.message;
           }

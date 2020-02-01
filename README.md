@@ -38,3 +38,4 @@ yarn run lint
  - SSL cert https://www.npmjs.com/package/openssl.js ?
  - Dark mode
  - Allow different text encodings
+ - Catch all errors

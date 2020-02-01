@@ -150,10 +150,10 @@
     },
     computed: {
       error () {
-        return !regEx.test(this.inputString);
+        return !regEx.test(this.text);
       },
       info () {
-        const parts = this.inputString.trim().split('/');
+        const parts = this.text.trim().split('/');
         const ip = parts[0];
         const ipInt = this.ipToInt(ip);
         const networkBits = parts[1] || 32;
@@ -201,15 +201,15 @@
       }
     },
     watch: {
-      inputString: {
-        handler: async function () {
+      text: {
+        handler: async function (value) {
           this.ipInfo = {};
 
           if (this.error) {
             return;
           }
 
-          const parts = this.inputString.trim().split('/');
+          const parts = value.trim().split('/');
 
           if (parts.length > 1) {
             return;

@@ -21,13 +21,13 @@
       };
     },
     watch: {
-      inputString: {
+      text: {
         immediate: true,
-        handler () {
+        handler (value) {
           this.error = '';
 
           try {
-            this.intArray = urlEncodedToUint8Array(this.inputString);
+            this.intArray = urlEncodedToUint8Array(value);
           } catch (e) {
             this.error = e.message;
           }

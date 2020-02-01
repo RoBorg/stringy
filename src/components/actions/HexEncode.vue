@@ -37,13 +37,9 @@
     },
     computed: {
       outputString () {
-        let result;
-
-        if (this.inputArrayBuffer) {
-          result = [...new Uint8Array(this.inputArrayBuffer)];
-        } else {
-          result = [...new TextEncoder().encode(this.inputString)];
-        }
+        let result = this.useFile
+          ? [...new Uint8Array(this.inputFile.asArrayBuffer)]
+          : [...new TextEncoder().encode(this.inputString)];
 
         result = result.map(b => b.toString(16).padStart(2, '0'));
 
