@@ -31,7 +31,11 @@
     props: {
       inputString: {
         type: String,
-        required: true
+        required: false
+      },
+      inputArrayBuffer: {
+        type: ArrayBuffer,
+        required: false
       }
     },
     data() {
@@ -43,7 +47,9 @@
     },
     computed: {
       outputString: function () {
-        let str = Base64.encode(this.inputString, this.urlFriendly);
+        let str = this.inputArrayBuffer
+          ? Base64.btoa(String.fromCharCode.apply(null, new Uint8Array(this.inputArrayBuffer)))
+          : Base64.encode(this.inputString);
 
         if (this.wrap) {
           str = str.replace(new RegExp(`(.{${this.wrapCharacters}})`, 'g'), '$1\n');
