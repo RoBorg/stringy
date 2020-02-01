@@ -84,8 +84,7 @@
         return this.autoFunction.component;
       },
       autoFunction: function () {
-        // TODO use file
-        const str = this.text.trim();
+        const str = (this.useFile ? this.fileContentsAsText : this.text).trim();
 
         if (str === '') {
           return unknown;

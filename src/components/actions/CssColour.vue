@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
+    <NoteBlock warning v-if="text === ''">
       Nothing to parse
     </NoteBlock>
     <NoteBlock alert v-else-if="error">
@@ -98,9 +98,9 @@
       isValid
     },
     watch: {
-      inputString: {
-        handler () {
-          this.colour = isValid(this.inputString) ? pureColor.convert.rgb.hex(pureColor.parse(this.inputString)) : '#000000';
+      text: {
+        handler (value) {
+          this.colour = isValid(value) ? pureColor.convert.rgb.hex(pureColor.parse(value)) : '#000000';
           this.chosenColour = this.colour.substr(0, 7);
         },
         immediate: true

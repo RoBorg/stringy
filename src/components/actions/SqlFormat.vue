@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
+    <NoteBlock warning v-if="text === ''">
       Nothing to format
     </NoteBlock>
     <template v-else>

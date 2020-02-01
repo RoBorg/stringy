@@ -18,4 +18,9 @@ export default {
       required: true
     }
   },
+  computed: {
+    text() {
+      return this.useFile ? this.inputFile.asText : this.inputString;
+    }
+  }
 };

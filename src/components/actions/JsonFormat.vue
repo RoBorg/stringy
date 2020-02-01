@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
+    <NoteBlock warning v-if="text === ''">
       Nothing to format
     </NoteBlock>
     <NoteBlock alert v-else-if="error">
@@ -54,7 +54,7 @@
         this.error = '';
 
         try {
-          const json = JSON.parse(this.inputString)
+          const json = JSON.parse(this.text);
           return JSON.stringify(json, null, this.indentType === 'tabs' ? '\t' : parseInt(this.indentSpaces));
         } catch (e) {
           this.error = e.message;

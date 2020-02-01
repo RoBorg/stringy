@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NoteBlock warning v-if="inputString === ''">
+    <NoteBlock warning v-if="text === ''">
       Nothing to decode
     </NoteBlock>
     <NoteBlock alert v-else-if="error">

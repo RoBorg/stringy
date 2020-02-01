@@ -15,7 +15,7 @@ export default new Vuex.Store({
   },
   mutations: {
     setFileIsLoaded (state, fileIsLoaded) {
-      state.useFile = true;
+      state.useFile = fileIsLoaded;
       state.fileIsLoaded = fileIsLoaded;
     },
     setFile (state, file) {

@@ -23,17 +23,17 @@
       };
     },
     watch: {
-      inputString: {
+      text: {
         immediate: true,
         handler: async function (value) {
           try {
             this.error = '';
 
-            if (!regEx.test(this.inputString)) {
+            if (!regEx.test(value)) {
               throw new Error('Invalid Base64 data');
             }
 
-            this.intArray = this.toIntArray(Base64.atob(this.inputString));
+            this.intArray = this.toIntArray(Base64.atob(value));
           } catch (e) {
             this.error = e.message;
           }

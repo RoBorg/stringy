@@ -24,11 +24,11 @@
       };
     },
     watch: {
-      inputString: {
+      text: {
         immediate: true,
         handler: function (value) {
           try {
-            const matches = this.inputString.match(regEx);
+            const matches = value.match(regEx);
 
             this.error = '';
 
