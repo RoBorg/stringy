@@ -47,7 +47,7 @@
       }
     },
     computed: {
-      outputString: function () {
+      outputString () {
         const options = {
           indent: this.indentType === 'spaces' ? ' '.repeat(this.indentSpaces) : '\t'
         };

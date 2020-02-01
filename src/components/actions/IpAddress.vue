@@ -149,10 +149,10 @@
       };
     },
     computed: {
-      error: function () {
+      error () {
         return !regEx.test(this.inputString);
       },
-      info: function () {
+      info () {
         const parts = this.inputString.trim().split('/');
         const ip = parts[0];
         const ipInt = this.ipToInt(ip);
@@ -183,7 +183,7 @@
           hosts
         }
       },
-      hosts: function () {
+      hosts () {
         return (2 ** (32 - this.info.networkBits)).toLocaleString();
       }
     },

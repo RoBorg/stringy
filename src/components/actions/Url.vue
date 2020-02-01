@@ -187,7 +187,7 @@
       };
     },
     computed: {
-      url: function () {
+      url () {
         try {
           const parser = document.createElement('a');
           const searchObject = [];

@@ -95,7 +95,7 @@
       };
     },
     watch: {
-      sandbox: function () {
+      sandbox () {
         const temp = this.asText;
         this.asText = '';
 

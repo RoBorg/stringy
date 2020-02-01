@@ -50,7 +50,7 @@
       }
     },
     computed: {
-      outputString: function () {
+      outputString () {
         this.error = '';
 
         try {

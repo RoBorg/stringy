@@ -68,7 +68,7 @@
       showTestData () {
         return window.location.hash.match(/test/);
       },
-      inputFile: function () {
+      inputFile () {
         return {
           file: this.file,
           asArrayBuffer: this.fileContentsAsArrayBuffer,
@@ -76,14 +76,14 @@
           asText: this.fileContentsAsText,
         };
       },
-      currentComponent: function () {
+      currentComponent () {
         if (this.selectedAction !== 'auto') {
           return actions[this.selectedAction].component;
         }
 
         return this.autoFunction.component;
       },
-      autoFunction: function () {
+      autoFunction () {
         const str = (this.useFile ? this.fileContentsAsText : this.text).trim();
 
         if (str === '') {
@@ -98,16 +98,16 @@
 
         return unknown;
       },
-      characterCount: function () {
+      characterCount () {
         return this.text.length;
       },
-      wordCount: function () {
+      wordCount () {
         return this.text.split(/\s+/).length;
       },
-      lineCount: function () {
+      lineCount () {
         return (this.text.match(/\r\n|\r|\n/g) || []).length + 1;
       },
-      actionOptions: function () {
+      actionOptions () {
         const options = [];
 
         for (const i in this.actions) {
@@ -130,7 +130,7 @@
       }
     },
     watch: {
-      inputString: function () {
+      inputString () {
         this.setText(this.inputString);
       }
     }

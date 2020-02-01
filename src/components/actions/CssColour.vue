@@ -55,17 +55,17 @@
   export default {
     name: 'CssColour',
     mixins: [action],
-    data: function () {
+    data () {
       return {
         colour: '',
         chosenColour: '#000000'
       };
     },
     computed: {
-      error: function () {
+      error () {
         return !isValid(this.colour);
       },
-      rgbColour: function () {
+      rgbColour () {
         try {
           return pureColor.parse(this.colour);
         } catch (e) {
@@ -74,10 +74,10 @@
 
         return undefined;
       },
-      asHex: function () {
+      asHex () {
         return this.error ? '' : pureColor.convert.rgb.hex(this.rgbColour);
       },
-      asHsl: function () {
+      asHsl () {
         if (this.error) {
           return '';
         }
@@ -90,7 +90,7 @@
 
         return this.error ? '' : pureColor.convert.hsl.string(hsl).replace(/,/g, ', ');
       },
-      asRgb: function () {
+      asRgb () {
         return this.error ? '' : pureColor.convert.rgb.string(this.rgbColour).replace(/,/g, ', ');
       }
     },

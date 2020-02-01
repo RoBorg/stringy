@@ -29,7 +29,7 @@
     name: 'UrlEncode',
     mixins: [action],
     computed: {
-      outputString: function () {
+      outputString () {
         return encodeURIComponent(this.inputString);
       },
     },

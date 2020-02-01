@@ -36,7 +36,7 @@
       };
     },
     computed: {
-      outputString: function () {
+      outputString () {
         let result;
 
         if (this.inputArrayBuffer) {

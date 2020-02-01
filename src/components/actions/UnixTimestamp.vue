@@ -57,11 +57,11 @@
         now: moment(),
       }
     },
-    created: function () {
+    created () {
       setInterval(() => this.now = moment(), 1000);
     },
     computed: {
-      date: function () {
+      date () {
         let timestamp = this.inputString.trim();
 
         if (timestamp.length === 10) {
@@ -70,10 +70,10 @@
 
         return moment(parseInt(timestamp));
       },
-      isInFuture: function () {
+      isInFuture () {
         return this.date.diff(moment()) > 0;
       },
-      duration: function () {
+      duration () {
         const duration = moment.duration(this.date.diff(this.now));
         const parts = [];
         const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];

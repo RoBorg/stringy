@@ -38,7 +38,7 @@
       };
     },
     computed: {
-      outputString: function () {
+      outputString () {
         let str = this.useFile
           ? this.inputFile.asDataUrl.replace(/^data:.*?;base64,/, '')
           : Base64.encode(this.inputString);

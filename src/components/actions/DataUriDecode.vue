@@ -26,7 +26,7 @@
     watch: {
       text: {
         immediate: true,
-        handler: function (value) {
+        handler (value) {
           try {
             const matches = value.match(regEx);
 

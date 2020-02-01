@@ -15,7 +15,7 @@
       NoteBlock
     },
     computed: {
-      outputString: function () {
+      outputString () {
         return 'Dunno LOL';
       }
     },
