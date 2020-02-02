@@ -31,14 +31,14 @@
     computed: {
       outputString: {
         get () {
-          return this.text.replace(/\\/g, '\\\\').
-            replace(/\u0008/g, '\\b').
-            replace(/\t/g, '\\t').
-            replace(/\n/g, '\\n').
-            replace(/\f/g, '\\f').
-            replace(/\r/g, '\\r').
-            replace(/'/g, '\\\'').
-            replace(/"/g, '\\"');
+          return this.text.replace(/\\/g, '\\\\')
+            .replace(/\u0008/g, '\\b') // eslint-disable-line no-control-regex
+            .replace(/\t/g, '\\t')
+            .replace(/\n/g, '\\n')
+            .replace(/\f/g, '\\f')
+            .replace(/\r/g, '\\r')
+            .replace(/'/g, '\\\'')
+            .replace(/"/g, '\\"')
         },
         set () {
           // Do nothing

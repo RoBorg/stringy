@@ -29,9 +29,9 @@
           try {
             const uuid = '----STRINGY DOUBLE SLASH----';
             const escapes = {
-              '\\a': '\a',
+              '\\a': '\u0007',
               '\\b': '\b',
-              '\\e': '\e',
+              '\\e': '\u001B',
               '\\f': '\f',
               '\\n': '\n',
               '\\r': '\r',
