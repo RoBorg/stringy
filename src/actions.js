@@ -12,60 +12,80 @@ import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
 
+export const types = {
+  decoder: 'Decoders',
+  encoder: 'Encoders',
+  formatter: 'Formatters',
+  other: 'Other'
+};
+
 // Actions, in order of most specific first
 // E.g. Base 64 Decode will match a unix timestamp, so make sure
 // Unix Timestamp comes before it
-export default [
+export const actions = [
   {
     name: 'CSS Colour',
-    component: CssColour
+    component: CssColour,
+    type: 'other',
   },
   {
     name: 'Data URI Decode',
-    component: DataUriDecode
+    component: DataUriDecode,
+    type: 'decoder'
   },
   {
     name: 'Unix Timestamp',
-    component: UnixTimestamp
+    component: UnixTimestamp,
+    type: 'other'
   },
   {
     name: 'IP Address',
-    component: IpAddress
+    component: IpAddress,
+    type: 'other'
   },
   {
     name: 'Hex Decode',
-    component: HexDecode
+    component: HexDecode,
+    type: 'decoder'
   },
   {
     name: 'Hex Encode',
-    component: HexEncode
+    component: HexEncode,
+    type: 'encoder'
   },
   {
     name: 'Base 64 Decode',
-    component: Base64Decode
+    component: Base64Decode,
+    type: 'decoder'
   },
   {
     name: 'Base 64 Encode',
-    component: Base64Encode
+    component: Base64Encode,
+    type: 'encoder'
   },
   {
     name: 'JSON Format',
-    component: JsonFormat
+    component: JsonFormat,
+    type: 'formatter'
   },
   {
     name: 'SQL Format',
-    component: SqlFormat
+    component: SqlFormat,
+    type: 'formatter'
   },
   {
     name: 'URL Information',
-    component: Url
+    component: Url,
+    type: 'other'
   },
   {
     name: 'URL Decode',
-    component: UrlDecode
+    component: UrlDecode,
+    type: 'decoder'
   },
   {
     name: 'URL Encode',
-    component: UrlEncode
+    component: UrlEncode,
+    type: 'encoder'
   }
 ];

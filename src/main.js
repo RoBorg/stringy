@@ -3,7 +3,7 @@ import App from './App.vue';
 import Copy from './components/Copy';
 import NoteBlock from './components/NoteBlock';
 import VueHighlightJS from 'vue-highlightjs';
-import { MdApp, MdButton, MdCard, MdCheckbox, MdContent, MdDivider, MdField, MdRadio, MdSnackbar, MdToolbar } from 'vue-material/dist/components'
+import { MdApp, MdButton, MdCard, MdCheckbox, MdContent, MdDivider, MdField, MdRadio, MdSnackbar, MdTabs, MdToolbar } from 'vue-material/dist/components'
 import store from './store/index';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faCopy } from '@fortawesome/free-solid-svg-icons';
@@ -29,6 +29,7 @@ Vue.use(MdDivider);
 Vue.use(MdField);
 Vue.use(MdRadio);
 Vue.use(MdSnackbar);
+Vue.use(MdTabs);
 Vue.use(MdToolbar);
 
 Vue.config.productionTip = false;

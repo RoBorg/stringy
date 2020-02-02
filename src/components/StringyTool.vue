@@ -19,6 +19,10 @@
     <br>
     <md-divider/>
     <br>
+    <md-tabs md-active-tab="all" @md-changed="filterActions">
+      <md-tab id="all" md-label="All"></md-tab>
+      <md-tab v-for="(label, type) in types" :key="type" :id="type" :md-label="label"></md-tab>
+    </md-tabs>
     <md-radio v-model="selectedAction" value="auto">
         <strong>Auto ({{ autoFunction.name }})</strong>
     </md-radio>
@@ -36,7 +40,7 @@
   import Copy from './Copy';
   import TestData from './TestData';
   import Unknown from './actions/Unknown';
-  import actions from '../actions';
+  import { actions, types } from '../actions';
   import { paste as getClipboardContents } from '../helpers';
   import { mapMutations, mapState } from 'vuex';
 
@@ -58,9 +62,11 @@
     data() {
       return {
         actions,
+        types,
         inputString: '',
         stringType: null,
-        selectedAction: 'auto'
+        selectedAction: 'auto',
+        actionsFilter: 'all'
       };
     },
     computed: {
@@ -111,10 +117,15 @@
         const options = [];
 
         for (const i in this.actions) {
-          options.push({
-            value: i,
-            text: this.actions[i].name
-          });
+          if (
+            (this.actionsFilter === 'all')
+            || (this.actions[i].type === this.actionsFilter)
+          ) {
+            options.push({
+              value: i,
+              text: this.actions[i].name
+            });
+          }
         }
 
         options.sort((a, b) => a.text.localeCompare(b.text));
@@ -127,6 +138,9 @@
       getClipboardContents,
       async paste () {
         this.inputString = await this.getClipboardContents();
+      },
+      filterActions (type) {
+        this.actionsFilter = type;
       }
     },
     watch: {
