@@ -32,7 +32,6 @@ yarn run lint
  - Test binary encode/decode
  - XML formatter/validator/encoder/decoder
  - HTML formatter/validator
- - Escape/unescape slashes
  - (S)CSS formatter
  - SSH key (format conversion, public from private)
  - SSL cert https://www.npmjs.com/package/openssl.js ?

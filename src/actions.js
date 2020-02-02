@@ -1,9 +1,13 @@
 import Base64Encode from './components/actions/Base64Encode';
 import Base64Decode from './components/actions/Base64Decode';
+import CSlashesDecode from './components/actions/CSlashesDecode';
+import CSlashesEncode from './components/actions/CSlashesEncode';
 import CssColour from './components/actions/CssColour';
 import DataUriDecode from './components/actions/DataUriDecode';
 import HexEncode from './components/actions/HexEncode';
 import HexDecode from './components/actions/HexDecode';
+import HtmlDecode from './components/actions/HtmlDecode';
+import HtmlEncode from './components/actions/HtmlEncode';
 import IpAddress from './components/actions/IpAddress';
 import JsonFormat from './components/actions/JsonFormat';
 import SqlFormat from './components/actions/SqlFormat';
@@ -11,8 +15,6 @@ import UnixTimestamp from './components/actions/UnixTimestamp';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
-import HtmlDecode from './components/actions/HtmlDecode';
-import HtmlEncode from './components/actions/HtmlEncode';
 
 export const types = {
   decoder: 'Decoders',
@@ -88,6 +90,16 @@ export const actions = [
   {
     name: 'URL Encode',
     component: UrlEncode,
+    type: 'encoder'
+  },
+  {
+    name: 'C Slashes Decode',
+    component: CSlashesDecode,
+    type: 'decoder'
+  },
+  {
+    name: 'C Slashes Encode',
+    component: CSlashesEncode,
     type: 'encoder'
   },
   {
