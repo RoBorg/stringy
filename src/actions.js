@@ -11,6 +11,8 @@ import UnixTimestamp from './components/actions/UnixTimestamp';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
 import UrlEncode from './components/actions/UrlEncode';
+import HtmlDecode from './components/actions/HtmlDecode';
+import HtmlEncode from './components/actions/HtmlEncode';
 
 export const types = {
   decoder: 'Decoders',
@@ -86,6 +88,16 @@ export const actions = [
   {
     name: 'URL Encode',
     component: UrlEncode,
+    type: 'encoder'
+  },
+  {
+    name: 'HTML Decode',
+    component: HtmlDecode,
+    type: 'decoder'
+  },
+  {
+    name: 'HTML Encode',
+    component: HtmlEncode,
     type: 'encoder'
   }
 ];

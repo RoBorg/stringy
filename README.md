@@ -31,7 +31,7 @@ yarn run lint
 ## ToDo
  - Test binary encode/decode
  - XML formatter/validator/encoder/decoder
- - HTML formatter/validator/encoder/decoder
+ - HTML formatter/validator
  - Escape/unescape slashes
  - (S)CSS formatter
  - SSH key (format conversion, public from private)
