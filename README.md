@@ -41,3 +41,4 @@ yarn run lint
  - Clean up warnings
  - Fix re-rendering bug when changing action
  - Data URI encode
+ - Unix file permissions?
