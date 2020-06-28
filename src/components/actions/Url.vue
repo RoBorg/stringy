@@ -99,7 +99,7 @@
             <td class="with-subtable">
               <table class="data parameters">
                   <tbody>
-                    <tr v-for="query in url.searchObject">
+                    <tr v-for="query in url.searchObject" :key="query">
                       <td>
                         {{ query.name }}
                         <Copy :text="query.name"/>
@@ -118,7 +118,7 @@
             <td class="with-subtable">
               <table class="data parameters">
                   <tbody>
-                    <tr v-for="query in url.searchObject">
+                    <tr v-for="query in url.searchObject" :key="query">
                       <td>
                         {{ query.nameDecoded }}
                         <Copy :text="query.nameDecoded"/>
