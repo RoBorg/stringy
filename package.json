@@ -14,7 +14,7 @@
     "core-js": "^3.6.5",
     "he": "^1.2.0",
     "js-base64": "^2.6.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "moment": "^2.27.0",
     "pure-color": "https://github.com/RoBorg/pure-color",
     "qrcode.vue": "^1.7.0",
