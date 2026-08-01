@@ -4,31 +4,31 @@
       Nothing to encode
     </NoteBlock>
     <template v-else>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">Output</div>
-        </md-card-header>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Output</div>
+        </div>
 
-        <md-card-content>
-          <md-field>
-            <md-textarea v-model="outputString" readonly/>
-          </md-field>
-        </md-card-content>
+        <div class="card-content">
+          <div class="field">
+            <textarea v-model="outputString" readonly/>
+          </div>
+        </div>
 
-        <md-card-actions>
-          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
-        </md-card-actions>
-      </md-card>
+        <div class="card-actions">
+          <button type="button" class="btn btn-primary" @click="copy(outputString)">Copy</button>
+        </div>
+      </div>
 
-      <md-checkbox v-model="urlFriendly">
+      <label class="checkbox">
+        <input type="checkbox" v-model="urlFriendly">
         URL friendly (use <code>-_</code> instead of <code>+/</code> <a href="https://tools.ietf.org/html/rfc4648" target="_blank">RFC 4648</a>)
-      </md-checkbox>
-      <md-checkbox v-model="wrap">
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" v-model="wrap">
         Wrap at
-        <md-field>
-          <md-input type="number" min="1" v-model="wrapCharacters"/>
-        </md-field>
-      </md-checkbox>
+        <input type="number" min="1" v-model="wrapCharacters">
+      </label>
     </template>
   </div>
 </template>
@@ -36,6 +36,7 @@
 <script>
   import { Base64 } from 'js-base64';
   import action from './action.mixin';
+  import { copy } from '../../helpers';
 
   export default {
     name: 'Base64Encode',
@@ -46,6 +47,9 @@
         wrap: true,
         wrapCharacters: 80
       };
+    },
+    methods: {
+      copy
     },
     computed: {
       outputString: {

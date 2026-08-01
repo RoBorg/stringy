@@ -10,57 +10,57 @@
       Loading...
     </NoteBlock>
     <template v-else>
-      <md-card v-if="isImage">
-        <md-card-header>
-          <div class="md-title">Decoded Image</div>
-          <div class="md-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
-        </md-card-header>
+      <div class="card" v-if="isImage">
+        <div class="card-header">
+          <div class="card-title">Decoded Image</div>
+          <div class="card-subhead">{{ imageWidth }}px &times; {{ imageHeight }}px</div>
+        </div>
 
-        <md-card-content>
+        <div class="card-content">
           <img :src="asDataSrc"/>
-        </md-card-content>
+        </div>
 
-        <md-card-actions>
-          <md-button :href="asDataSrc" download class="md-primary md-raised">Download</md-button>
-        </md-card-actions>
-      </md-card>
+        <div class="card-actions">
+          <a :href="asDataSrc" download class="btn btn-primary">Download</a>
+        </div>
+      </div>
       <template v-else-if="isText">
-        <md-card>
-          <md-card-header>
-            <div class="md-title">Output</div>
-          </md-card-header>
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">Output</div>
+          </div>
 
-          <md-card-content>
-            <md-field>
-              <md-textarea v-model="asText" readonly/>
-            </md-field>
-          </md-card-content>
+          <div class="card-content">
+            <div class="field">
+              <textarea v-model="asText" readonly/>
+            </div>
+          </div>
 
-          <md-card-actions>
-            <md-button class="md-primary md-raised" @click="copy(asText)">Copy</md-button>
-          </md-card-actions>
-        </md-card>
-        <md-card v-if="isHtml">
-          <md-card-header>
-            <div class="md-title">HTML Preview</div>
-          </md-card-header>
+          <div class="card-actions">
+            <button type="button" class="btn btn-primary" @click="copy(asText)">Copy</button>
+          </div>
+        </div>
+        <div class="card" v-if="isHtml">
+          <div class="card-header">
+            <div class="card-title">HTML Preview</div>
+          </div>
 
-          <md-card-content>
+          <div class="card-content">
             <label>
               <input type="checkbox" v-model="sandbox">
               Sandbox preview (disallow Javascript etc)
             </label>
-          </md-card-content>
+          </div>
 
-          <md-card-content>
+          <div class="card-content">
             <iframe :srcdoc="asText" :sandbox="sandbox ? '' : false" class="preview"/>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </template>
       <template v-else>
-        <md-button class="md-primary md-raised" download :href="asDataSrc.replace(/image\/jpeg/, 'application/octet-stream')">
+        <a class="btn btn-primary" download :href="asDataSrc.replace(/image\/jpeg/, 'application/octet-stream')">
           Download binary file
-        </md-button>
+        </a>
         <p>
           {{ intArray.length.toLocaleString() }} bytes
         </p>

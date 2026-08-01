@@ -4,30 +4,34 @@
       Nothing to format
     </NoteBlock>
     <template v-else>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">Output</div>
-        </md-card-header>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Output</div>
+        </div>
 
-        <md-card-content>
+        <div class="card-content">
           <pre v-highlightjs="outputString"><code class="sql"></code></pre>
-        </md-card-content>
+        </div>
 
-        <md-card-actions>
-          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
-        </md-card-actions>
-      </md-card>
-      <md-field>
+        <div class="card-actions">
+          <button type="button" class="btn btn-primary" @click="copy(outputString)">Copy</button>
+        </div>
+      </div>
+      <div class="field">
         <label>Indent with</label>
-      </md-field>
+      </div>
 
-      <md-radio v-model="indentType" value="spaces">
-        <md-field class="spaces-field">
-          <md-input v-model="indentSpaces" type="number" min="1" max="8" class="spaces-input"/>
-          <span class="md-suffix">Spaces</span>
-        </md-field>
-      </md-radio>
-      <md-radio v-model="indentType" value="tabs">Tabs</md-radio>
+      <label class="radio">
+        <input type="radio" v-model="indentType" value="spaces">
+        <span class="spaces-field">
+          <input type="number" v-model="indentSpaces" min="1" max="8" class="spaces-input">
+          Spaces
+        </span>
+      </label>
+      <label class="radio">
+        <input type="radio" v-model="indentType" value="tabs">
+        Tabs
+      </label>
     </template>
   </div>
 </template>

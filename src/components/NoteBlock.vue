@@ -5,9 +5,6 @@
 </template>
 
 <script>
-  // import MdComponent from 'vue-material/src/core/MdComponent'
-
-  // export default MdComponent({
   export default {
     name: 'NoteBlock',
     props: {
@@ -19,14 +16,12 @@
 </script>
 
 <style lang="scss" scoped>
-  // @import "~vue-material/dist/components/MdAnimation/variables";
-  @import "~vue-material/dist/theme/engine";
-
-  $note-border: md-get-palette-color(orange, A200);
-  $alert-border: md-get-palette-color(red, A200);
-  $tip-border: md-get-palette-color(green, 500);
+  $note-border: #ffab40;
+  $alert-border: #ff5252;
+  $tip-border: #4caf50;
 
   .note-block {
+    background-color: #f5f5f5;
     margin: 1.5em 0;
     padding: 8px 16px;
     overflow: hidden;

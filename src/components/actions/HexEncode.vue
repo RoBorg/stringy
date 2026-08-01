@@ -3,22 +3,25 @@
     <NoteBlock warning v-if="text === ''">
       Nothing to encode
     </NoteBlock>
-    <md-card v-else>
-      <md-card-header>
-        <div class="md-title">Output</div>
-      </md-card-header>
+    <div class="card" v-else>
+      <div class="card-header">
+        <div class="card-title">Output</div>
+      </div>
 
-      <md-card-content>
-        <md-field>
-          <md-textarea v-model="outputString" readonly/>
-        </md-field>
-        <md-checkbox v-model="format">Format output</md-checkbox>
-      </md-card-content>
+      <div class="card-content">
+        <div class="field">
+          <textarea v-model="outputString" readonly/>
+        </div>
+        <label class="checkbox">
+          <input type="checkbox" v-model="format">
+          Format output
+        </label>
+      </div>
 
-      <md-card-actions>
-        <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
-      </md-card-actions>
-    </md-card>
+      <div class="card-actions">
+        <button type="button" class="btn btn-primary" @click="copy(outputString)">Copy</button>
+      </div>
+    </div>
   </div>
 </template>
 

@@ -1,45 +1,41 @@
 <template>
   <div class="page-container" @drop.prevent="dropFiles" @dragover.prevent @dragenter="showOverlay = true">
-    <md-app>
-      <md-app-toolbar class="md-primary">
-        <span class="md-title">Stringy</span>
-        <div class="md-toolbar-section-end">
-          <md-button class="md-icon-button" href="https://github.com/RoBorg/stringy" target="_blank">
-            <div class="github-icon"/>
-          </md-button>
-        </div>
-      </md-app-toolbar>
-      <md-app-content>
-        <p>
-          <md-button style="vertical-align: middle;" class="md-raised" @click="paste">
-            Paste
-          </md-button>
-           your text below, drag-drop a file or
-          <md-button style="vertical-align: middle;" class="md-raised" @click="$refs.fileInput.click();">
-            upload a file
-          </md-button>
-          <input type="file" @change="selectFile" ref="fileInput">
-        </p>
-        <StringyTool ref="stringy"/>
-      </md-app-content>
-    </md-app>
+    <header class="toolbar">
+      <span class="toolbar-title">Stringy</span>
+      <a class="btn-icon" href="https://github.com/RoBorg/stringy" target="_blank">
+        <div class="github-icon"/>
+      </a>
+    </header>
+    <main class="content">
+      <p>
+        <button class="btn" style="vertical-align: middle;" @click="paste">
+          Paste
+        </button>
+         your text below, drag-drop a file or
+        <button class="btn" style="vertical-align: middle;" @click="$refs.fileInput.click();">
+          upload a file
+        </button>
+        <input type="file" @change="selectFile" ref="fileInput">
+      </p>
+      <StringyTool ref="stringy"/>
+    </main>
     <transition name="fade">
       <div class="overlay" v-if="showOverlay" @dragleave="showOverlay = false" @dragenter="showOverlay = true">
-        <md-card class="drop-card">
-          <md-card-header>
-            <div class="md-title">Drop File</div>
-          </md-card-header>
+        <div class="card drop-card">
+          <div class="card-header">
+            <div class="card-title">Drop File</div>
+          </div>
 
-          <md-card-content>
+          <div class="card-content">
             <p>Drop your file here</p>
-          </md-card-content>
-        </md-card>
+          </div>
+        </div>
       </div>
     </transition>
-    <md-snackbar md-position="center" :md-active.sync="showUploadError">
+    <div class="snackbar" v-if="showUploadError">
       <span>Please choose a single file only</span>
-      <md-button class="md-primary" @click="showUploadError = false">close</md-button>
-    </md-snackbar>
+      <button class="btn" @click="showUploadError = false">close</button>
+    </div>
   </div>
 </template>
 

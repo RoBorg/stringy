@@ -24,6 +24,7 @@
             {{ date.toISOString() }}
             <Copy :text="date.toISOString()"/>
           </td>
+        </tr>
         <tr>
           <th>SQL Format</th>
           <td>

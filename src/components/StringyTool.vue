@@ -3,12 +3,12 @@
     <TestData v-if="showTestData"/>
     <div v-if="file">
       {{ file.name }}
-      <md-button class="md-raised" style="vertical-align: middle;" @click="removeFile">Clear</md-button>
+      <button type="button" class="btn" style="vertical-align: middle;" @click="removeFile">Clear</button>
     </div>
     <template v-else>
-      <md-field>
-        <md-textarea v-model="inputString" ref="input" placeholder="Enter your text here"/>
-      </md-field>
+      <div class="field">
+        <textarea v-model="inputString" ref="input" placeholder="Enter your text here"/>
+      </div>
 
       <div class="input-info">
         <span class="amount">{{ characterCount }}</span> character<template v-if="characterCount != 1">s</template>,
@@ -16,22 +16,20 @@
         <span class="amount">{{ lineCount }}</span> line<template v-if="lineCount != 1">s</template>
       </div>
     </template>
-    <br>
-    <md-divider/>
-    <br>
-    <md-tabs md-active-tab="all" @md-changed="filterActions">
-      <md-tab id="all" md-label="All"></md-tab>
-      <md-tab v-for="(label, type) in types" :key="type" :id="type" :md-label="label"></md-tab>
-    </md-tabs>
-    <md-radio v-model="selectedAction" value="auto">
-        <strong>Auto ({{ autoFunction.name }})</strong>
-    </md-radio>
-    <md-radio v-model="selectedAction" v-for="option in actionOptions" :key="option.value" :value="option.value">
+    <hr class="divider">
+    <div class="tabs">
+      <button type="button" class="tab" :class="{ active: actionsFilter === 'all' }" @click="filterActions('all')">All</button>
+      <button type="button" class="tab" v-for="(label, type) in types" :key="type" :class="{ active: actionsFilter === type }" @click="filterActions(type)">{{ label }}</button>
+    </div>
+    <label class="radio">
+      <input type="radio" v-model="selectedAction" value="auto">
+      <strong>Auto ({{ autoFunction.name }})</strong>
+    </label>
+    <label class="radio" v-for="option in actionOptions" :key="option.value">
+      <input type="radio" v-model="selectedAction" :value="option.value">
       {{ option.text }}
-    </md-radio>
-    <br>
-    <md-divider/>
-    <br>
+    </label>
+    <hr class="divider">
     <component v-bind:is="currentComponent" :inputString="text" :inputFile="inputFile" :useFile="useFile"/>
   </div>
 </template>

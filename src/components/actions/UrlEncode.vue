@@ -4,19 +4,19 @@
       Nothing to encode
     </NoteBlock>
     <template v-else>
-      <md-card>
-        <md-card-header>
-          <div class="md-title">Output</div>
-        </md-card-header>
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Output</div>
+        </div>
 
-        <md-card-content>
+        <div class="card-content">
           <pre>{{ outputString }}</pre>
-        </md-card-content>
+        </div>
 
-        <md-card-actions>
-          <md-button class="md-primary md-raised" @click="copy(outputString)">Copy</md-button>
-        </md-card-actions>
-      </md-card>
+        <div class="card-actions">
+          <button type="button" class="btn btn-primary" @click="copy(outputString)">Copy</button>
+        </div>
+      </div>
     </template>
   </div>
 </template>

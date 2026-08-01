@@ -1,7 +1,7 @@
 <template>
-  <md-button class="md-icon-button md-dense" @click="copy(text)" title="Copy to clipboard">
-    <md-icon>content_copy</md-icon>
-  </md-button>
+  <button type="button" class="btn-icon" @click="copy(text)" title="Copy to clipboard">
+    <font-awesome-icon icon="copy"/>
+  </button>
 </template>
 
 <script>
@@ -22,7 +22,7 @@
 </script>
 
 <style scoped>
-  .md-icon-button {
+  .btn-icon {
     vertical-align: middle;
   }
 </style>
