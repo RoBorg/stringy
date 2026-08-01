@@ -21,14 +21,16 @@
       <button type="button" class="tab" :class="{ active: actionsFilter === 'all' }" @click="filterActions('all')">All</button>
       <button type="button" class="tab" v-for="(label, type) in types" :key="type" :class="{ active: actionsFilter === type }" @click="filterActions(type)">{{ label }}</button>
     </div>
-    <label class="radio">
-      <input type="radio" v-model="selectedAction" value="auto">
-      <strong>Auto ({{ autoFunction.name }})</strong>
-    </label>
-    <label class="radio" v-for="option in actionOptions" :key="option.value">
-      <input type="radio" v-model="selectedAction" :value="option.value">
-      {{ option.text }}
-    </label>
+    <div class="actions">
+      <label class="radio">
+        <input type="radio" v-model="selectedAction" value="auto">
+        <strong>Auto ({{ autoFunction.name }})</strong>
+      </label>
+      <label class="radio" v-for="option in actionOptions" :key="option.value">
+        <input type="radio" v-model="selectedAction" :value="option.value">
+        {{ option.text }}
+      </label>
+    </div>
     <hr class="divider">
     <component v-bind:is="currentComponent" :inputString="text" :inputFile="inputFile" :useFile="useFile"/>
   </div>

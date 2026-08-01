@@ -40,10 +40,11 @@
           <th>Difference From Now</th>
           <td>
             <template v-if="isInFuture">in</template>
-            <template v-for="item in duration">
+            <span v-for="item in duration" style="display: inline-block; margin-right: 0.7em" :key="item.unit">
               {{ item.timeInUnit }}
               {{ item.unit }}
-            </template>
+
+            </span>
             <template v-if="!isInFuture">ago</template>
           </td>
         </tr>
