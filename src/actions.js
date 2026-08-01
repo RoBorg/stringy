@@ -11,6 +11,7 @@ import HtmlEncode from './components/actions/HtmlEncode';
 import IpAddress from './components/actions/IpAddress';
 import JsonFormat from './components/actions/JsonFormat';
 import SqlFormat from './components/actions/SqlFormat';
+import SslCertificateDecode from './components/actions/SslCertificateDecode';
 import UnixTimestamp from './components/actions/UnixTimestamp';
 import Url from './components/actions/Url';
 import UrlDecode from './components/actions/UrlDecode';
@@ -46,6 +47,11 @@ export const actions = [
     name: 'IP Address',
     component: IpAddress,
     type: 'other'
+  },
+  {
+    name: 'SSL Certificate / CSR Decode',
+    component: SslCertificateDecode,
+    type: 'decoder'
   },
   {
     name: 'Hex Decode',

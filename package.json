@@ -13,11 +13,13 @@
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/vue-fontawesome": "^3.0.8",
+    "asn1js": "^3.0.10",
     "he": "^1.2.0",
     "highlight.js": "^11.10.0",
     "js-base64": "^2.6.4",
     "lodash": "^4.17.19",
     "moment": "^2.29.0",
+    "pkijs": "^3.4.0",
     "pure-color": "git+https://github.com/RoBorg/pure-color.git",
     "qrcode.vue": "^3.6.0",
     "sass": "^1.26.11",
@@ -41,7 +43,14 @@
       "eslint:recommended"
     ],
     "rules": {
-      "vue/multi-word-component-names": ["error", { "ignores": ["Copy"] }]
+      "vue/multi-word-component-names": [
+        "error",
+        {
+          "ignores": [
+            "Copy"
+          ]
+        }
+      ]
     },
     "parserOptions": {
       "ecmaVersion": 2022,
