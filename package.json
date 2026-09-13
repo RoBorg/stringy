@@ -18,7 +18,6 @@
     "highlight.js": "^11.10.0",
     "js-base64": "^2.6.4",
     "lodash": "^4.17.19",
-    "moment": "^2.29.0",
     "pkijs": "^3.4.0",
     "pure-color": "git+https://github.com/RoBorg/pure-color.git",
     "qrcode.vue": "^3.6.0",

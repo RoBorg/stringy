@@ -16,7 +16,7 @@
       <tbody>
         <tr>
           <th>Date Time</th>
-          <td>{{ date.format() }}</td>
+          <td>{{ formatDateIso(date) }}</td>
         </tr>
         <tr>
           <th>ISO8601 Format</th>
@@ -28,13 +28,13 @@
         <tr>
           <th>SQL Format</th>
           <td>
-            {{ date.format('Y-MM-DD HH:mm:ss') }}
-            <Copy :text="date.format('Y-MM-DD HH:mm:ss')"/>
+            {{ formatDateSql(date) }}
+            <Copy :text="formatDateSql(date)"/>
           </td>
         </tr>
         <tr>
           <th>Difference From Now</th>
-          <td>{{ date.fromNow() }}</td>
+          <td>{{ fromNow(date, now) }}</td>
         </tr>
         <tr>
           <th>Difference From Now</th>
@@ -54,8 +54,8 @@
 </template>
 
 <script>
-  import moment from 'moment';
   import action from './action.mixin';
+  import { formatDateIso, formatDateSql, fromNow, durationParts } from '../../date-helpers';
 
   export default {
     name: 'UnixTimestamp',
@@ -63,38 +63,42 @@
     data() {
       return {
         date: null,
-        now: moment(),
+        now: new Date(),
       }
     },
     created () {
-      setInterval(() => this.now = moment(), 1000);
+      setInterval(() => this.now = new Date(), 1000);
     },
     computed: {
       isInFuture () {
-        return this.date ? this.date.diff(moment()) > 0 : null;
+        return this.date ? this.date.getTime() > Date.now() : null;
       },
       duration () {
         if (!this.date) {
           return null;
         }
 
-        const duration = moment.duration(this.date.diff(this.now));
-        const parts = [];
+        const parts = durationParts(this.date.getTime() - this.now.getTime());
         const units = ['years', 'months', 'days', 'hours', 'minutes', 'seconds'];
+        const result = [];
 
-        for (let i in units) {
-          const unit = units[i]
-          const timeInUnit = Math.abs(duration[unit]());
+        for (const unit of units) {
+          const timeInUnit = parts[unit];
 
           if (timeInUnit > 0)
-            parts.push({
+            result.push({
               timeInUnit,
               unit
             });
         }
 
-        return parts;
+        return result;
       }
+    },
+    methods: {
+      formatDateIso,
+      formatDateSql,
+      fromNow
     },
     watch: {
       text: {
@@ -107,9 +111,9 @@
           }
 
           this.error = '';
-          this.date = moment(parseInt(timestamp));
+          this.date = new Date(parseInt(timestamp));
 
-          if (!this.date.isValid()) {
+          if (isNaN(this.date.getTime())) {
             this.error = 'Invalid timestamp';
           }
         }

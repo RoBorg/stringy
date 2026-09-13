@@ -144,9 +144,9 @@
 </template>
 
 <script>
-  import moment from 'moment';
   import action from './action.mixin';
   import { pemBlocks, decodeCertificate, decodeCsr, domainHref } from '../../cert-helpers';
+  import { formatDateIso, fromNow } from '../../date-helpers';
 
   const csrLabels = ['CERTIFICATE REQUEST', 'NEW CERTIFICATE REQUEST'];
 
@@ -165,7 +165,7 @@
     methods: {
       isCsrLabel,
       formatDate (date) {
-        return moment(date).format() + ' (' + moment(date).fromNow() + ')';
+        return formatDateIso(date) + ' (' + fromNow(date) + ')';
       },
       attrHref (attr) {
         return attr.name === 'CN' ? domainHref(attr.value) : null;
