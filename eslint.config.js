@@ -19,7 +19,7 @@ export default [
     },
     rules: {
       'vue/multi-word-component-names': ['error', {
-        ignores: ['Copy', 'Output', 'Unknown', 'Url']
+        ignores: ['Copy', 'Unknown', 'Url']
       }]
     }
   }

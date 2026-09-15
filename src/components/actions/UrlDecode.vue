@@ -3,7 +3,7 @@
     <NoteBlock alert v-if="error">
       Error: {{ error }}
     </NoteBlock>
-    <Output v-else :int-array="intArray"/>
+    <OutputBlock v-else :int-array="intArray"/>
   </div>
 </template>
 

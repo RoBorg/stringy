@@ -1,8 +1,8 @@
-import Output from '../Output';
+import OutputBlock from '../OutputBlock';
 
 export default {
   components: {
-    Output
+    OutputBlock
   },
   props: {
     inputString: {

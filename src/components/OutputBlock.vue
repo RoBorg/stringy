@@ -73,7 +73,7 @@
   import { copy, getFileInfo } from '../helpers';
 
   export default {
-    name: 'Output',
+    name: 'OutputBlock',
     props: {
       intArray: {
         type: Uint8Array,
