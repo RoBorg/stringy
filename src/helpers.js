@@ -1,12 +1,7 @@
 import { Base64 } from 'js-base64';
 
-export function copy (text) {
-  const element = document.createElement('textarea');
-  document.body.appendChild(element);
-  element.value = text;
-  element.select();
-  document.execCommand('copy');
-  element.remove();
+export async function copy (text) {
+  await navigator.clipboard.writeText(text);
 }
 
 export async function paste () {
