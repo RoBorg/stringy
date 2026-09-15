@@ -10,6 +10,7 @@ import HtmlDecode from './components/actions/HtmlDecode';
 import HtmlEncode from './components/actions/HtmlEncode';
 import IpAddress from './components/actions/IpAddress';
 import JsonFormat from './components/actions/JsonFormat';
+import JwtDecode from './components/actions/JwtDecode';
 import SqlFormat from './components/actions/SqlFormat';
 import SslCertificateDecode from './components/actions/SslCertificateDecode';
 import UnixTimestamp from './components/actions/UnixTimestamp';
@@ -51,6 +52,11 @@ export const actions = [
   {
     name: 'SSL Certificate / CSR Decode',
     component: SslCertificateDecode,
+    type: 'decoder'
+  },
+  {
+    name: 'JWT Decode',
+    component: JwtDecode,
     type: 'decoder'
   },
   {

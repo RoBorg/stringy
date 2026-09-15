@@ -93,6 +93,7 @@
     <span class="test"><Copy text='{"fruit": "Apple","size": "Large","color": "Red"}'/>JSON</span>
     <span class="test"><Copy text="aGVsbG8gd29ybGQ="/>Base64</span>
     <span class="test"><Copy text="1576923482"/>UNIX Timestamp</span>
+    <span class="test"><Copy text="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"/>JWT</span>
     <span class="test"><Copy text="128.42.5.4/21"/>CIDR</span>
     <span class="test"><Copy text="data:text/html;charset=utf-8;base64,PCFET0NUWVBFIGh0bWw+PGh0bWwgbGFuZz0iZW4iPjxoZWFkPjx0aXRsZT5FbWJlZGRlZCBXaW5kb3c8L3RpdGxlPjwvaGVhZD48Ym9keT48aDE+NDI8L2gxPjxzY3JpcHQgdHlwZT0idGV4dC9qYXZhc2NyaXB0Ij53aW5kb3cub25sb2FkPWZ1bmN0aW9uKCkgeyBkb2N1bWVudC5ib2R5LnN0eWxlLmJhY2tncm91bmRDb2xvcj0nI2ZmODAwMCc7fTwvc2NyaXB0PjwvYm9keT48L2h0bWw+"/>Data URI HTML</span>
     <span class="test">
