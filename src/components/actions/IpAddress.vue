@@ -60,72 +60,34 @@
               {{ info.hosts }}
             </td>
           </tr>
-          <template v-if="ipInfo.status === 'success'">
-            <tr v-if="ipInfo.businessName">
-              <th>Business Name</th>
-              <td>{{ ipInfo.businessName }}</td>
-            </tr>
-            <tr v-if="ipInfo.businessWebsite">
-              <th>Business Website</th>
-              <td>{{ ipInfo.businessWebsite }}</td>
-            </tr>
+          <template v-if="ipInfo.ip">
             <tr v-if="ipInfo.city">
               <th>City</th>
               <td>{{ ipInfo.city }}</td>
             </tr>
-            <tr v-if="ipInfo.continent">
-              <th>Continent</th>
-              <td>{{ ipInfo.continent }}</td>
+            <tr v-if="ipInfo.state">
+              <th>State</th>
+              <td>{{ ipInfo.state }}</td>
             </tr>
             <tr v-if="ipInfo.country">
               <th>Country</th>
               <td>{{ ipInfo.country }}</td>
             </tr>
-            <tr v-if="ipInfo.countryCode">
+            <tr v-if="ipInfo.cc">
               <th>Country Code</th>
-              <td>{{ ipInfo.countryCode }}</td>
+              <td>{{ ipInfo.cc }}</td>
             </tr>
-            <tr v-if="ipInfo.ipName">
-              <th>IP Name</th>
-              <td>{{ ipInfo.ipName }}</td>
-            </tr>
-            <tr v-if="ipInfo.ipType">
-              <th>IP Type</th>
-              <td>{{ ipInfo.ipType }}</td>
-            </tr>
-            <tr v-if="ipInfo.isp">
-              <th>ISP</th>
-              <td>{{ ipInfo.isp }}</td>
-            </tr>
-            <tr v-if="ipInfo.lat">
+            <tr v-if="ipInfo.latitude">
               <th>Latitude</th>
-              <td>{{ ipInfo.lat }}</td>
+              <td>{{ ipInfo.latitude }}</td>
             </tr>
-            <tr v-if="ipInfo.lon">
+            <tr v-if="ipInfo.longitude">
               <th>Longitude</th>
-              <td>{{ ipInfo.lon }}</td>
+              <td>{{ ipInfo.longitude }}</td>
             </tr>
-            <tr v-if="ipInfo.lat && ipInfo.lon">
+            <tr v-if="ipInfo.latitude && ipInfo.longitude">
               <th>Map</th>
-              <td><a :href="`https://www.google.com/maps/@${ipInfo.lat},${ipInfo.lon},8z`" target="_blank">Google Maps</a></td>
-            </tr>
-            <tr v-if="ipInfo.org">
-              <th>Org</th>
-              <td>{{ ipInfo.org }}</td>
-            </tr>
-            <tr v-if="ipInfo.query">
-              <th>Query</th>
-              <td>{{ ipInfo.query }}</td>
-            </tr>
-            <tr v-if="ipInfo.region">
-              <th>Region</th>
-              <td>{{ ipInfo.region }}</td>
-            </tr>
-          </template>
-          <template v-else-if="ipInfo.status">
-            <tr>
-              <th>IP Info</th>
-              <td>{{ ipInfo.status }}</td>
+              <td><a :href="`https://www.google.com/maps/@${ipInfo.latitude},${ipInfo.longitude},8z`" target="_blank">Google Maps</a></td>
             </tr>
           </template>
         </tbody>

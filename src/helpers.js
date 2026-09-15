@@ -193,7 +193,7 @@ export async function getIp (hostname) {
 }
 
 export async function getIpInfo(ip) {
-  const response = await fetch(`http://extreme-ip-lookup.com/json/${ip}`);
+  const response = await fetch(`https://api.hackertarget.com/geoip/?output=json&q=${ip}`);
   const result = await response.json();
 
   return result;
