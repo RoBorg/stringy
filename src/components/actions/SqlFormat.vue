@@ -37,7 +37,7 @@
 </template>
 
 <script>
-  import sqlFormatter from 'sql-formatter';
+  import { format } from 'sql-formatter';
   import action from './action.mixin';
   import { copy } from '../../helpers';
 
@@ -52,11 +52,11 @@
     },
     computed: {
       outputString () {
-        const options = {
-          indent: this.indentType === 'spaces' ? ' '.repeat(this.indentSpaces) : '\t'
-        };
+        const options = this.indentType === 'spaces'
+          ? { tabWidth: this.indentSpaces, useTabs: false }
+          : { useTabs: true };
 
-        return sqlFormatter.format(this.text, options);
+        return format(this.text, options);
       }
     },
     methods: {

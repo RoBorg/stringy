@@ -230,7 +230,7 @@
           };
 
           return url;
-        } catch (e) {
+        } catch {
           return false;
         }
       }

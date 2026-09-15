@@ -139,7 +139,7 @@ function getPublicKeyInfo (spki) {
 
       return { algorithm: `EC (${parsed.namedCurve})`, size: curveSizes[parsed.namedCurve] || null };
     }
-  } catch (e) {
+  } catch {
     return { algorithm: oidName(algOid, signatureAlgorithmNames), size: null };
   }
 
@@ -246,7 +246,7 @@ export function pemBlocks (text) {
     try {
       const binary = atob(base64);
       der = Uint8Array.from(binary, c => c.charCodeAt(0)).buffer;
-    } catch (e) {
+    } catch {
       der = null;
     }
 
@@ -280,7 +280,7 @@ export async function decodeCertificate (der) {
   if (selfSigned) {
     try {
       signatureValid = await cert.verify();
-    } catch (e) {
+    } catch {
       signatureValid = null;
     }
   }
@@ -332,11 +332,11 @@ export async function decodeCsr (der) {
     extensions = parseExtensions(requested.extensions);
   }
 
-  let signatureValid = null;
+  let signatureValid;
 
   try {
     signatureValid = await csr.verify();
-  } catch (e) {
+  } catch {
     signatureValid = null;
   }
 

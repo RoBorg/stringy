@@ -43,7 +43,7 @@
         urlEncodedToUint8Array(str);
 
         return true;
-      } catch (e) {
+      } catch {
         return false;
       }
     }

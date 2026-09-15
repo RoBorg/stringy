@@ -47,7 +47,7 @@
   const isValid = (str) => {
     try {
       return pureColor.parse(str) !== undefined;
-    } catch (e) {
+    } catch {
       return false;
     }
   };
@@ -68,7 +68,7 @@
       rgbColour () {
         try {
           return pureColor.parse(this.colour);
-        } catch (e) {
+        } catch {
           // Do nothing
         }
 

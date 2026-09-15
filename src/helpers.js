@@ -210,7 +210,7 @@ export function urlEncodedToUint8Array(str) {
       const char = str[i];
 
       if (hexChar && !/[0-9a-f]/i.test(char)) {
-        throw new Error('Invalid data: ' + char);
+        throw new Error('Invalid data: ' + char, { cause: e });
       }
 
       if (char === '%') {
