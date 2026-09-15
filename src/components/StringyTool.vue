@@ -108,10 +108,10 @@
         return this.text.length;
       },
       wordCount () {
-        return this.text.split(/\s+/).length;
+        return this.text.length ? this.text.trim().split(/\s+/).length : 0;
       },
       lineCount () {
-        return (this.text.match(/\r\n|\r|\n/g) || []).length + 1;
+        return this.text.length ? (this.text.match(/\r\n|\r|\n/g) || []).length + 1 : 0;
       },
       actionOptions () {
         const options = [];
