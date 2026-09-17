@@ -153,7 +153,7 @@
           <tr>
             <th>Link QR Code</th>
             <td>
-              <qrcode-vue :value="url.href" size="200"/>
+              <qrcode-vue :value="url.href" :size="200"/>
             </td>
           </tr>
         </tbody>

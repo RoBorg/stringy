@@ -29,13 +29,11 @@ npm run lint
 ```
 
 ## ToDo
- - Unit tests
  - Test binary encode/decode
  - XML formatter/validator/encoder/decoder
  - HTML formatter/validator
  - (S)CSS formatter
  - SSH key (format conversion, public from private)
- - SSL cert https://www.npmjs.com/package/openssl.js ?
  - Dark mode
  - Allow different text encodings
  - Catch all errors
