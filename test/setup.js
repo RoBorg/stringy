@@ -1,5 +1,17 @@
 import { createHash, webcrypto } from 'node:crypto';
 
+// jsdom's global TextEncoder produces Uint8Arrays from Node's outer realm,
+// not jsdom's own realm, so `instanceof Uint8Array` (and Vue's prop type
+// checks) fail even though the values look identical. Re-cast encode()'s
+// output through the ambient (jsdom-realm) Uint8Array to fix that up.
+const NativeTextEncoder = globalThis.TextEncoder;
+
+globalThis.TextEncoder = class extends NativeTextEncoder {
+  encode (input) {
+    return Uint8Array.from(super.encode(input));
+  }
+};
+
 // jsdom doesn't implement SubtleCrypto - SslCertificateDecode relies on
 // crypto.subtle.digest() to compute certificate fingerprints. Node's
 // WebCrypto SubtleCrypto rejects ArrayBuffers from jsdom's separate realm
